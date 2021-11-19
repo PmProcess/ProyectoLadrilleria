@@ -23,7 +23,7 @@ class CreateDocumentoVentaTable extends Migration
             $table->date('fecha_vencimiento');
             $table->enum('tipo_documento',['BOLETA','FACTURA']);
             $table->string('serie');
-            $table->correlativo('correlativo');
+            $table->string('correlativo');
             $table->enum('tipo_pago',['CONTADO','CREDITO']);
             $table->enum('moneda',['SOLES','DOLARES']);
             $table->decimal('total');
