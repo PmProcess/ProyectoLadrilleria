@@ -6,6 +6,10 @@
 import Vue from "vue";
 import helperJs from "./helpers.js";
 import vSelect from "vue-select";
+import VueIframe from 'vue-iframes'
+
+Vue.use(VueIframe)
+Vue.config.devtools = false
 // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
 Vue.component("v-select", vSelect);
 require("./bootstrap");
@@ -36,6 +40,11 @@ Vue.use(plugin);
 Vue.component(
     "tipoempleadoindex-component",
     require("./components/administracion/tipoEmpleado/TipoEmpleadoIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "tipodocumentoindex-component",
+    require("./components/configuracion/TipoDocumento/TipoDocumentoIndexComponent.vue")
         .default
 );
 Vue.component(

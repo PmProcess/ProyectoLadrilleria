@@ -62,11 +62,12 @@
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('tipoProducto-active')"><a href="{{ route('tipoProducto.index') }}"><i class="fa fa-book" aria-hidden="true"></i>Tipos
+            <li class="@yield('tipoProducto-active')"><a href="{{ route('tipoProducto.index') }}"><i
+                        class="fa fa-book" aria-hidden="true"></i>Tipos
                     de Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('producto-active')"><a href="{{route('producto.index')}}"><i class="fa fa-cart-plus"
+            <li class="@yield('producto-active')"><a href="{{ route('producto.index') }}"><i class="fa fa-cart-plus"
                         aria-hidden="true"></i>Productos</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
@@ -87,8 +88,16 @@
                         class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
         </ul>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('almacen-active')"><a href="{{route('almacen.index')}}"><i class="fa fa-archive"
+            <li class="@yield('almacen-active')"><a href="{{ route('almacen.index') }}"><i class="fa fa-archive"
                         aria-hidden="true"></i>Almacen</a></li>
+        </ul>
+    </li>
+    <li class="@yield('configuracion-active')">
+        <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Configuracion</span><span
+                class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
+            <li class="@yield('tipoDocumento-active')"><a href="{{ route('tipoDocumento.index') }}"><i
+                        class="fa fa-building" aria-hidden="true"></i>Tipo de Documentos</a></li>
         </ul>
     </li>
 </ul>

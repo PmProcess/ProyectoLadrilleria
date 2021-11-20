@@ -5,6 +5,7 @@ use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
+use App\Http\Controllers\Configuracion\TipoDocumentoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mantenimiento\AlmacenController;
 use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
@@ -120,4 +121,10 @@ Route::prefix('empresaPersonal')->group(function () {
     Route::get('/empresaPersonal', [EmpresaPersonalController::class, 'getEmpresaPersonal'])->name('EmpresaPersonal.empresaPersonal');
     Route::post('/store', [EmpresaPersonalController::class, 'store'])->name('EmpresaPersonal.store');
     Route::get('/verify', [EmpresaPersonalController::class, 'verify'])->name('EmpresaPersonal.verify');
+});
+Route::prefix('tipoDocumento')->group(function(){
+    Route::get('/index',[TipoDocumentoController::class,'index'])->name('tipoDocumento.index');
+    Route::get('/vistaPrevia/{tipo}',[TipoDocumentoController::class,'vistaPrevia'])->name('tipoDocumento.vistaPrevia');
+    Route::get('/update/{id}',[TipoDocumentoController::class,'update'])->name('tipoDocumento.update');
+    Route::get('/getList',[TipoDocumentoController::class,'getList'])->name('tipoDocumento.getList');
 });
