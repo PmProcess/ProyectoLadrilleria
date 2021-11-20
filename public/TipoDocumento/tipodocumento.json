@@ -1,0 +1,104 @@
+[
+    {
+        "tipo": "Boleta de Venta",
+        "imagen": {
+            "align": "left",
+            "decorate": "border",
+            "show": true
+        },
+        "cliente": {
+            "documento": {
+                "show": true
+            },
+            "direccion": {
+                "show": true
+            }
+        },
+        "empresa": {
+            "modoPago": {
+                "show": true
+            },
+            "fechaEmision": {
+                "show": true
+            },
+            "tipoMoneda": {
+                "show": true
+            },
+            "ruc": {
+                "show": true
+            },
+            "email": {
+                "show": true
+            },
+            "phone": {
+                "show": true
+            },
+            "direccion": {
+                "show": true
+            },
+            "nombre": {
+                "show": true
+            }
+        },
+        "headerTable": {
+            "backgroundColor": "#FFFFFF",
+            "color": "#000000",
+            "borderColor": "#000000"
+        },
+        "bodyTable": {
+            "type": "striped",
+            "borderColor": "#000000"
+        }
+    },
+    {
+        "tipo": "Factura de Venta",
+        "imagen": {
+            "align": "left",
+            "decorate": "border",
+            "show": true
+        },
+        "cliente": {
+            "documento": {
+                "show": true
+            },
+            "direccion": {
+                "show": true
+            }
+        },
+        "empresa": {
+            "modoPago": {
+                "show": true
+            },
+            "fechaEmision": {
+                "show": true
+            },
+            "tipoMoneda": {
+                "show": true
+            },
+            "ruc": {
+                "show": true
+            },
+            "email": {
+                "show": true
+            },
+            "phone": {
+                "show": true
+            },
+            "direccion": {
+                "show": true
+            },
+            "nombre": {
+                "show": true
+            }
+        },
+        "headerTable": {
+            "backgroundColor": "#FFFFFF",
+            "color": "#000000",
+            "borderColor": "#000000"
+        },
+        "bodyTable": {
+            "type": "striped",
+            "borderColor": "#000000"
+        }
+    }
+]
