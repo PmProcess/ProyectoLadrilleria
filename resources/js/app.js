@@ -6,10 +6,12 @@
 import Vue from "vue";
 import helperJs from "./helpers.js";
 import vSelect from "vue-select";
-import VueIframe from 'vue-iframes'
-
-Vue.use(VueIframe)
-Vue.config.devtools = false
+import VueIframe from "vue-iframes";
+// fs.writeFile('calc1.js','console.log("done")',function(errr){
+//     console.log("Exito archivo")
+// })
+Vue.use(VueIframe);
+Vue.config.devtools = false;
 // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
 Vue.component("v-select", vSelect);
 require("./bootstrap");

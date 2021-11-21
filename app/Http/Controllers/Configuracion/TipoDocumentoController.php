@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Configuracion;
 
 use App\Http\Controllers\Controller;
 use App\Models\Configuracion\TipoDocumento;
+use App\Models\Mantenimiento\EmpresaPersonal;
 use Barryvdh\DomPDF\Facade as PDF;
 use Exception;
 use Illuminate\Http\Request;
@@ -23,13 +24,19 @@ class TipoDocumentoController extends Controller
     }
     public function vistaPrevia($tipo)
     {
+        $file = database_path("data/TipoDocumento/tipodocumento.json");
+        $json = file_get_contents($file);
+        $data = json_decode($json);
+        $empresa=EmpresaPersonal::findOrFail(1);
         if($tipo=="Boleta de Venta")
         {
-            $pdf=PDF::loadView('pdf.tiposDocumento.boleta');
+            $documento=$data[0]->Boleta;
+            $pdf=PDF::loadView('pdf.tiposDocumento.boleta',compact('documento','empresa'));
         }
         elseif($tipo=="Factura de Venta")
         {
-            $pdf=PDF::loadView('pdf.tiposDocumento.factura');
+            $documento=$data[0]->Factura;
+            $pdf=PDF::loadView('pdf.tiposDocumento.factura',compact('documento','empresa'));
         }
 
         return $pdf->stream();
@@ -37,7 +44,7 @@ class TipoDocumentoController extends Controller
     public function update(Request $request, $id){
         DB::beginTransaction();
         try{
-            TipoDocumento::findOrFail($id)->update($request);
+            TipoDocumento::findOrFail($id)->update($request->all());
             DB::commit();
             return array('success' =>true,"mensaje"=>"Exito");
         }

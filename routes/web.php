@@ -116,15 +116,15 @@ Route::prefix('ubigeo')->middleware('auth')->group(function(){
     Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');
     Route::get('getdistritos/{provinciaid}',[UbigeoController::class,'getDistritos'])->name('ubigeo.getDistritos');
 });
-Route::prefix('empresaPersonal')->group(function () {
+Route::prefix('empresaPersonal')->middleware('auth')->group(function () {
     Route::get('/index', [EmpresaPersonalController::class, 'index'])->name('EmpresaPersonal.index');
     Route::get('/empresaPersonal', [EmpresaPersonalController::class, 'getEmpresaPersonal'])->name('EmpresaPersonal.empresaPersonal');
     Route::post('/store', [EmpresaPersonalController::class, 'store'])->name('EmpresaPersonal.store');
     Route::get('/verify', [EmpresaPersonalController::class, 'verify'])->name('EmpresaPersonal.verify');
 });
-Route::prefix('tipoDocumento')->group(function(){
+Route::prefix('tipoDocumento')->middleware('auth')->group(function(){
     Route::get('/index',[TipoDocumentoController::class,'index'])->name('tipoDocumento.index');
     Route::get('/vistaPrevia/{tipo}',[TipoDocumentoController::class,'vistaPrevia'])->name('tipoDocumento.vistaPrevia');
-    Route::get('/update/{id}',[TipoDocumentoController::class,'update'])->name('tipoDocumento.update');
+    Route::post('/update/{id}',[TipoDocumentoController::class,'update'])->name('tipoDocumento.update');
     Route::get('/getList',[TipoDocumentoController::class,'getList'])->name('tipoDocumento.getList');
 });

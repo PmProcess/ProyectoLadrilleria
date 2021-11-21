@@ -53,6 +53,54 @@
                 </div>
             </div>
         </div>
+        <div
+            class="modal fade"
+            id="modalEdit"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Editar Tipo de Documento
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div class="form-group">
+                            <label for="">Tipo</label>
+                            <input type="text" disabled class="form-control" v-model="tipo">
+                        </div>
+                        <div class="form-group">
+                            <label for="">Descripcion</label>
+                            <textarea  cols="30" rows="3" v-model="descripcion" class="form-control"></textarea>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Cerrar
+                        </button>
+                        <button type="button" class="btn btn-primary" @click="editar">
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
@@ -62,26 +110,42 @@ export default {
     data() {
         return {
             preview: false,
-            table:null,
+            table: null,
             src: "",
+            tipo:"",
+            descripcion:"",
+            id:""
         };
     },
     mounted() {
         this.inicializarDatatables();
-        var $this=this;
-        $(document).on('click','.btn-edit',function(e) {
-            console.log($this.table.row($(this).closest('tr')).data())
-        })
-        $(document).on('click','.btn-show',function(e) {
-            var dato=$this.table.row($(this).closest('tr')).data();
-            $this.src=route('tipoDocumento.vistaPrevia',dato.tipo)
-            $this.preview=!$this.preview
-        })
+        var $this = this;
+        $(document).on("click", ".btn-edit", function (e) {
+            var datos=$this.table.row($(this).closest("tr")).data()
+            $this.tipo=datos.tipo;
+            $this.descripcion=datos.descripcion;
+            $this.id=datos.id
+            $("#modalEdit").modal("show");
+        });
+        $(document).on("click", ".btn-show", function (e) {
+            var dato = $this.table.row($(this).closest("tr")).data();
+            $this.src = route("tipoDocumento.vistaPrevia", dato.tipo);
+            $this.preview = true;
+        });
     },
     methods: {
-        onLoad: function (frame) {
-
+        editar:function ()
+        {
+            var $this=this;
+            var data =new FormData();
+            data.append('tipo',$this.tipo);
+            data.append('descripcion',$this.descripcion)
+            axios.post(route('tipoDocumento.update',$this.id),data).then((value) => {
+                $this.table.ajax.reload();
+                $("#modalEdit").modal("hide");
+            })
         },
+        onLoad: function (frame) {},
         inicializarDatatables: function () {
             this.table = $("#tableTiposDocumentos").DataTable({
                 bPaginate: true,

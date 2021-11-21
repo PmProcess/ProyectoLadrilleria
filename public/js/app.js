@@ -3156,6 +3156,54 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
@@ -3163,22 +3211,39 @@ __webpack_require__.r(__webpack_exports__);
     return {
       preview: false,
       table: null,
-      src: ""
+      src: "",
+      tipo: "",
+      descripcion: "",
+      id: ""
     };
   },
   mounted: function mounted() {
     this.inicializarDatatables();
     var $this = this;
-    $(document).on('click', '.btn-edit', function (e) {
-      console.log($this.table.row($(this).closest('tr')).data());
+    $(document).on("click", ".btn-edit", function (e) {
+      var datos = $this.table.row($(this).closest("tr")).data();
+      $this.tipo = datos.tipo;
+      $this.descripcion = datos.descripcion;
+      $this.id = datos.id;
+      $("#modalEdit").modal("show");
     });
-    $(document).on('click', '.btn-show', function (e) {
-      var dato = $this.table.row($(this).closest('tr')).data();
-      $this.src = route('tipoDocumento.vistaPrevia', dato.tipo);
-      $this.preview = !$this.preview;
+    $(document).on("click", ".btn-show", function (e) {
+      var dato = $this.table.row($(this).closest("tr")).data();
+      $this.src = route("tipoDocumento.vistaPrevia", dato.tipo);
+      $this.preview = true;
     });
   },
   methods: {
+    editar: function editar() {
+      var $this = this;
+      var data = new FormData();
+      data.append('tipo', $this.tipo);
+      data.append('descripcion', $this.descripcion);
+      axios.post(route('tipoDocumento.update', $this.id), data).then(function (value) {
+        $this.table.ajax.reload();
+        $("#modalEdit").modal("hide");
+      });
+    },
     onLoad: function onLoad(frame) {},
     inicializarDatatables: function inicializarDatatables() {
       this.table = $("#tableTiposDocumentos").DataTable({
@@ -6944,6 +7009,9 @@ __webpack_require__.r(__webpack_exports__);
 
 
 
+ // fs.writeFile('calc1.js','console.log("done")',function(errr){
+//     console.log("Exito archivo")
+// })
 
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].use((vue_iframes__WEBPACK_IMPORTED_MODULE_2___default()));
 vue__WEBPACK_IMPORTED_MODULE_3__["default"].config.devtools = false; // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
@@ -7033,7 +7101,7 @@ try {
 
 
 window.axios = __webpack_require__(/*! axios */ "./node_modules/axios/index.js");
-window.axios.defaults.headers.common['X-Requested-With'] = 'XMLHttpRequest';
+window.axios.defaults.headers.common["X-Requested-With"] = "XMLHttpRequest";
 /**
  * Echo exposes an expressive API for subscribing to channels and listening
  * for events that are broadcast by Laravel. Echo and event broadcasting
@@ -79926,6 +79994,114 @@ var render = function () {
         ]),
       ]),
     ]),
+    _vm._v(" "),
+    _c(
+      "div",
+      {
+        staticClass: "modal fade",
+        attrs: {
+          id: "modalEdit",
+          tabindex: "-1",
+          role: "dialog",
+          "aria-labelledby": "exampleModalLabel",
+          "aria-hidden": "true",
+        },
+      },
+      [
+        _c(
+          "div",
+          { staticClass: "modal-dialog", attrs: { role: "document" } },
+          [
+            _c("div", { staticClass: "modal-content" }, [
+              _vm._m(2),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-body" }, [
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Tipo")]),
+                  _vm._v(" "),
+                  _c("input", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.tipo,
+                        expression: "tipo",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { type: "text", disabled: "" },
+                    domProps: { value: _vm.tipo },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.tipo = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "form-group" }, [
+                  _c("label", { attrs: { for: "" } }, [_vm._v("Descripcion")]),
+                  _vm._v(" "),
+                  _c("textarea", {
+                    directives: [
+                      {
+                        name: "model",
+                        rawName: "v-model",
+                        value: _vm.descripcion,
+                        expression: "descripcion",
+                      },
+                    ],
+                    staticClass: "form-control",
+                    attrs: { cols: "30", rows: "3" },
+                    domProps: { value: _vm.descripcion },
+                    on: {
+                      input: function ($event) {
+                        if ($event.target.composing) {
+                          return
+                        }
+                        _vm.descripcion = $event.target.value
+                      },
+                    },
+                  }),
+                ]),
+              ]),
+              _vm._v(" "),
+              _c("div", { staticClass: "modal-footer" }, [
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-secondary",
+                    attrs: { type: "button", "data-dismiss": "modal" },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Cerrar\n                    "
+                    ),
+                  ]
+                ),
+                _vm._v(" "),
+                _c(
+                  "button",
+                  {
+                    staticClass: "btn btn-primary",
+                    attrs: { type: "button" },
+                    on: { click: _vm.editar },
+                  },
+                  [
+                    _vm._v(
+                      "\n                        Guardar\n                    "
+                    ),
+                  ]
+                ),
+              ]),
+            ]),
+          ]
+        ),
+      ]
+    ),
   ])
 }
 var staticRenderFns = [
@@ -79981,6 +80157,35 @@ var staticRenderFns = [
         ]),
       ]
     )
+  },
+  function () {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "modal-header" }, [
+      _c(
+        "h5",
+        { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
+        [
+          _vm._v(
+            "\n                        Editar Tipo de Documento\n                    "
+          ),
+        ]
+      ),
+      _vm._v(" "),
+      _c(
+        "button",
+        {
+          staticClass: "close",
+          attrs: {
+            type: "button",
+            "data-dismiss": "modal",
+            "aria-label": "Close",
+          },
+        },
+        [_c("span", { attrs: { "aria-hidden": "true" } }, [_vm._v("×")])]
+      ),
+    ])
   },
 ]
 render._withStripped = true
