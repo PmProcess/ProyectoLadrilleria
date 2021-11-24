@@ -1,19 +1,20 @@
 <?php
 
 namespace App\Models\Configuracion;
+
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class TipoDocumento extends Model
+class NumeracionConteo extends Model
 {
     use HasFactory;
-    protected $table="tipo_documento";
+    protected $table="numeracion_conteo";
     protected $fillable=[
-        'tipo','descripcion'
+        'correlativo',
+        'numeracion_id'
     ];
     public $timestamps=true;
-    public function numeraciones()
-    {
-        return $this->hasMany(Numeracion::class,'tipo_documento_id');
+    public function numeracion(){
+        return $this->belongsTo(Numeracion::class,'numeracion_id');
     }
 }

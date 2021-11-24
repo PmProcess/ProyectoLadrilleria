@@ -21,7 +21,8 @@ class CreateDocumentoVentaTable extends Migration
             $table->foreign('empleado_id')->references('id')->on('empleado')->onDelete('cascade');
             $table->date('fecha_registro');
             $table->date('fecha_vencimiento');
-            $table->enum('tipo_documento',['BOLETA','FACTURA']);
+            $table->unsignedBigInteger('tipo_documento_id');
+            $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento')->onDelete('cascade');
             $table->string('serie');
             $table->string('correlativo');
             $table->enum('tipo_pago',['CONTADO','CREDITO']);

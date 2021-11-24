@@ -97,6 +97,11 @@ Vue.component(
     "productoindex-component",
     require("./components/ventas/Producto/ProductoIndexComponent.vue").default
 );
+Vue.component(
+    "numeracionindex-component",
+    require("./components/configuracion/Numeracion/NumeracionIndexComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(

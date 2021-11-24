@@ -14248,12 +14248,14 @@
         <thead>
             <tr>
                 <th style="width:25%">
-                    @if ($documento->imagen->show && $documento->imagen->align == 'left')
-                        @if ($empresa->nombre_imagen)
-                            <img src="{{ base_path() . '/storage/app/' . $empresa->url_imagen }}"
-                                style="height: 100px;width:100%">
-                        @else
-                            <img src="{{ public_path() . '/img/default.png' }}" style="height: 100px;width:100%">
+                    @if ($documento->imagen->align == 'left')
+                        @if ($documento->imagen->show)
+                            @if ($empresa->nombre_imagen)
+                                <img src="{{ base_path() . '/storage/app/' . $empresa->url_imagen }}"
+                                    style="height: 100px;width:100%">
+                            @else
+                                <img src="{{ public_path() . '/img/default.png' }}" style="height: 100px;width:100%">
+                            @endif
                         @endif
                     @else
                         <div class="cuadro-documento text-center"
@@ -14294,12 +14296,14 @@
                     @endif
                 </th>
                 <th style="width:25%">
-                    @if ($documento->imagen->show && $documento->imagen->align == 'right')
-                        @if ($empresa->nombre_imagen)
-                            <img src="{{ base_path() . '/storage/app/' . $empresa->url_imagen }}"
-                                style="height: 100px;width:100%">
-                        @else
-                            <img src="{{ public_path() . '/img/default.png' }}" style="height: 100px;width:100%">
+                    @if ($documento->imagen->align == 'right')
+                        @if ($documento->imagen->show)
+                            @if ($empresa->nombre_imagen)
+                                <img src="{{ base_path() . '/storage/app/' . $empresa->url_imagen }}"
+                                    style="height: 100px;width:100%">
+                            @else
+                                <img src="{{ public_path() . '/img/default.png' }}" style="height: 100px;width:100%">
+                            @endif
                         @endif
 
                     @else

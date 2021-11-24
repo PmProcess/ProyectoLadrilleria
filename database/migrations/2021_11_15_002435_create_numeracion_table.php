@@ -18,7 +18,9 @@ class CreateNumeracionTable extends Migration
             $table->unsignedBigInteger('tipo_documento_id');
             $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento')->onDelete('cascade');
             $table->string('serie');
-            $table->bigInteger('correlativo');
+            $table->bigInteger('correlativo_iniciar');
+            $table->enum('seleccionado',['SI','NO'])->default('NO');
+            $table->enum('estado',['ACTIVO', 'ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });
     }

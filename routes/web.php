@@ -5,6 +5,7 @@ use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
+use App\Http\Controllers\Configuracion\NumeracionController;
 use App\Http\Controllers\Configuracion\TipoDocumentoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mantenimiento\AlmacenController;
@@ -127,4 +128,13 @@ Route::prefix('tipoDocumento')->middleware('auth')->group(function(){
     Route::get('/vistaPrevia/{tipo}',[TipoDocumentoController::class,'vistaPrevia'])->name('tipoDocumento.vistaPrevia');
     Route::post('/update/{id}',[TipoDocumentoController::class,'update'])->name('tipoDocumento.update');
     Route::get('/getList',[TipoDocumentoController::class,'getList'])->name('tipoDocumento.getList');
+});
+Route::prefix('numeracion')->middleware('auth')->group(function(){
+    Route::get('/index',[NumeracionController::class,'index'])->name('numeracion.index');
+    Route::post('/store',[NumeracionController::class,'store'])->name('numeracion.store');
+    Route::post('/update/{id}',[NumeracionController::class,'update'])->name('numeracion.update');
+    Route::post('/destroy/{id}',[NumeracionController::class,'destroy'])->name('numeracion.destroy');
+    Route::post('/seleccionar/{id}',[NumeracionController::class,'seleccionar'])->name('numeracion.seleccionar');
+    Route::post('/deseleccionar/{id}',[NumeracionController::class,'deseleccionar'])->name('numeracion.deseleccionar');
+    Route::get('/getList',[NumeracionController::class,'getList'])->name('numeracion.getList');
 });
