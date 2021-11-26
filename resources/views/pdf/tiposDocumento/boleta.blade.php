@@ -14364,7 +14364,7 @@
             </tr>
             <tr>
                 <td style="width:50%">
-                    @if ($documento->cliente->formaPago->show)
+                    @if ($documento->cliente->tipoMoneda->show)
                         <div class="small font-weight-bold">
                             Tipo de Moneda:
                             <span class="font-weight-none">SOLES</span>

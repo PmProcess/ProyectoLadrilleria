@@ -7,6 +7,9 @@ import Vue from "vue";
 import helperJs from "./helpers.js";
 import vSelect from "vue-select";
 import VueIframe from "vue-iframes";
+import Verte from 'verte';
+// import { Photoshop } from 'vue-color'
+// import { Slider } from 'vue-color'
 // fs.writeFile('calc1.js','console.log("done")',function(errr){
 //     console.log("Exito archivo")
 // })
@@ -14,6 +17,14 @@ Vue.use(VueIframe);
 Vue.config.devtools = false;
 // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
 Vue.component("v-select", vSelect);
+Vue.component('verte', Verte);
+// new Vue({
+//     components: {
+//       'photoshop-picker': Photoshop
+//     }
+//   })
+// Vue.component("photoshop-picker",Photoshop)
+// Vue.component("slider-picker",Slider)
 require("./bootstrap");
 
 window.Vue = require("vue").default;

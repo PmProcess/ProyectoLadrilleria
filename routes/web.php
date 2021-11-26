@@ -127,6 +127,9 @@ Route::prefix('tipoDocumento')->middleware('auth')->group(function(){
     Route::get('/index',[TipoDocumentoController::class,'index'])->name('tipoDocumento.index');
     Route::get('/vistaPrevia/{tipo}',[TipoDocumentoController::class,'vistaPrevia'])->name('tipoDocumento.vistaPrevia');
     Route::post('/update/{id}',[TipoDocumentoController::class,'update'])->name('tipoDocumento.update');
+    Route::get('/vistaPreviaPdf/{arreglo}/{tipo}',[TipoDocumentoController::class,'vistaPreviaPdf'])->name('tipoDocumento.vistaPreviaPdf');
+    Route::post('/updatePdf/{arreglo}/{tipo}',[TipoDocumentoController::class,'updatePdf'])->name('tipoDocumento.updatePdf');
+    Route::get('/formatoPdf',[TipoDocumentoController::class,'formatoPdf'])->name('tipoDocumento.formatoPdf');
     Route::get('/getList',[TipoDocumentoController::class,'getList'])->name('tipoDocumento.getList');
 });
 Route::prefix('numeracion')->middleware('auth')->group(function(){

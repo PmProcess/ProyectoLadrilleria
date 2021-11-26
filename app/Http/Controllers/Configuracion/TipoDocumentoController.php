@@ -16,11 +16,62 @@ class TipoDocumentoController extends Controller
 {
     public function index(){
         // $tiposDocumentos =TipoDocumento::get();
-        return view('configuracion.tipoDocumento.index');
+        $file = database_path("data/TipoDocumento/tipodocumento.json");
+        $json = file_get_contents($file);
+        // $arreglo = json_decode($json);
+        return view('configuracion.tipoDocumento.index',compact('json'));
+    }
+    public function formatoPdf(){
+        $file = database_path("data/TipoDocumento/tipodocumento.json");
+        $json = file_get_contents($file);
+        return $json;
     }
     public function getList(){
         $tiposDocumentos= TipoDocumento::get();
         return DataTables::of($tiposDocumentos)->toJson();
+    }
+    public function vistaPreviaPdf($arreglo,$tipo)
+    {
+        $data = json_decode($arreglo);
+        $empresa=EmpresaPersonal::findOrFail(1);
+        if($tipo=="Boleta de Venta")
+        {
+            $documento=$data[0]->Boleta;
+            $pdf=PDF::loadView('pdf.tiposDocumento.boleta',compact('documento','empresa'));
+        }
+        elseif($tipo=="Factura de Venta")
+        {
+            $documento=$data[0]->Factura;
+            $pdf=PDF::loadView('pdf.tiposDocumento.factura',compact('documento','empresa'));
+        }
+
+        return $pdf->stream();
+    }
+    public function updatePdf($arreglo,$tipo)
+    {
+        try {
+            $file = database_path("data/TipoDocumento/tipodocumento.json");
+            $json = file_get_contents($file);
+            $data = json_decode($json);
+
+            $dataArreglo = json_decode($arreglo);
+
+            $fh = fopen($file,'r+');
+            if($tipo=="Boleta de Venta")
+            {
+                $data[0]->Boleta=$dataArreglo[0]->Boleta;
+            }
+            elseif($tipo=="Factura de Venta"){
+                $data[0]->Factura=$dataArreglo[0]->Factura;
+            }
+            file_put_contents(database_path("data/TipoDocumento/tipodocumento.json"), json_encode($data));
+
+            fclose($fh);
+            return array("success"=>true,"mensaje"=>"Registro con Exito");
+        } catch (Exception $e) {
+            Log::info($e);
+            return array("success"=>false,"mensaje"=>"Ocurrio un Error");
+        }
     }
     public function vistaPrevia($tipo)
     {
