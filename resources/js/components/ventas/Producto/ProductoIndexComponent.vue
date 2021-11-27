@@ -36,11 +36,12 @@
                                 </div>
                             </div>
                             <div class="col-md-12">
-                                <producto-lista-component ref="ProductoList" v-bind:tiposProductos="tiposProductos"></producto-lista-component>
-                                <!-- <datatable-tipo-producto-component
-                                    ref="datatableTipoProducto"
-                                >
-                                </datatable-tipo-producto-component> -->
+                                <producto-lista-component
+                                    ref="ProductoList"
+                                    v-bind:tiposProductos="tiposProductos"
+                                    v-bind:tiposOperaciones="tiposOperaciones"
+                                    v-bind:unidadesMedidas="unidadesMedidas"
+                                ></producto-lista-component>
                             </div>
                         </div>
                     </div>
@@ -70,45 +71,93 @@
                         </button>
                     </div>
                     <div class="modal-body">
-                        <div class="form-group">
-                            <label for="">Tipo Producto</label>
-                            <v-select
-                                v-model="modelo.obligatorio.tipo_producto_id"
-                                :options="tiposProductos"
-                            >
-                                <span slot="no-options"
-                                    >No se encontraron datos</span
+                        <div class="form-group row">
+                            <div class="col-md-6">
+                                <label for="">Tipo Producto</label>
+                                <v-select
+                                    v-model="
+                                        modelo.obligatorio.tipo_producto_id
+                                    "
+                                    :options="tiposProductos"
                                 >
-                            </v-select>
-                            <span
-                                style="color: #dc3545; font-size: 80%"
-                                v-if="errores.tipo_producto_id.error"
-                            >
-                                <strong>{{
-                                    errores.tipo_producto_id.mensaje
-                                }}</strong>
-                            </span>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Nombre</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-sm"
-                                :class="
-                                    errores.nombre.error ? 'is-invalid' : ''
-                                "
-                                v-model="modelo.obligatorio.nombre"
-                            />
-                            <span
-                                class="invalid-feedback"
-                                role="alert"
-                                v-if="errores.nombre.error"
-                            >
-                                <strong>{{ errores.nombre.mensaje }}</strong>
-                            </span>
+                                    <span slot="no-options"
+                                        >No se encontraron datos</span
+                                    >
+                                </v-select>
+                                <span
+                                    style="color: #dc3545; font-size: 80%"
+                                    v-if="errores.tipo_producto_id.error"
+                                >
+                                    <strong>{{
+                                        errores.tipo_producto_id.mensaje
+                                    }}</strong>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Unidad de Medida</label>
+                                <v-select
+                                    v-model="
+                                        modelo.obligatorio.unidad_medida_id
+                                    "
+                                    :options="unidadesMedidas"
+                                >
+                                    <span slot="no-options"
+                                        >No se encontraron datos</span
+                                    >
+                                </v-select>
+                                <span
+                                    style="color: #dc3545; font-size: 80%"
+                                    v-if="errores.unidad_medida_id.error"
+                                >
+                                    <strong>{{
+                                        errores.unidad_medida_id.mensaje
+                                    }}</strong>
+                                </span>
+                            </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-7">
+                            <div class="col-md-6">
+                                <label for="">Nombre</label>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    :class="
+                                        errores.nombre.error ? 'is-invalid' : ''
+                                    "
+                                    v-model="modelo.obligatorio.nombre"
+                                />
+                                <span
+                                    class="invalid-feedback"
+                                    role="alert"
+                                    v-if="errores.nombre.error"
+                                >
+                                    <strong>{{
+                                        errores.nombre.mensaje
+                                    }}</strong>
+                                </span>
+                            </div>
+                            <div class="col-md-6">
+                                <label for="">Tipo de Operacion</label>
+                                <v-select
+                                    v-model="modelo.obligatorio.tipo_operacion"
+                                    :options="tiposOperaciones"
+                                >
+                                    <span slot="no-options"
+                                        >No se encontraron datos</span
+                                    >
+                                </v-select>
+                                <span
+                                    style="color: #dc3545; font-size: 80%"
+                                    v-if="errores.tipo_operacion.error"
+                                >
+                                    <strong>{{
+                                        errores.tipo_operacion.mensaje
+                                    }}</strong>
+                                </span>
+                            </div>
+                        </div>
+                        <div class="form-group row">
+                            <div class="col-md-4">
                                 <label for="">Precio Venta</label>
                                 <input
                                     type="number"
@@ -130,7 +179,29 @@
                                     }}</strong>
                                 </span>
                             </div>
-                            <div class="col-md-5">
+                            <div class="col-md-4">
+                                <label for="">Precio Compra</label>
+                                <input
+                                    type="number"
+                                    class="form-control form-control-sm"
+                                    :class="
+                                        errores.precio_compra.error
+                                            ? 'is-invalid'
+                                            : ''
+                                    "
+                                    v-model="modelo.obligatorio.precio_compra"
+                                />
+                                <span
+                                    class="invalid-feedback"
+                                    role="alert"
+                                    v-if="errores.precio_compra.error"
+                                >
+                                    <strong>{{
+                                        errores.precio_compra.mensaje
+                                    }}</strong>
+                                </span>
+                            </div>
+                            <div class="col-md-4">
                                 <label for="">stock</label>
                                 <input
                                     readonly
@@ -197,7 +268,8 @@
                                     <div class="col-lg-2"></div>
                                     <div class="col-lg-7">
                                         <p>
-                                            <img id="imagenLogon"
+                                            <img
+                                                id="imagenLogon"
                                                 class="
                                                     logo
                                                     img-fluid img-thumbnail
@@ -232,29 +304,56 @@
     </div>
 </template>
 <script>
-import ProductoListaComponent from './ProductoListaComponent.vue';
+import ProductoListaComponent from "./ProductoListaComponent.vue";
 export default {
-  components: { ProductoListaComponent },
+    components: { ProductoListaComponent },
     data() {
         return {
             modelo: {
                 obligatorio: {
-                    tipo_producto_id: "",
-                    precio_venta: "",
+                    tipo_producto_id: null,
+                    unidad_medida_id: null,
+                    precio_venta: "0",
+                    precio_compra: "0",
                     stock: "0",
                     nombre: "",
+                    tipo_operacion: null,
                 },
                 otros: {
                     imagen: "",
                 },
             },
+            tiposOperaciones: [
+                {
+                    label: "VENTA",
+                },
+                {
+                    label: "COMPRA",
+                },
+                {
+                    label: "VENTA Y COMPRA",
+                },
+            ],
             tiposProductos: [],
+            unidadesMedidas: [],
             errores: {
+                tipo_operacion: {
+                    error: false,
+                    mensaje: "",
+                },
                 tipo_producto_id: {
                     error: false,
                     mensaje: "",
                 },
+                unidad_medida_id: {
+                    error: false,
+                    mensaje: "",
+                },
                 precio_venta: {
+                    error: false,
+                    mensaje: "",
+                },
+                precio_compra: {
                     error: false,
                     mensaje: "",
                 },
@@ -291,13 +390,22 @@ export default {
                     });
                 });
             });
+            await axios.get(route("unidadMedida.getList")).then((value) => {
+                value.data.data.forEach((value, index, array) => {
+                    this.unidadesMedidas.push({
+                        label: value.simbolo,
+                        code: value.id,
+                    });
+                });
+            });
         },
         openModalStore: function () {
             this.limpiarErrores();
             $("#modalCreate").modal("show");
         },
         storeProducto: function () {
-            var $this=this;
+            var $this = this;
+            this.limpiarErrores();
             if (this.validaciones()) {
                 const config = {
                     headers: {
@@ -310,7 +418,16 @@ export default {
                         if (key.includes("id")) {
                             data.append(key, this.modelo[keyModelo][key].code);
                         } else {
-                            data.append(key, this.modelo[keyModelo][key]);
+                            if (
+                                typeof this.modelo[keyModelo][key] === "object" && key!="imagen"
+                            ) {
+                                data.append(
+                                    key,
+                                    this.modelo[keyModelo][key].label
+                                );
+                            } else {
+                                data.append(key, this.modelo[keyModelo][key]);
+                            }
                         }
                     }
                 }
@@ -318,10 +435,11 @@ export default {
                     .post(route("producto.store"), data, config)
                     .then((value) => {
                         if (value.data.success) {
-                            $this.$refs.ProductoList.datos()
+                            $this.$refs.ProductoList.datos();
+                            $this.limpiarDatos();
                             $("#modalCreate").modal("hide");
                         } else {
-                            toast.error("Error", "Ocurrio un Error");
+                            toastr.error("Error", "Ocurrio un Error");
                         }
                     });
             }
@@ -339,11 +457,23 @@ export default {
             var resultado = true;
             var arregloDatos = Object.entries($this.modelo.obligatorio);
             for (let index = 0; index < arregloDatos.length; index++) {
-                if (arregloDatos[index][1] == "") {
-                    $this.errores[arregloDatos[index][0]].error = true;
-                    $this.errores[arregloDatos[index][0]].mensaje =
-                        "Ingrese el campo " + arregloDatos[index][0];
-                    resultado = false;
+                if (arregloDatos[index][0].includes("id")) {
+                    if (arregloDatos[index][1] == null) {
+                        $this.errores[arregloDatos[index][0]].error = true;
+                        $this.errores[arregloDatos[index][0]].mensaje =
+                            "Ingrese el campo " + arregloDatos[index][0];
+                        resultado = false;
+                    }
+                } else {
+                    if (
+                        arregloDatos[index][1] == "" ||
+                        arregloDatos[index][1] == null
+                    ) {
+                        $this.errores[arregloDatos[index][0]].error = true;
+                        $this.errores[arregloDatos[index][0]].mensaje =
+                            "Ingrese el campo " + arregloDatos[index][0];
+                        resultado = false;
+                    }
                 }
             }
             return resultado;
@@ -358,12 +488,7 @@ export default {
                 userFile.attr("src", URL.createObjectURL(e.target.files[0]));
                 var data = userFile.attr("src");
                 $(".logo").attr("src", data);
-
                 let fileName = $(".custom-file #logo").val().split("\\").pop();
-                // $(".custom-file #logo")
-                //     .next(".custom-file-label")
-                //     .addClass("selected")
-                //     .html(fileName);
                 $("#logo_txt").html(fileName);
             } else {
                 toastr.error(
@@ -374,6 +499,21 @@ export default {
                     "src",
                     window.location.origin + "/img/defaultProducto.jpg"
                 );
+            }
+        },
+        limpiarDatos: function () {
+            for (var keyModelo in this.modelo) {
+                for (var key in this.modelo[keyModelo]) {
+                    if (key.includes("id")) {
+                        this.modelo[keyModelo][key]={}
+                    } else {
+                        if (typeof this.modelo[keyModelo][key] === "object") {
+                        this.modelo[keyModelo][key]={}
+                        } else {
+                        this.modelo[keyModelo][key]=""
+                        }
+                    }
+                }
             }
         },
         limpiar: function () {},

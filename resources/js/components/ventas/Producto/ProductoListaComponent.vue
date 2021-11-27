@@ -1,6 +1,6 @@
 <template>
     <div class="row">
-        <div class="col-md-8">
+        <div class="col-md-12">
             <div class="card-min-custom" v-if="!productos.length">
                 <div>
                     <h3 class="text-center text-uppercase">
@@ -10,7 +10,7 @@
                 </div>
             </div>
             <div class="row" v-else>
-                <div class="col-md-4" v-for="item in productos" :key="item.id">
+                <div class="col-md-3" v-for="item in productos" :key="item.id">
                     <div class="ibox">
                         <div class="ibox-content product-box active">
                             <div style="height: 180px">
@@ -67,17 +67,20 @@
                 </div>
             </div>
         </div>
-        <div class="col-md-4">
-            <div class="card card-min-custom shadow">
-                <div v-if="!seleccionado">
-                    <h3 class="text-center text-uppercase">
-                        Seleccione un producto para Editar
-                    </h3>
-                    <lottie-animation path="Json/select.json" :height="256" />
-                </div>
-                <div class="row" style="padding: 10px" v-else>
-                    <div class="col-md-12">
-                        <div class="text-right">
+        <div
+            class="modal fade"
+            id="modalEdit"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="myModalLabel2"
+        >
+            <div class="modal-dialog" role="document" id="modal-dialog-custom">
+                <div class="modal-content" id="modal-content-custom">
+                    <div class="modal-header">
+                        <h4 class="modal-title" id="exampleModalLabel">
+                            Editar Producto
+                        </h4>
+                        <div class="ml-2">
                             <button
                                 class="btn btn-primary"
                                 @click="editarProducto"
@@ -85,137 +88,267 @@
                                 <i class="fa fa-plus"></i>Guardar
                             </button>
                         </div>
-                        <div class="form-group">
-                            <label for="">Tipo Producto</label>
-                            <v-select
-                                v-model="modelo.obligatorio.tipo_producto_id"
-                                :options="tiposProductos"
-                            >
-                                <span slot="no-options"
-                                    >No se encontraron datos</span
-                                >
-                            </v-select>
-                            <span
-                                style="color: #dc3545; font-size: 80%"
-                                v-if="errores.tipo_producto_id.error"
-                            >
-                                <strong>{{
-                                    errores.tipo_producto_id.mensaje
-                                }}</strong>
-                            </span>
-                        </div>
-                        <div class="form-group">
-                            <label for="">Nombre</label>
-                            <input
-                                type="text"
-                                class="form-control form-control-sm"
-                                :class="
-                                    errores.nombre.error ? 'is-invalid' : ''
-                                "
-                                v-model="modelo.obligatorio.nombre"
-                            />
-                            <span
-                                class="invalid-feedback"
-                                role="alert"
-                                v-if="errores.nombre.error"
-                            >
-                                <strong>{{ errores.nombre.mensaje }}</strong>
-                            </span>
-                        </div>
-                        <div class="form-group row">
-                            <div class="col-md-7">
-                                <label for="">Precio Venta</label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-sm"
-                                    :class="
-                                        errores.precio_venta.error
-                                            ? 'is-invalid'
-                                            : ''
-                                    "
-                                    v-model="modelo.obligatorio.precio_venta"
-                                />
-                                <span
-                                    class="invalid-feedback"
-                                    role="alert"
-                                    v-if="errores.precio_venta.error"
-                                >
-                                    <strong>{{
-                                        errores.precio_venta.mensaje
-                                    }}</strong>
-                                </span>
-                            </div>
-                            <div class="col-md-5">
-                                <label for="">stock</label>
-                                <input
-                                    readonly
-                                    type="text"
-                                    class="form-control form-control-sm"
-                                    :class="
-                                        errores.stock.error ? 'is-invalid' : ''
-                                    "
-                                    v-model="modelo.obligatorio.stock"
-                                />
-                                <span
-                                    class="invalid-feedback"
-                                    role="alert"
-                                    v-if="errores.stock.error"
-                                >
-                                    <strong>{{ errores.stock.mensaje }}</strong>
-                                </span>
-                            </div>
-                        </div>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
                         <div class="row">
                             <div class="col-md-12">
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="">Tipo Producto</label>
+                                        <v-select
+                                            v-model="
+                                                modelo.obligatorio
+                                                    .tipo_producto_id
+                                            "
+                                            :options="tiposProductos"
+                                        >
+                                            <span slot="no-options"
+                                                >No se encontraron datos</span
+                                            >
+                                        </v-select>
+                                        <span
+                                            style="
+                                                color: #dc3545;
+                                                font-size: 80%;
+                                            "
+                                            v-if="
+                                                errores.tipo_producto_id.error
+                                            "
+                                        >
+                                            <strong>{{
+                                                errores.tipo_producto_id.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Unidad de Medida</label>
+                                        <v-select
+                                            v-model="
+                                                modelo.obligatorio
+                                                    .unidad_medida_id
+                                            "
+                                            :options="unidadesMedidas"
+                                        >
+                                            <span slot="no-options"
+                                                >No se encontraron datos</span
+                                            >
+                                        </v-select>
+                                        <span
+                                            style="
+                                                color: #dc3545;
+                                                font-size: 80%;
+                                            "
+                                            v-if="
+                                                errores.unidad_medida_id.error
+                                            "
+                                        >
+                                            <strong>{{
+                                                errores.unidad_medida_id.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-6">
+                                        <label for="">Nombre</label>
+                                        <input
+                                            type="text"
+                                            class="form-control form-control-sm"
+                                            :class="
+                                                errores.nombre.error
+                                                    ? 'is-invalid'
+                                                    : ''
+                                            "
+                                            v-model="modelo.obligatorio.nombre"
+                                        />
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                            v-if="errores.nombre.error"
+                                        >
+                                            <strong>{{
+                                                errores.nombre.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-6">
+                                        <label for="">Tipo de Operacion</label>
+                                        <v-select
+                                            v-model="
+                                                modelo.obligatorio
+                                                    .tipo_operacion
+                                            "
+                                            :options="tiposOperaciones"
+                                        >
+                                            <span slot="no-options"
+                                                >No se encontraron datos</span
+                                            >
+                                        </v-select>
+                                        <span
+                                            style="
+                                                color: #dc3545;
+                                                font-size: 80%;
+                                            "
+                                            v-if="errores.tipo_operacion.error"
+                                        >
+                                            <strong>{{
+                                                errores.tipo_operacion.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                </div>
+                                <div class="form-group row">
+                                    <div class="col-md-4">
+                                        <label for="">P.Venta</label>
+                                        <input
+                                            type="number"
+                                            class="form-control form-control-sm"
+                                            :class="
+                                                errores.precio_venta.error
+                                                    ? 'is-invalid'
+                                                    : ''
+                                            "
+                                            v-model="
+                                                modelo.obligatorio.precio_venta
+                                            "
+                                        />
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                            v-if="errores.precio_venta.error"
+                                        >
+                                            <strong>{{
+                                                errores.precio_venta.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">P.Compra</label>
+                                        <input
+                                            type="number"
+                                            class="form-control form-control-sm"
+                                            :class="
+                                                errores.precio_compra.error
+                                                    ? 'is-invalid'
+                                                    : ''
+                                            "
+                                            v-model="
+                                                modelo.obligatorio.precio_compra
+                                            "
+                                        />
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                            v-if="errores.precio_compra.error"
+                                        >
+                                            <strong>{{
+                                                errores.precio_compra.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">stock</label>
+                                        <input
+                                            readonly
+                                            type="text"
+                                            class="form-control form-control-sm"
+                                            :class="
+                                                errores.stock.error
+                                                    ? 'is-invalid'
+                                                    : ''
+                                            "
+                                            v-model="modelo.obligatorio.stock"
+                                        />
+                                        <span
+                                            class="invalid-feedback"
+                                            role="alert"
+                                            v-if="errores.stock.error"
+                                        >
+                                            <strong>{{
+                                                errores.stock.mensaje
+                                            }}</strong>
+                                        </span>
+                                    </div>
+                                </div>
                                 <div class="row">
-                                    <div class="col-lg-12">
-                                        <label>Logo:</label>
-                                        <div class="custom-file">
-                                            <input
-                                                id="logoEditar"
-                                                type="file"
-                                                v-on:change="seleccionarImagen"
-                                                class="custom-file-input"
-                                                accept="image/*"
-                                            />
-                                            <label
-                                                for="logo"
-                                                id="logo_txtEditar"
-                                                class="
-                                                    custom-file-label
-                                                    selected
-                                                "
-                                                >{{ nombreImagen }}</label
-                                            >
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label>Logo:</label>
+                                                <div class="custom-file">
+                                                    <input
+                                                        id="logoEditar"
+                                                        type="file"
+                                                        v-on:change="
+                                                            seleccionarImagen
+                                                        "
+                                                        class="
+                                                            custom-file-input
+                                                        "
+                                                        accept="image/*"
+                                                    />
+                                                    <label
+                                                        for="logo"
+                                                        id="logo_txtEditar"
+                                                        class="
+                                                            custom-file-label
+                                                            selected
+                                                        "
+                                                        >{{
+                                                            nombreImagen
+                                                        }}</label
+                                                    >
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-2">
-                                    <div class="col-lg-2"></div>
-                                    <div class="col-lg-7">
-                                        <div class="row justify-content-end">
-                                            <a
-                                                href="javascript:void(0);"
-                                                id="limpiar_logo"
-                                                v-on:click="limpiar"
-                                            >
-                                                <span class="badge badge-danger"
-                                                    >x</span
+                                        <div class="row mt-2">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-7">
+                                                <div
+                                                    class="
+                                                        row
+                                                        justify-content-end
+                                                    "
                                                 >
-                                            </a>
+                                                    <a
+                                                        href="javascript:void(0);"
+                                                        id="limpiar_logo"
+                                                        v-on:click="limpiar"
+                                                    >
+                                                        <span
+                                                            class="
+                                                                badge
+                                                                badge-danger
+                                                            "
+                                                            >x</span
+                                                        >
+                                                    </a>
+                                                </div>
+                                            </div>
                                         </div>
-                                    </div>
-                                </div>
-                                <div class="row mt-1">
-                                    <div class="col-lg-2"></div>
-                                    <div class="col-lg-7">
-                                        <p>
-                                            <img
-                                                :src="preview"
-                                                class="img-fluid img-thumbnail"
-                                                alt=""
-                                            />
-                                        </p>
+                                        <div class="row mt-1">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-7">
+                                                <p>
+                                                    <img
+                                                        :src="preview"
+                                                        class="
+                                                            img-fluid
+                                                            img-thumbnail
+                                                        "
+                                                        alt=""
+                                                    />
+                                                </p>
+                                            </div>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -229,7 +362,7 @@
 <script>
 import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue";
 export default {
-    props: ["tiposProductos"],
+    props: ["tiposProductos", "unidadesMedidas", "tiposOperaciones"],
     components: {
         LottieAnimation,
     },
@@ -237,10 +370,13 @@ export default {
         return {
             modelo: {
                 obligatorio: {
-                    tipo_producto_id: "",
-                    precio_venta: "",
+                    tipo_producto_id: null,
+                    unidad_medida_id: null,
+                    precio_venta: "0",
+                    precio_compra: "0",
                     stock: "0",
                     nombre: "",
+                    tipo_operacion: null,
                 },
                 otros: {
                     imagen: "",
@@ -250,11 +386,23 @@ export default {
             preview: "",
             nombreImagen: "",
             errores: {
+                tipo_operacion: {
+                    error: false,
+                    mensaje: "",
+                },
                 tipo_producto_id: {
                     error: false,
                     mensaje: "",
                 },
+                unidad_medida_id: {
+                    error: false,
+                    mensaje: "",
+                },
                 precio_venta: {
+                    error: false,
+                    mensaje: "",
+                },
+                precio_compra: {
                     error: false,
                     mensaje: "",
                 },
@@ -271,7 +419,6 @@ export default {
                     mensaje: "",
                 },
             },
-            seleccionado: false,
             rutaOriginal: "",
             productos: [],
         };
@@ -282,13 +429,25 @@ export default {
     },
     mounted() {
         this.preview = window.location.origin + "/img/defaultProducto.jpg";
+        this.modalPersonalizado();
     },
     methods: {
+        modalPersonalizado() {
+            $("#modal-dialog-custom").css({
+                position: "fixed",
+                margin: "auto",
+                width: "400px",
+                height: "100%",
+                right: "0px",
+            });
+            $("#modal-content-custom").css({
+                height: "100%",
+            });
+        },
         datos: async function () {
             var $this = this;
             axios.get(route("producto.getList")).then((value) => {
                 $this.productos = value.data;
-                console.log(value.data);
             });
         },
         editar: function (item) {
@@ -301,9 +460,13 @@ export default {
                 code: item.tipo_producto_id,
                 label: item.tipo_producto.tipo,
             };
-
-            // var container = this.$el.querySelector("#container");
-            // container.scrollTop = container.scrollHeight;
+            this.modelo.obligatorio.unidad_medida_id = {
+                code: item.unidad_medida_id,
+                label: item.unidad_medida.simbolo,
+            };
+            this.modelo.obligatorio.tipo_operacion = {
+                label: item.tipo_operacion,
+            };
             this.nombreImagen = item.nombre_imagen;
             if (item.url_imagen != null) {
                 this.preview =
@@ -314,17 +477,19 @@ export default {
                 this.preview =
                     window.location.origin + "/img/defaultProducto.jpg";
             }
-            this.seleccionado = true;
-            this.$nextTick(function () {
-                window.scroll({
-                    top: 100,
-                    left: 0,
-                    behavior: "smooth",
-                });
-            });
+            // this.seleccionado = true;
+            // this.$nextTick(function () {
+            //     window.scroll({
+            //         top: 100,
+            //         left: 0,
+            //         behavior: "smooth",
+            //     });
+            // });
+            $("#modalEdit").modal("show");
         },
         editarProducto: function () {
             var $this = this;
+            console.log(this.modelo.otros.imagen);
             if (this.validaciones()) {
                 const config = {
                     headers: {
@@ -333,11 +498,21 @@ export default {
                 };
                 var data = new FormData();
                 for (var keyModelo in this.modelo) {
+                    console.log(keyModelo)
                     for (var key in this.modelo[keyModelo]) {
                         if (key.includes("id")) {
                             data.append(key, this.modelo[keyModelo][key].code);
                         } else {
-                            data.append(key, this.modelo[keyModelo][key]);
+                            if (
+                                typeof this.modelo[keyModelo][key] === "object" && key!="imagen"
+                            ) {
+                                data.append(
+                                    key,
+                                    this.modelo[keyModelo][key].label
+                                );
+                            } else {
+                                data.append(key, this.modelo[keyModelo][key]);
+                            }
                         }
                     }
                 }
@@ -346,6 +521,7 @@ export default {
                     .then((value) => {
                         if (value.data.success) {
                             $this.datos();
+                            $("#modalEdit").modal("hide");
                         } else {
                             toast.error("Error", "Ocurrio un Error");
                         }
@@ -366,17 +542,17 @@ export default {
             var arregloDatos = Object.entries($this.modelo.obligatorio);
             for (let index = 0; index < arregloDatos.length; index++) {
                 if (arregloDatos[index][0].includes("id")) {
-                    console.log(arregloDatos[index][0]);
-                    if (
-                        $this.modelo.obligatorio[arregloDatos[index][0]] == null
-                    ) {
+                    if (arregloDatos[index][1] == null) {
                         $this.errores[arregloDatos[index][0]].error = true;
                         $this.errores[arregloDatos[index][0]].mensaje =
                             "Ingrese el campo " + arregloDatos[index][0];
                         resultado = false;
                     }
                 } else {
-                    if (arregloDatos[index][1] == "") {
+                    if (
+                        arregloDatos[index][1] == "" ||
+                        arregloDatos[index][1] == null
+                    ) {
                         $this.errores[arregloDatos[index][0]].error = true;
                         $this.errores[arregloDatos[index][0]].mensaje =
                             "Ingrese el campo " + arregloDatos[index][0];
@@ -414,7 +590,7 @@ export default {
         },
         limpiar: function () {},
         eliminarProducto: function (item) {
-            var $this=this;
+            var $this = this;
             swal({
                 title: "Estas seguro?",
                 text: "Eliminar Registro!",
@@ -426,9 +602,8 @@ export default {
                     axios
                         .post(route("producto.destroy", item.id))
                         .then((value) => {
-                            console.log(value)
                             if (value.data.success) {
-                                $this.datos()
+                                $this.datos();
                             } else {
                                 console.log(value.data.mensaje);
                                 toastr.error("Ocurrio un Error", "Error");
@@ -445,8 +620,4 @@ export default {
     },
 };
 </script>
-<style>
-.card-min-custom {
-    min-height: 300px;
-}
-</style>
+<style></style>

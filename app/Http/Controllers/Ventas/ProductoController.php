@@ -18,24 +18,23 @@ class ProductoController extends Controller
     }
     public function getList()
     {
-        return Producto::where('estado', 'ACTIVO')->with(['tipoProducto'])->get();
+        return Producto::where('estado', 'ACTIVO')->with(['tipoProducto','unidadMedida'])->get();
     }
     public function store(Request $request)
     {
         DB::beginTransaction();
         try {
-            Log::info($request);
             $datos = $request->except(['imagen']);
             if ($request->hasFile('imagen')) {
                 $datos['url_imagen'] = $request->file('imagen')->store('public/Producto');
                 $datos['nombre_imagen'] = $request->file('imagen')->getClientOriginalName();
             }
-            Log::info($datos);
             Producto::create($datos);
             DB::commit();
             return array("success" => true, "mensaje" => "Registro con Exito");
         } catch (Exception $e) {
             DB::rollBack();
+            Log::info($e);
             return array("success" => false, "mensaje" => $e->getMessage());
         }
     }
@@ -43,6 +42,7 @@ class ProductoController extends Controller
     {
         DB::beginTransaction();
         try {
+            Log::info($request);
             $datos = $request->except(['imagen']);
             if ($request->hasFile('imagen')) {
                 $datos['url_imagen'] = $request->file('imagen')->store('public/Producto');
@@ -55,6 +55,7 @@ class ProductoController extends Controller
             return array("success" => true, "mensaje" => "Actualizado con Exito");
         } catch (Exception $e) {
             DB::rollBack();
+            Log::info($e);
             return array("success" => false, "mensaje" => $e->getMessage());
         }
     }

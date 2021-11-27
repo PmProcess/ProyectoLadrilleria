@@ -785,7 +785,7 @@
                                             </div>
                                         </div>
                                     </fieldset>
-                                    <fieldset>
+                                    <fieldset class="mt-4">
                                         <label
                                             for=""
                                             class="

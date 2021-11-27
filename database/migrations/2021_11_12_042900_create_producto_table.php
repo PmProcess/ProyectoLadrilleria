@@ -17,11 +17,15 @@ class CreateProductoTable extends Migration
             $table->id();
             $table->unsignedBigInteger('tipo_producto_id');
             $table->foreign('tipo_producto_id')->references('id')->on('tipo_producto')->onDelete('cascade');
-            $table->decimal('precio_venta');
+            $table->decimal('precio_venta')->default(0);
+            $table->decimal('precio_compra')->default(0);
             $table->decimal('stock')->default(0);
+            $table->unsignedBigInteger('unidad_medida_id');
+            $table->foreign('unidad_medida_id')->references('id')->on('unidad_medida')->onDelete('cascade');
             $table->string('nombre');
             $table->string('nombre_imagen')->nullable();
             $table->string('url_imagen')->nullable();
+            $table->enum('tipo_operacion',['VENTA','COMPRA','VENTA Y COMPRA'])->default('VENTA');
             $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });
