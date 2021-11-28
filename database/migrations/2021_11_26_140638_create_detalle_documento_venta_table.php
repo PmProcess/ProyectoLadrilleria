@@ -19,7 +19,9 @@ class CreateDetalleDocumentoVentaTable extends Migration
             $table->foreign('documento_venta_id')->references('id')->on('documento_venta')->onDelete('cascade');
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('producto')->onDelete('cascade');
-
+            $table->decimal('cantidad');
+            $table->decimal('precio');
+            $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });
     }

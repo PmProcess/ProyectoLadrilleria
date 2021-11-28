@@ -14,6 +14,8 @@ use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
 use App\Http\Controllers\Ventas\ProductoController;
 use App\Http\Controllers\Ventas\TipoProductoController;
+use App\Models\Configuracion\Numeracion;
+use App\Models\Configuracion\TipoDocumento;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -140,4 +142,7 @@ Route::prefix('numeracion')->middleware('auth')->group(function(){
     Route::post('/seleccionar/{id}',[NumeracionController::class,'seleccionar'])->name('numeracion.seleccionar');
     Route::post('/deseleccionar/{id}',[NumeracionController::class,'deseleccionar'])->name('numeracion.deseleccionar');
     Route::get('/getList',[NumeracionController::class,'getList'])->name('numeracion.getList');
+});
+Route::prefix('documentoVenta')->middleware('auth')->group(function(){
+    // Route::get('index',)
 });

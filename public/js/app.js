@@ -3581,6 +3581,7 @@ __webpack_require__.r(__webpack_exports__);
     });
     $(document).on("click", ".btn-show", function (e) {
       var dato = $this.table.row($(this).closest("tr")).data();
+      console.log(dato.tipo);
       $this.src = route("tipoDocumento.vistaPrevia", dato.tipo);
       $this.preview = true;
     });

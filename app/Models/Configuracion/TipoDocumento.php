@@ -16,4 +16,8 @@ class TipoDocumento extends Model
     {
         return $this->hasMany(Numeracion::class,'tipo_documento_id');
     }
+    public function numeracionSeleccionada()
+    {
+        return $this->hasOne(Numeracion::class,'tipo_documento_id')->where('seleccionado','SI');
+    }
 }
