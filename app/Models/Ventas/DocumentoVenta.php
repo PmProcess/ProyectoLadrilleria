@@ -30,10 +30,6 @@ class DocumentoVenta extends Model
     {
         return $this->belongsTo(Cliente::class,'cliente_id');
     }
-    // public function productos()
-    // {
-    //     return $this->belongsToMany(Producto::class,DetalleDocumentoVenta::class,)
-    // }
     public function empleado()
     {
         return $this->belongsTo(Empleado::class,'empleado_id');

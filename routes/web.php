@@ -12,6 +12,7 @@ use App\Http\Controllers\Mantenimiento\AlmacenController;
 use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
 use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
+use App\Http\Controllers\Ventas\DocumentoVentaController;
 use App\Http\Controllers\Ventas\ProductoController;
 use App\Http\Controllers\Ventas\TipoProductoController;
 use App\Models\Configuracion\Numeracion;
@@ -144,5 +145,11 @@ Route::prefix('numeracion')->middleware('auth')->group(function(){
     Route::get('/getList',[NumeracionController::class,'getList'])->name('numeracion.getList');
 });
 Route::prefix('documentoVenta')->middleware('auth')->group(function(){
-    // Route::get('index',)
+    Route::get('index',[DocumentoVentaController::class,'index'])->name('documentoVenta.index');
+    Route::get('getList',[DocumentoVentaController::class,'getList'])->name('documentoVenta.getList');
+    Route::get('create',[DocumentoVentaController::class,'create'])->name('documentoVenta.create');
+    Route::post('store',[DocumentoVentaController::class,'store'])->name('documentoVenta.store');
+    Route::get('edit/{id}',[DocumentoVentaController::class,'edit'])->name('documentoVenta.edit');
+    Route::post('update/{id}',[DocumentoVentaController::class,'update'])->name('documentoVenta.update');
+    Route::get('destroy/{id}',[DocumentoVentaController::class,'destroy'])->name('documentoVenta.destroy');
 });

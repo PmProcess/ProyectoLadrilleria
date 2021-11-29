@@ -21,6 +21,11 @@ class Persona extends Model
         'estado'
     ];
     public $timestamps = true;
+    public function tipoPersona()
+    {
+        $tipoClase=$this->tipo_documento=="DNI" ? PersonaDni::class : PersonaRuc::class;
+        return $this->hasOne($tipoClase, 'persona_id');
+    }
     public function personaDni()
     {
         return $this->hasOne(PersonaDni::class, 'persona_id');
