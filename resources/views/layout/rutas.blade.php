@@ -43,8 +43,6 @@
         <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span
                 class="fa arrow"></span></a>
         <ul class="nav nav-second-level collapse">
-            <li class="@yield('insumo-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Insumos</a>
-            </li>
             <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i>Doc
                     Compra</a></li>
         </ul>
