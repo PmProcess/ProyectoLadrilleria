@@ -26,7 +26,10 @@ class DocumentoVentaController extends Controller
     }
     public function getList()
     {
-        $documentos = DocumentoVenta::where('estado', 'ACTIVO')->with(['cliente', 'empleado', 'tipoPago', 'correlativo', 'tipoDocumento'])->get();
+        $documentos = DocumentoVenta::where('estado', 'ACTIVO')->with(['cliente', 'empleado', 'tipoPago', 'correlativo', 'tipoDocumento'])->get()->map(function ($documento) {
+            $documento->cliente->persona->tipoPersona;
+            return $documento;
+        });
         return DataTables::of($documentos)->toJson();
     }
     public function create()
