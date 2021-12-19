@@ -18,7 +18,6 @@ class CreateProductoTable extends Migration
             $table->unsignedBigInteger('tipo_producto_id');
             $table->foreign('tipo_producto_id')->references('id')->on('tipo_producto')->onDelete('cascade');
             $table->decimal('precio_venta')->default(0);
-            $table->decimal('precio_compra')->default(0);
             $table->decimal('stock')->default(0);
             $table->unsignedBigInteger('unidad_medida_id');
             $table->foreign('unidad_medida_id')->references('id')->on('unidad_medida')->onDelete('cascade');

@@ -1,5 +1,5 @@
 @extends('layout.index')
-@section('configuracion-active','active')
+@section('ventas-active','active')
 @section('tipoDocumento-active','active')
 @section('contenido')
     <div id="app">

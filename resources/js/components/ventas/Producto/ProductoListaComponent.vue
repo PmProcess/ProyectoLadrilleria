@@ -231,30 +231,6 @@
                                         </span>
                                     </div>
                                     <div class="col-md-4">
-                                        <label for="">P.Compra</label>
-                                        <input
-                                            type="number"
-                                            class="form-control form-control-sm"
-                                            :class="
-                                                errores.precio_compra.error
-                                                    ? 'is-invalid'
-                                                    : ''
-                                            "
-                                            v-model="
-                                                modelo.obligatorio.precio_compra
-                                            "
-                                        />
-                                        <span
-                                            class="invalid-feedback"
-                                            role="alert"
-                                            v-if="errores.precio_compra.error"
-                                        >
-                                            <strong>{{
-                                                errores.precio_compra.mensaje
-                                            }}</strong>
-                                        </span>
-                                    </div>
-                                    <div class="col-md-4">
                                         <label for="">stock</label>
                                         <input
                                             readonly
@@ -373,7 +349,6 @@ export default {
                     tipo_producto_id: null,
                     unidad_medida_id: null,
                     precio_venta: "0",
-                    precio_compra: "0",
                     stock: "0",
                     nombre: "",
                     tipo_operacion: null,
@@ -399,10 +374,6 @@ export default {
                     mensaje: "",
                 },
                 precio_venta: {
-                    error: false,
-                    mensaje: "",
-                },
-                precio_compra: {
                     error: false,
                     mensaje: "",
                 },

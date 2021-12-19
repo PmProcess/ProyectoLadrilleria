@@ -20,7 +20,7 @@
         </div>
     </li>
     <li class="@yield('map-active')">
-        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Dashboard</a>
+        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Reportes</a>
     </li>
     @if (auth()->user()->can('haveaccess', 'tipoEmpleado.index') ||
     auth()->user()->can('haveaccess', 'empleado.index') ||
@@ -52,14 +52,15 @@
 
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'docCompra.index')||auth()->user()->can('haveaccess', 'proveedor.index'))
+    @if (auth()->user()->can('haveaccess', 'docCompra.index') ||
+    auth()->user()->can('haveaccess', 'proveedor.index'))
         <li class="@yield('compra-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 @if (auth()->user()->can('haveaccess', 'docCompra.index'))
-                <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i>Doc
-                        Compra</a></li>
+                    <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus"
+                                aria-hidden="true"></i>Orden de Compra</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'proveedor.index'))
                     <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i
@@ -68,28 +69,28 @@
             </ul>
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'tipoProducto.index') ||
-    auth()->user()->can('haveaccess', 'producto.index') ||
+    @if (auth()->user()->can('haveaccess', 'producto.index') ||
     auth()->user()->can('haveaccess', 'docVenta.index') ||
     auth()->user()->can('haveaccess', 'tipoDocumento.index') ||
-    auth()->user()->can('haveaccess', 'numeracion.index')||auth()->user()->can('haveaccess', 'cliente.index'))
+    auth()->user()->can('haveaccess', 'numeracion.index') ||
+    auth()->user()->can('haveaccess', 'cliente.index') ||
+    auth()->user()->can('haveaccess', 'unidadMedida.index'))
         <li class="@yield('ventas-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                @if (auth()->user()->can('haveaccess', 'tipoProducto.index'))
+                {{-- @if (auth()->user()->can('haveaccess', 'tipoProducto.index'))
                     <li class="@yield('tipoProducto-active')"><a href="{{ route('tipoProducto.index') }}"><i
                                 class="fa fa-book" aria-hidden="true"></i>Tipos
                             de Productos</a></li>
-                @endif
+                @endif --}}
                 @if (auth()->user()->can('haveaccess', 'producto.index'))
                     <li class="@yield('producto-active')"><a href="{{ route('producto.index') }}"><i
                                 class="fa fa-cart-plus" aria-hidden="true"></i>Productos</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'docVenta.index'))
                     <li class="@yield('docVenta-active')"><a href="{{ route('documentoVenta.index') }}"><i
-                                class="fa fa-book" aria-hidden="true"></i>Doc
-                            Ventas</a></li>
+                                class="fa fa-book" aria-hidden="true"></i>Registrar Venta</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'tipoDocumento.index'))
                     <li class="@yield('tipoDocumento-active')"><a href="{{ route('tipoDocumento.index') }}"><i
@@ -100,14 +101,17 @@
                                 class="fa fa-building" aria-hidden="true"></i>Numeracion</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'cliente.index'))
-                <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
-                            class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
-            @endif
+                    <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
+                                class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'unidadMedida.index'))
+                    <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
+                                class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
+                @endif
             </ul>
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'empresa.index') ||
-    auth()->user()->can('haveaccess', 'unidadMedida.index'))
+    @if (auth()->user()->can('haveaccess', 'empresa.index'))
         <li class="@yield('mantenimiento-active')">
             <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Mantenimiento</span><span
                     class="fa arrow"></span></a>
@@ -117,10 +121,7 @@
                                 class="fa fa-building" aria-hidden="true"></i>Datos de
                             la Empresa</a></li>
                 @endif
-                @if (auth()->user()->can('haveaccess', 'unidadMedida.index'))
-                    <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
-                @endif
+
             </ul>
         </li>
     @endif

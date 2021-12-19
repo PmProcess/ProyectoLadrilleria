@@ -180,28 +180,6 @@
                                 </span>
                             </div>
                             <div class="col-md-4">
-                                <label for="">Precio Compra</label>
-                                <input
-                                    type="number"
-                                    class="form-control form-control-sm"
-                                    :class="
-                                        errores.precio_compra.error
-                                            ? 'is-invalid'
-                                            : ''
-                                    "
-                                    v-model="modelo.obligatorio.precio_compra"
-                                />
-                                <span
-                                    class="invalid-feedback"
-                                    role="alert"
-                                    v-if="errores.precio_compra.error"
-                                >
-                                    <strong>{{
-                                        errores.precio_compra.mensaje
-                                    }}</strong>
-                                </span>
-                            </div>
-                            <div class="col-md-4">
                                 <label for="">stock</label>
                                 <input
                                     readonly
@@ -311,13 +289,17 @@ export default {
         return {
             modelo: {
                 obligatorio: {
-                    tipo_producto_id: null,
+                    tipo_producto_id: {
+                        label: "ladrillo",
+                        code: 1,
+                    },
                     unidad_medida_id: null,
                     precio_venta: "0",
-                    precio_compra: "0",
                     stock: "0",
                     nombre: "",
-                    tipo_operacion: null,
+                    tipo_operacion: {
+                        label: "VENTA",
+                    },
                 },
                 otros: {
                     imagen: "",
@@ -326,12 +308,6 @@ export default {
             tiposOperaciones: [
                 {
                     label: "VENTA",
-                },
-                {
-                    label: "COMPRA",
-                },
-                {
-                    label: "VENTA Y COMPRA",
                 },
             ],
             tiposProductos: [],
@@ -350,10 +326,6 @@ export default {
                     mensaje: "",
                 },
                 precio_venta: {
-                    error: false,
-                    mensaje: "",
-                },
-                precio_compra: {
                     error: false,
                     mensaje: "",
                 },
@@ -419,7 +391,9 @@ export default {
                             data.append(key, this.modelo[keyModelo][key].code);
                         } else {
                             if (
-                                typeof this.modelo[keyModelo][key] === "object" && key!="imagen"
+                                typeof this.modelo[keyModelo][key] ===
+                                    "object" &&
+                                key != "imagen"
                             ) {
                                 data.append(
                                     key,
@@ -505,16 +479,28 @@ export default {
             for (var keyModelo in this.modelo) {
                 for (var key in this.modelo[keyModelo]) {
                     if (key.includes("id")) {
-                        this.modelo[keyModelo][key]={}
+                        this.modelo[keyModelo][key] = {};
                     } else {
                         if (typeof this.modelo[keyModelo][key] === "object") {
-                        this.modelo[keyModelo][key]={}
+                            this.modelo[keyModelo][key] = {};
                         } else {
-                        this.modelo[keyModelo][key]=""
+                            this.modelo[keyModelo][key] = "";
                         }
                     }
                 }
             }
+            this.modelo.obligatorio.stock = "0";
+            $(".logo").attr(
+                "src",
+                window.location.origin + "/img/defaultProducto.jpg"
+            );
+            this.modelo.obligatorio.tipo_producto_id = {
+                label: "ladrillo",
+                code: 1,
+            };
+            this.modelo.obligatorio.tipo_operacion = {
+                label: "VENTA",
+            };
         },
         limpiar: function () {},
     },

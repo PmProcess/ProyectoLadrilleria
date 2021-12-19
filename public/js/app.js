@@ -8725,28 +8725,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   components: {
@@ -8756,13 +8734,17 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
     return {
       modelo: {
         obligatorio: {
-          tipo_producto_id: null,
+          tipo_producto_id: {
+            label: "ladrillo",
+            code: 1
+          },
           unidad_medida_id: null,
           precio_venta: "0",
-          precio_compra: "0",
           stock: "0",
           nombre: "",
-          tipo_operacion: null
+          tipo_operacion: {
+            label: "VENTA"
+          }
         },
         otros: {
           imagen: ""
@@ -8770,10 +8752,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
       },
       tiposOperaciones: [{
         label: "VENTA"
-      }, {
-        label: "COMPRA"
-      }, {
-        label: "VENTA Y COMPRA"
       }],
       tiposProductos: [],
       unidadesMedidas: [],
@@ -8791,10 +8769,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           mensaje: ""
         },
         precio_venta: {
-          error: false,
-          mensaje: ""
-        },
-        precio_compra: {
           error: false,
           mensaje: ""
         },
@@ -8966,6 +8940,16 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           }
         }
       }
+
+      this.modelo.obligatorio.stock = "0";
+      $(".logo").attr("src", window.location.origin + "/img/defaultProducto.jpg");
+      this.modelo.obligatorio.tipo_producto_id = {
+        label: "ladrillo",
+        code: 1
+      };
+      this.modelo.obligatorio.tipo_operacion = {
+        label: "VENTA"
+      };
     },
     limpiar: function limpiar() {}
   }
@@ -9332,30 +9316,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
   props: ["tiposProductos", "unidadesMedidas", "tiposOperaciones"],
@@ -9369,7 +9329,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           tipo_producto_id: null,
           unidad_medida_id: null,
           precio_venta: "0",
-          precio_compra: "0",
           stock: "0",
           nombre: "",
           tipo_operacion: null
@@ -9395,10 +9354,6 @@ function _asyncToGenerator(fn) { return function () { var self = this, args = ar
           mensaje: ""
         },
         precio_venta: {
-          error: false,
-          mensaje: ""
-        },
-        precio_compra: {
           error: false,
           mensaje: ""
         },
@@ -93861,54 +93816,6 @@ var render = function () {
                 ]),
                 _vm._v(" "),
                 _c("div", { staticClass: "col-md-4" }, [
-                  _c("label", { attrs: { for: "" } }, [
-                    _vm._v("Precio Compra"),
-                  ]),
-                  _vm._v(" "),
-                  _c("input", {
-                    directives: [
-                      {
-                        name: "model",
-                        rawName: "v-model",
-                        value: _vm.modelo.obligatorio.precio_compra,
-                        expression: "modelo.obligatorio.precio_compra",
-                      },
-                    ],
-                    staticClass: "form-control form-control-sm",
-                    class: _vm.errores.precio_compra.error ? "is-invalid" : "",
-                    attrs: { type: "number" },
-                    domProps: { value: _vm.modelo.obligatorio.precio_compra },
-                    on: {
-                      input: function ($event) {
-                        if ($event.target.composing) {
-                          return
-                        }
-                        _vm.$set(
-                          _vm.modelo.obligatorio,
-                          "precio_compra",
-                          $event.target.value
-                        )
-                      },
-                    },
-                  }),
-                  _vm._v(" "),
-                  _vm.errores.precio_compra.error
-                    ? _c(
-                        "span",
-                        {
-                          staticClass: "invalid-feedback",
-                          attrs: { role: "alert" },
-                        },
-                        [
-                          _c("strong", [
-                            _vm._v(_vm._s(_vm.errores.precio_compra.mensaje)),
-                          ]),
-                        ]
-                      )
-                    : _vm._e(),
-                ]),
-                _vm._v(" "),
-                _c("div", { staticClass: "col-md-4" }, [
                   _c("label", { attrs: { for: "" } }, [_vm._v("stock")]),
                   _vm._v(" "),
                   _c("input", {
@@ -94610,61 +94517,6 @@ var render = function () {
                                   _c("strong", [
                                     _vm._v(
                                       _vm._s(_vm.errores.precio_venta.mensaje)
-                                    ),
-                                  ]),
-                                ]
-                              )
-                            : _vm._e(),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-4" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("P.Compra"),
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.modelo.obligatorio.precio_compra,
-                                expression:
-                                  "\n                                            modelo.obligatorio.precio_compra\n                                        ",
-                              },
-                            ],
-                            staticClass: "form-control form-control-sm",
-                            class: _vm.errores.precio_compra.error
-                              ? "is-invalid"
-                              : "",
-                            attrs: { type: "number" },
-                            domProps: {
-                              value: _vm.modelo.obligatorio.precio_compra,
-                            },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.modelo.obligatorio,
-                                  "precio_compra",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _vm.errores.precio_compra.error
-                            ? _c(
-                                "span",
-                                {
-                                  staticClass: "invalid-feedback",
-                                  attrs: { role: "alert" },
-                                },
-                                [
-                                  _c("strong", [
-                                    _vm._v(
-                                      _vm._s(_vm.errores.precio_compra.mensaje)
                                     ),
                                   ]),
                                 ]

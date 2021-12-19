@@ -78,12 +78,12 @@ class RolesSeeder extends Seeder
         $permission_all[] = $permission->id;
 
 
-        $permission = Permission::create([
-            'name' => 'modulo de Tipos de Productos',
-            'slug' => 'tipoProducto.index',
-            'description' => 'Un usuario puede ver el modulo de Tipos Productos'
-        ]);
-        $permission_all[] = $permission->id;
+        // $permission = Permission::create([
+        //     'name' => 'modulo de Tipos de Productos',
+        //     'slug' => 'tipoProducto.index',
+        //     'description' => 'Un usuario puede ver el modulo de Tipos Productos'
+        // ]);
+        // $permission_all[] = $permission->id;
         $permission = Permission::create([
             'name' => 'modulo de Productos',
             'slug' => 'producto.index',
