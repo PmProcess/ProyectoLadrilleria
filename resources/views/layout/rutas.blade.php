@@ -19,9 +19,7 @@
             <img src="{{ asset('img/header.jpg') }}" height="45" width="45">
         </div>
     </li>
-    <li class="@yield('map-active')">
-        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Reportes</a>
-    </li>
+
     @if (auth()->user()->can('haveaccess', 'tipoEmpleado.index') ||
     auth()->user()->can('haveaccess', 'empleado.index') ||
     auth()->user()->can('haveaccess', 'roles.index') ||
@@ -135,4 +133,7 @@
             </ul>
         </li>
     @endif
+    <li class="@yield('map-active')">
+        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Reportes</a>
+    </li>
 </ul>
