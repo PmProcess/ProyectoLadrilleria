@@ -4,7 +4,7 @@
 @section('contenido')
     <div id="app">
         <documentoventacreate-component :old="{{ json_encode(Session::getOldInput()) }}"
-            :cliente_v="{{ json_encode(getClientes()) }}" :tipopago_v="{{json_encode(getTipoPagos())}}"
+            :cliente_v="{{ json_encode(getClientes()) }}" :formapago_v="{{json_encode(getFormaPagos())}}"
             :tipodocumento_v="{{json_encode(getTipoDocumentos())}}"
             :producto_v="{{json_encode(getProductos('VENTA'))}}"
             :csrf="{{ json_encode(csrf_token()) }}"

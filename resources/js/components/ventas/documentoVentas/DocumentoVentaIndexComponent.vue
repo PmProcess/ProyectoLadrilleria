@@ -93,7 +93,10 @@ export default {
                 })
                 .then((result) => {
                     if (result.isConfirmed) {
-                        window.location.href=route('documentoVenta.destroy',$this.table.row($(this).closest('tr')).data().id)
+                        window.location.href = route(
+                            "documentoVenta.destroy",
+                            $this.table.row($(this).closest("tr")).data().id
+                        );
                     }
                 });
         });
@@ -143,21 +146,18 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            if (data.tipo_pago.id == 1) {
-                                return data.tipo_pago.tipo;
-                            }
-                            return (
-                                data.tipo_pago.tipo +
-                                " - " +
-                                data.tipo_pago.dias
-                            );
+                            return data.forma_pago.tipo;
                         },
                     },
                     {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            return data.correlativo.numeracion.serie+"-"+data.correlativo.correlativo;
+                            return (
+                                data.correlativo.numeracion.serie +
+                                "-" +
+                                data.correlativo.correlativo
+                            );
                         },
                     },
                     {

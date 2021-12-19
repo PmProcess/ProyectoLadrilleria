@@ -126,21 +126,21 @@
                                 <div class="col-md-6">
                                     <div class="form-group row">
                                         <div class="col-md-6">
-                                            <label for="">Tipo de Pago</label>
+                                            <label for="">Forma de Pago</label>
                                             <v-select
-                                                :options="tipopago_v"
-                                                v-model="select.tipo_pago_id"
+                                                :options="formapago_v"
+                                                v-model="select.forma_pago_id"
                                                 v-on:input="
-                                                    obligatorio.tipo_pago_id =
-                                                        select.tipo_pago_id.id
+                                                    obligatorio.forma_pago_id =
+                                                        select.forma_pago_id.id
                                                 "
-                                                label="tipo_completo"
+                                                label="tipo"
                                             ></v-select>
                                             <input
                                                 type="hidden"
-                                                name="tipo_pago_id"
+                                                name="forma_pago_id"
                                                 v-model="
-                                                    obligatorio.tipo_pago_id
+                                                    obligatorio.forma_pago_id
                                                 "
                                             />
                                             <span
@@ -150,12 +150,12 @@
                                                 "
                                                 v-if="
                                                     errores_externos
-                                                        .tipo_pago_id.error
+                                                        .forma_pago_id.error
                                                 "
                                             >
                                                 <strong>{{
                                                     errores_externos
-                                                        .tipo_pago_id.mensaje
+                                                        .forma_pago_id.mensaje
                                                 }}</strong>
                                             </span>
                                         </div>
@@ -432,7 +432,7 @@ export default {
     props: [
         "old",
         "cliente_v",
-        "tipopago_v",
+        "formapago_v",
         "tipodocumento_v",
         "producto_v",
         "tipomoneda_v",
@@ -444,7 +444,7 @@ export default {
         return {
             select: {
                 cliente_id: null,
-                tipo_pago_id: null,
+                forma_pago_id: null,
                 tipo_moneda_id: null,
                 tipo_documento_id: null,
             },
@@ -452,7 +452,7 @@ export default {
                 fecha_registro: "",
                 fecha_vencimiento: "",
                 cliente_id: "",
-                tipo_pago_id: "",
+                forma_pago_id: "",
                 tipo_moneda_id: "",
                 tipo_documento_id: "",
             },
@@ -474,7 +474,7 @@ export default {
                     error: false,
                     mensaje: "",
                 },
-                tipo_pago_id: {
+                forma_pago_id: {
                     error: false,
                     mensaje: "",
                 },

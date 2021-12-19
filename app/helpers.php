@@ -5,6 +5,7 @@ use App\Models\Configuracion\NumeracionConteo;
 use App\Models\Configuracion\TipoDocumento;
 use App\Models\Configuracion\TipoMoneda;
 use App\Models\Configuracion\TipoPago;
+use App\Models\FormaPago;
 use App\Models\Ubigeo\Departamento;
 use App\Models\Ubigeo\Distrito;
 use App\Models\Ubigeo\Provincia;
@@ -49,6 +50,12 @@ if (!function_exists('getTipoPagos')) {
             $tipopago->tipo_completo = $tipopago->tipo . " - " . $tipopago->dias;
             return $tipopago;
         });
+    }
+}
+if (!function_exists('getFormaPagos')) {
+    function getFormaPagos()
+    {
+        return FormaPago::get();
     }
 }
 if (!function_exists('getTipoDocumentos')) {

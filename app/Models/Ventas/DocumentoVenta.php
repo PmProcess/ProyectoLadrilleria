@@ -7,6 +7,7 @@ use App\Models\Administracion\Empleado;
 use App\Models\Configuracion\NumeracionConteo;
 use App\Models\Configuracion\TipoDocumento;
 use App\Models\Configuracion\TipoPago;
+use App\Models\FormaPago;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -17,7 +18,7 @@ class DocumentoVenta extends Model
     protected $fillable=[
         'cliente_id',
         'user_id',
-        'tipo_pago_id',
+        'forma_pago_id',
         'correlativo_id',
         'tipo_documento_id',
         'fecha_registro',
@@ -39,8 +40,8 @@ class DocumentoVenta extends Model
     {
         return $this->belongsTo(Empleado::class,'empleado_id');
     }
-    public function tipoPago(){
-        return $this->belongsTo(TipoPago::class,'tipo_pago_id');
+    public function formaPago(){
+        return $this->belongsTo(FormaPago::class,'forma_pago_id');
     }
     public function correlativo(){
         return $this->belongsTo(NumeracionConteo::class,"correlativo_id");

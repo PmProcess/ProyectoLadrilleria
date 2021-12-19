@@ -10021,12 +10021,12 @@ __webpack_require__.r(__webpack_exports__);
 
 
 /* harmony default export */ const __WEBPACK_DEFAULT_EXPORT__ = ({
-  props: ["old", "cliente_v", "tipopago_v", "tipodocumento_v", "producto_v", "tipomoneda_v", "csrf", "errores_laravel", "error"],
+  props: ["old", "cliente_v", "formapago_v", "tipodocumento_v", "producto_v", "tipomoneda_v", "csrf", "errores_laravel", "error"],
   data: function data() {
     return {
       select: {
         cliente_id: null,
-        tipo_pago_id: null,
+        forma_pago_id: null,
         tipo_moneda_id: null,
         tipo_documento_id: null
       },
@@ -10034,7 +10034,7 @@ __webpack_require__.r(__webpack_exports__);
         fecha_registro: "",
         fecha_vencimiento: "",
         cliente_id: "",
-        tipo_pago_id: "",
+        forma_pago_id: "",
         tipo_moneda_id: "",
         tipo_documento_id: ""
       },
@@ -10056,7 +10056,7 @@ __webpack_require__.r(__webpack_exports__);
           error: false,
           mensaje: ""
         },
-        tipo_pago_id: {
+        forma_pago_id: {
           error: false,
           mensaje: ""
         },
@@ -10337,7 +10337,7 @@ __webpack_require__.r(__webpack_exports__);
         cancelButtonText: "Cancelar"
       }).then(function (result) {
         if (result.isConfirmed) {
-          window.location.href = route('documentoVenta.destroy', $this.table.row($(_this).closest('tr')).data().id);
+          window.location.href = route("documentoVenta.destroy", $this.table.row($(_this).closest("tr")).data().id);
         }
       });
     });
@@ -10378,11 +10378,7 @@ __webpack_require__.r(__webpack_exports__);
           data: null,
           className: "text-center",
           render: function render(data) {
-            if (data.tipo_pago.id == 1) {
-              return data.tipo_pago.tipo;
-            }
-
-            return data.tipo_pago.tipo + " - " + data.tipo_pago.dias;
+            return data.forma_pago.tipo;
           }
         }, {
           data: null,
@@ -94941,26 +94937,23 @@ var render = function () {
                       { staticClass: "col-md-6" },
                       [
                         _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Tipo de Pago"),
+                          _vm._v("Forma de Pago"),
                         ]),
                         _vm._v(" "),
                         _c("v-select", {
-                          attrs: {
-                            options: _vm.tipopago_v,
-                            label: "tipo_completo",
-                          },
+                          attrs: { options: _vm.formapago_v, label: "tipo" },
                           on: {
                             input: function ($event) {
-                              _vm.obligatorio.tipo_pago_id =
-                                _vm.select.tipo_pago_id.id
+                              _vm.obligatorio.forma_pago_id =
+                                _vm.select.forma_pago_id.id
                             },
                           },
                           model: {
-                            value: _vm.select.tipo_pago_id,
+                            value: _vm.select.forma_pago_id,
                             callback: function ($$v) {
-                              _vm.$set(_vm.select, "tipo_pago_id", $$v)
+                              _vm.$set(_vm.select, "forma_pago_id", $$v)
                             },
-                            expression: "select.tipo_pago_id",
+                            expression: "select.forma_pago_id",
                           },
                         }),
                         _vm._v(" "),
@@ -94969,13 +94962,13 @@ var render = function () {
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.obligatorio.tipo_pago_id,
+                              value: _vm.obligatorio.forma_pago_id,
                               expression:
-                                "\n                                                obligatorio.tipo_pago_id\n                                            ",
+                                "\n                                                obligatorio.forma_pago_id\n                                            ",
                             },
                           ],
-                          attrs: { type: "hidden", name: "tipo_pago_id" },
-                          domProps: { value: _vm.obligatorio.tipo_pago_id },
+                          attrs: { type: "hidden", name: "forma_pago_id" },
+                          domProps: { value: _vm.obligatorio.forma_pago_id },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
@@ -94983,14 +94976,14 @@ var render = function () {
                               }
                               _vm.$set(
                                 _vm.obligatorio,
-                                "tipo_pago_id",
+                                "forma_pago_id",
                                 $event.target.value
                               )
                             },
                           },
                         }),
                         _vm._v(" "),
-                        _vm.errores_externos.tipo_pago_id.error
+                        _vm.errores_externos.forma_pago_id.error
                           ? _c(
                               "span",
                               {
@@ -95003,7 +94996,7 @@ var render = function () {
                                 _c("strong", [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.errores_externos.tipo_pago_id.mensaje
+                                      _vm.errores_externos.forma_pago_id.mensaje
                                     )
                                   ),
                                 ]),

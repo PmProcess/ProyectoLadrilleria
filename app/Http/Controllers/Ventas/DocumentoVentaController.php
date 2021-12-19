@@ -26,7 +26,7 @@ class DocumentoVentaController extends Controller
     }
     public function getList()
     {
-        $documentos = DocumentoVenta::where('estado', 'ACTIVO')->with(['cliente', 'empleado', 'tipoPago', 'correlativo', 'tipoDocumento'])->get()->map(function ($documento) {
+        $documentos = DocumentoVenta::where('estado', 'ACTIVO')->with(['cliente', 'empleado', 'formaPago', 'correlativo', 'tipoDocumento'])->get()->map(function ($documento) {
             $documento->cliente->persona->tipoPersona;
             $documento->correlativo->numeracion;
             return $documento;
@@ -44,7 +44,7 @@ class DocumentoVentaController extends Controller
         try {
             $rules = [
                 'cliente_id' => 'required',
-                'tipo_pago_id' => 'required',
+                'forma_pago_id' => 'required',
                 'tipo_documento_id' => 'required',
                 'fecha_registro' => 'required',
                 'fecha_vencimiento' => 'required',
@@ -52,13 +52,23 @@ class DocumentoVentaController extends Controller
             ];
             $mensaje = [
                 'cliente_id.required' => "El campo cliente es obligatorio",
-                'tipo_pago_id.required' => "El campo tipo pago es obligatorio",
+                'forma_pago_id.required' => "El campo tipo pago es obligatorio",
                 'tipo_documento_id.required' => "El campo tipo documento es obligatorio",
                 'fecha_registro.required' => "El campo fecha registro es obligatorio",
                 'fecha_vencimiento.required' => "El campo fecha vencimiento es obligatorio",
                 'tipo_moneda_id.required' => "El campo moneda es obligatorio",
             ];
             $validator=Validator::make($request->all(), $rules, $mensaje);
+            if(Cliente::findOrFail($request->cliente_id)->persona->tipo_documento=="DNI" && TipoDocumento::findOrFail($request->tipo_documento_id)->id=="2")
+            {
+                Session::flash("error", "El tipo de documento, no se puede asociar con ese tipo de cliente");
+                return redirect()->back()->withInput();
+            }
+            if(Cliente::findOrFail($request->cliente_id)->persona->tipo_documento=="RUC" && TipoDocumento::findOrFail($request->tipo_documento_id)->id=="1")
+            {
+                Session::flash("error", "El tipo de documento, no se puede asociar con ese tipo de cliente");
+                return redirect()->back()->withInput();
+            }
             if($validator->fails())
             {
                 return redirect()->back()->with('errores', $validator->errors())->withInput();
@@ -72,6 +82,7 @@ class DocumentoVentaController extends Controller
             $datos['correlativo_id'] = obtenerCorrelativo(TipoDocumento::findOrFail($request->tipo_documento_id))->id;
             $datos['user_id'] = Auth::user()->id;
             $datos['total']=0;
+            $datos['tipo_pago_id']=1;
             $total=0;
             $detalle= $request->get('tabladetalle');
             $documento = DocumentoVenta::create($datos);
