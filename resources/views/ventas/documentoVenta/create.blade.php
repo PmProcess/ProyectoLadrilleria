@@ -1,4 +1,6 @@
 @extends('layout.index')
+@section('ventas-active', 'active')
+@section('docVenta-active', 'active')
 @section('contenido')
     <div id="app">
         <documentoventacreate-component :old="{{ json_encode(Session::getOldInput()) }}"

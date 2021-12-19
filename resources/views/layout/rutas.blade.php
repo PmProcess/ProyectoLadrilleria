@@ -90,7 +90,7 @@
                 @endif
                 @if (auth()->user()->can('haveaccess', 'docVenta.index'))
                     <li class="@yield('docVenta-active')"><a href="{{ route('documentoVenta.index') }}"><i
-                                class="fa fa-book" aria-hidden="true"></i>Registrar Venta</a></li>
+                                class="fa fa-book" aria-hidden="true"></i>Comprobante de Ventas</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'tipoDocumento.index'))
                     <li class="@yield('tipoDocumento-active')"><a href="{{ route('tipoDocumento.index') }}"><i
