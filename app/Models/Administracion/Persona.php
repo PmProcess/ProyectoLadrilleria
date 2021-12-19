@@ -26,6 +26,10 @@ class Persona extends Model
         $tipoClase=$this->tipo_documento=="DNI" ? PersonaDni::class : PersonaRuc::class;
         return $this->hasOne($tipoClase, 'persona_id');
     }
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class,'persona_id');
+    }
     public function personaDni()
     {
         return $this->hasOne(PersonaDni::class, 'persona_id');

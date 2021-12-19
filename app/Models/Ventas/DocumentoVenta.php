@@ -16,16 +16,21 @@ class DocumentoVenta extends Model
     protected $table="documento_venta";
     protected $fillable=[
         'cliente_id',
-        'empleado_id',
+        'user_id',
         'tipo_pago_id',
         'correlativo_id',
         'tipo_documento_id',
         'fecha_registro',
         'fecha_vencimiento',
-        'moneda',
-        'total'
+        'tipo_moneda_id',
+        'total',
+        'estado'
     ];
     public $timestamps=true;
+    public function tipoMoneda()
+    {
+        return $this->belongsTo(tipoMoneda::class,'tipo_moneda_id');
+    }
     public function cliente()
     {
         return $this->belongsTo(Cliente::class,'cliente_id');

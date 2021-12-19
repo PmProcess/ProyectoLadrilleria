@@ -28,6 +28,7 @@ class DocumentoVentaController extends Controller
     {
         $documentos = DocumentoVenta::where('estado', 'ACTIVO')->with(['cliente', 'empleado', 'tipoPago', 'correlativo', 'tipoDocumento'])->get()->map(function ($documento) {
             $documento->cliente->persona->tipoPersona;
+            $documento->correlativo->numeracion;
             return $documento;
         });
         return DataTables::of($documentos)->toJson();
@@ -38,6 +39,7 @@ class DocumentoVentaController extends Controller
     }
     public function store(Request $request)
     {
+        // return redirect()->back()->withInput();
         DB::beginTransaction();
         try {
             $rules = [
@@ -46,36 +48,44 @@ class DocumentoVentaController extends Controller
                 'tipo_documento_id' => 'required',
                 'fecha_registro' => 'required',
                 'fecha_vencimiento' => 'required',
-                'moneda' => 'required',
-                'total' => 'total'
+                'tipo_moneda_id' => 'required',
             ];
             $mensaje = [
                 'cliente_id.required' => "El campo cliente es obligatorio",
                 'tipo_pago_id.required' => "El campo tipo pago es obligatorio",
                 'tipo_documento_id.required' => "El campo tipo documento es obligatorio",
                 'fecha_registro.required' => "El campo fecha registro es obligatorio",
-                'fecha_vencimiento.require' => "El campo fecha vencimiento es obligatorio",
-                'moneda.required' => "El campo moneda es obligatorio",
-                'total.required' => "El campo total es obligatorio"
+                'fecha_vencimiento.required' => "El campo fecha vencimiento es obligatorio",
+                'tipo_moneda_id.required' => "El campo moneda es obligatorio",
             ];
-            Validator::make($request->all(), $rules, $mensaje)->validate();
+            $validator=Validator::make($request->all(), $rules, $mensaje);
+            if($validator->fails())
+            {
+                return redirect()->back()->with('errores', $validator->errors())->withInput();
+            }
             if (!TipoDocumento::findOrFail($request->tipo_documento_id)->numeracionSeleccionada) {
                 Session::flash("error", "No se ha seleccionado una serie para este tipo de Documento");
-                return redirect()->back();
+                return redirect()->back()->withInput();
             }
 
             $datos = $request->except(['detalle']);
             $datos['correlativo_id'] = obtenerCorrelativo(TipoDocumento::findOrFail($request->tipo_documento_id))->id;
             $datos['user_id'] = Auth::user()->id;
+            $datos['total']=0;
+            $total=0;
+            $detalle= $request->get('tabladetalle');
             $documento = DocumentoVenta::create($datos);
-            foreach ($request->detalle as $key => $value) {
+            foreach(json_decode($detalle) as $value) {
+                $total+=$value->total;
                 DetalleDocumentoVenta::create([
                     "documento_venta_id" => $documento->id,
-                    "producto_id" => $value['producto_id'],
-                    "cantidad" => $value['cantidad'],
-                    "precio" => $value['precio']
+                    "producto_id" => $value->producto_id,
+                    "cantidad" => $value->cantidad,
+                    "precio" => $value->precio
                 ]);
             }
+            $documento->total=$total;
+            $documento->save();
 
             DB::commit();
             Session::flash('mensaje', "Registro con Exito");
@@ -84,7 +94,7 @@ class DocumentoVentaController extends Controller
             DB::rollback();
             Log::info($e);
             Session::flash('error', $e->getMessage());
-            return redirect()->back();
+            return redirect()->back()->withInput();
         }
     }
     public function edit($id)

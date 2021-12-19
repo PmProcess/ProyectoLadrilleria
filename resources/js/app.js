@@ -7,17 +7,24 @@ import Vue from "vue";
 import helperJs from "./helpers.js";
 import vSelect from "vue-select";
 import VueIframe from "vue-iframes";
-import Verte from 'verte';
+import Verte from "verte";
+
+const options = {
+    confirmButtonColor: "#41b882",
+    cancelButtonColor: "#ff7674",
+};
+import VueSweetalert2 from "vue-sweetalert2";
 // import { Photoshop } from 'vue-color'
 // import { Slider } from 'vue-color'
 // fs.writeFile('calc1.js','console.log("done")',function(errr){
 //     console.log("Exito archivo")
 // })
 Vue.use(VueIframe);
+Vue.use(VueSweetalert2,options);
 Vue.config.devtools = false;
 // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
 Vue.component("v-select", vSelect);
-Vue.component('verte', Verte);
+Vue.component("verte", Verte);
 // new Vue({
 //     components: {
 //       'photoshop-picker': Photoshop
@@ -113,6 +120,16 @@ Vue.component(
     require("./components/configuracion/Numeracion/NumeracionIndexComponent.vue")
         .default
 );
+Vue.component(
+    "documentoventaindex-component",
+    require("./components/ventas/documentoVentas/DocumentoVentaIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "documentoventacreate-component",
+    require("./components/ventas/documentoVentas/DocumentoVentaCreateComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(
@@ -162,6 +179,6 @@ Vue.component(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-const app = new Vue({
+var pabloprueba = new Vue({
     el: "#app",
 });

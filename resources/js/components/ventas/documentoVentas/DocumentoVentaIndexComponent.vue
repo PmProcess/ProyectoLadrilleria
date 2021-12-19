@@ -51,7 +51,10 @@
                                             <thead>
                                                 <tr>
                                                     <th>#</th>
-                                                    <th>Tipo</th>
+                                                    <th>Cliente</th>
+                                                    <th>Tipo Doc</th>
+                                                    <th>Tipo Pago</th>
+                                                    <th>Serie</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
@@ -72,22 +75,39 @@ import "datatables.net-buttons-bs4";
 export default {
     data() {
         return {
-            table:null
+            table: null,
         };
     },
     mounted() {
-        this.datosInicializado()
+        var $this = this;
+        this.datosInicializado();
+        $(document).on("click", ".btn-delete", function (e) {
+            $this.$swal
+                .fire({
+                    title: "Estas Seguro?",
+                    text: "Tu deseas eliminar este registro",
+                    icon: "warning",
+                    showCancelButton: true,
+                    confirmButtonText: "Si eliminar",
+                    cancelButtonText: "Cancelar",
+                })
+                .then((result) => {
+                    if (result.isConfirmed) {
+                        window.location.href=route('documentoVenta.destroy',$this.table.row($(this).closest('tr')).data().id)
+                    }
+                });
+        });
     },
     methods: {
         datosInicializado: function () {
-            this.table = $("#tableDocumentos").DataTable({
+            this.table = $("#tableDocumentosVentas").DataTable({
                 bPaginate: true,
                 bLengthChange: true,
                 bFilter: true,
                 bInfo: true,
                 bAutoWidth: false,
                 processing: true,
-                ajax: route("documentoVentas.getList"),
+                ajax: route("documentoVenta.getList"),
                 language: {
                     url: window.location.origin + "/Spanish.json",
                 },
@@ -99,36 +119,54 @@ export default {
                     {
                         data: null,
                         className: "text-center",
-                        render:function(data){
-                            if(data.tipo_documento_id==1)
-                            {
-
-                                return data.cliente.persona.tipoPersona.apellidos+" "+data.cliente.persona.tipoPersona.nombres;
+                        render: function (data) {
+                            if (data.tipo_documento_id == 1) {
+                                return (
+                                    data.cliente.persona.tipo_persona
+                                        .apellidos +
+                                    " " +
+                                    data.cliente.persona.tipo_persona.nombres
+                                );
                             }
-                            return data.cliente.persona.tipoPersona.nombre_comercial;
-                        }
+                            return data.cliente.persona.tipo_persona
+                                .nombre_comercial;
+                        },
                     },
                     {
-                        data:null,
-                        className:"text-center",
-                        render:function(data){
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
                             return data.tipo_documento.tipo;
-                        }
+                        },
                     },
                     {
-                        data:null,
-                        className:"text-center",
-                        render:function(data){
-                            return data.tipo_pago
-                        }
-                    }
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
+                            if (data.tipo_pago.id == 1) {
+                                return data.tipo_pago.tipo;
+                            }
+                            return (
+                                data.tipo_pago.tipo +
+                                " - " +
+                                data.tipo_pago.dias
+                            );
+                        },
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
+                            return data.correlativo.numeracion.serie+"-"+data.correlativo.correlativo;
+                        },
+                    },
                     {
                         data: null,
                         className: "text-center",
                         render: function (data) {
                             return (
                                 "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
-                                "<li><a class='dropdown-item btn-edit' href='#' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
+                                // "<li><a class='dropdown-item btn-edit' href='#' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
                                 "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" +
                                 "</ul></div>"
                             );
@@ -138,10 +176,14 @@ export default {
                 ],
             });
         },
-        goCreate:function()
-        {
-            window.location.href=route('documentoVenta.create');
-        }
+        goCreate: function () {
+            window.location.href = route("documentoVenta.create");
+        },
     },
 };
 </script>
+<style>
+.swal2-container {
+    z-index: 4000;
+}
+</style>

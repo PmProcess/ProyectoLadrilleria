@@ -1,5 +1,4 @@
 const { default: axios } = require("axios");
-
 export default {
     verificarExistenciaTipoEmpleado()
     {

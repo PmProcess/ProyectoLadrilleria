@@ -16,6 +16,10 @@ class PersonaRuc extends Model
         "ruc"
     ];
     public $timestamps = true;
+    public function getNombreCompletoAttribute()
+    {
+        return $this->nombre_comercial." - RUC";
+    }
     public function persona()
     {
         return $this->belongsTo(Persona::class, "persona_id");

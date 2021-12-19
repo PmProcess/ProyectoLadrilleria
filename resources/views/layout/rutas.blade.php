@@ -56,7 +56,8 @@
                     de Productos</a></li>
             <li class="@yield('producto-active')"><a href="{{ route('producto.index') }}"><i class="fa fa-cart-plus"
                         aria-hidden="true"></i>Productos</a></li>
-            <li class="@yield('docVenta-active')"><a href="#"><i class="fa fa-book" aria-hidden="true"></i>Doc
+            <li class="@yield('docVenta-active')"><a href="{{ route('documentoVenta.index') }}"><i
+                        class="fa fa-book" aria-hidden="true"></i>Doc
                     Ventas</a></li>
         </ul>
     </li>
@@ -69,6 +70,12 @@
                     la Empresa</a></li>
             <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
                         class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
+        </ul>
+    </li>
+    <li class="@yield('almacen-active')">
+        <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Almacen</span><span
+                class="fa arrow"></span></a>
+        <ul class="nav nav-second-level collapse">
             <li class="@yield('almacen-active')"><a href="{{ route('almacen.index') }}"><i class="fa fa-archive"
                         aria-hidden="true"></i>Almacen</a></li>
         </ul>

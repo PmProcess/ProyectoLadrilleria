@@ -16,6 +16,10 @@ class PersonaDni extends Model
         "dni"
     ];
     public $timestamps=true;
+    public function getNombreCompletoAttribute()
+    {
+        return $this->apellidos." ".$this->nombres." - DNI";
+    }
     public function persona()
     {
         return $this->belongsTo(Persona::class,"persona_id");

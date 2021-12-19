@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Configuracion\TipoMoneda;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -19,6 +20,7 @@ class DatabaseSeeder extends Seeder
         $this->call(ApiSeeder::class);
         $this->call(TipoDocumentoSeeder::class);
         $this->call(TipoPagoSeeder::class);
+        $this->call(TipoMoneda::class);
 
     }
 }

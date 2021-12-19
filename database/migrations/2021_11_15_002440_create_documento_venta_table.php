@@ -27,8 +27,10 @@ class CreateDocumentoVentaTable extends Migration
             $table->foreign('tipo_documento_id')->references('id')->on('tipo_documento')->onDelete('cascade');
             $table->date('fecha_registro');
             $table->date('fecha_vencimiento');
-            $table->enum('moneda',['SOLES','DOLARES']);
+            $table->unsignedBigInteger('tipo_moneda_id');
+            $table->foreign('tipo_moneda_id')->references('id')->on('tipo_moneda')->onDelete('cascade');
             $table->decimal('total');
+            $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });
     }
