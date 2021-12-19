@@ -6,6 +6,7 @@ use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
 use App\Http\Controllers\Configuracion\NumeracionController;
+use App\Http\Controllers\Configuracion\RolController;
 use App\Http\Controllers\Configuracion\TipoDocumentoController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mantenimiento\AlmacenController;
@@ -134,6 +135,16 @@ Route::prefix('tipoDocumento')->middleware('auth')->group(function(){
     Route::post('/updatePdf/{arreglo}/{tipo}',[TipoDocumentoController::class,'updatePdf'])->name('tipoDocumento.updatePdf');
     Route::get('/formatoPdf',[TipoDocumentoController::class,'formatoPdf'])->name('tipoDocumento.formatoPdf');
     Route::get('/getList',[TipoDocumentoController::class,'getList'])->name('tipoDocumento.getList');
+});
+Route::prefix('rol')->group(function () {
+    Route::get('/', [RolController::class, 'index'])->name('roles.index');
+    Route::get('/getTable', [RolController::class, 'getTable'])->name('roles.getTable');
+    Route::get('/registrar', [RolController::class, 'create'])->name('roles.create');
+    Route::post('/registrar', [RolController::class, 'store'])->name('roles.store');
+    Route::get('/actualizar/{id}', [RolController::class, 'edit'])->name('roles.edit');
+    Route::put('/actualizar/{id}', [RolController::class, 'update'])->name('roles.update');
+    Route::get('/datos/{id}', [RolController::class, 'show'])->name('roles.show');
+    Route::get('/destroy/{id}', [RolController::class, 'destroy'])->name('roles.destroy');
 });
 Route::prefix('numeracion')->middleware('auth')->group(function(){
     Route::get('/index',[NumeracionController::class,'index'])->name('numeracion.index');

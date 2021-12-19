@@ -20,7 +20,8 @@ class DatabaseSeeder extends Seeder
         $this->call(ApiSeeder::class);
         $this->call(TipoDocumentoSeeder::class);
         $this->call(TipoPagoSeeder::class);
-        $this->call(TipoMoneda::class);
+        $this->call(TipoMonedaSeeder::class);
+        $this->call(RolesSeeder::class);
 
     }
 }
