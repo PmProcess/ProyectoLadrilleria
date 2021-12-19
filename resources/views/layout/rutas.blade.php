@@ -24,30 +24,22 @@
     </li>
     @if (auth()->user()->can('haveaccess', 'tipoEmpleado.index') ||
     auth()->user()->can('haveaccess', 'empleado.index') ||
-    auth()->user()->can('haveaccess', 'proveedor.index') ||
-    auth()->user()->can('haveaccess', 'cliente.index') ||
     auth()->user()->can('haveaccess', 'roles.index') ||
     auth()->user()->can('haveaccess', 'api.index'))
         <li class="@yield('administracion-active')">
-            <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Administracion</span><span
+            <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Seguridad</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
                 @if (auth()->user()->can('haveaccess', 'tipoEmpleado.index'))
                     <li class="@yield('tipoempleado-active')"><a href="{{ route('tipoempleado.index') }}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Tipos de Empleados</a></li>
+                                class="fa fa-building" aria-hidden="true"></i>Cargo</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'empleado.index'))
                     <li class="@yield('empleado-active')"><a href="{{ route('empleado.index') }}"><i
                                 class="fa fa-users" aria-hidden="true"></i>Empleados</a></li>
                 @endif
-                @if (auth()->user()->can('haveaccess', 'proveedor.index'))
-                    <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i
-                                class="fa fa-users" aria-hidden="true"></i>Proveedores</a></li>
-                @endif
-                @if (auth()->user()->can('haveaccess', 'cliente.index'))
-                    <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
-                                class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
-                @endif
+
+
                 @if (auth()->user()->can('haveaccess', 'api.index'))
                     <li class="@yield('api-active')"><a href="{{ route('api.index') }}"><i class="fa fa-paper-plane"
                                 aria-hidden="true"></i>Apis</a></li>
@@ -60,13 +52,19 @@
 
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'docCompra.index'))
+    @if (auth()->user()->can('haveaccess', 'docCompra.index')||auth()->user()->can('haveaccess', 'proveedor.index'))
         <li class="@yield('compra-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
+                @if (auth()->user()->can('haveaccess', 'docCompra.index'))
                 <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus" aria-hidden="true"></i>Doc
                         Compra</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'proveedor.index'))
+                    <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i
+                                class="fa fa-users" aria-hidden="true"></i>Proveedores</a></li>
+                @endif
             </ul>
         </li>
     @endif
@@ -74,7 +72,7 @@
     auth()->user()->can('haveaccess', 'producto.index') ||
     auth()->user()->can('haveaccess', 'docVenta.index') ||
     auth()->user()->can('haveaccess', 'tipoDocumento.index') ||
-    auth()->user()->can('haveaccess', 'numeracion.index'))
+    auth()->user()->can('haveaccess', 'numeracion.index')||auth()->user()->can('haveaccess', 'cliente.index'))
         <li class="@yield('ventas-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                     class="fa arrow"></span></a>
@@ -101,6 +99,10 @@
                     <li class="@yield('numeracion-active')"><a href="{{ route('numeracion.index') }}"><i
                                 class="fa fa-building" aria-hidden="true"></i>Numeracion</a></li>
                 @endif
+                @if (auth()->user()->can('haveaccess', 'cliente.index'))
+                <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
+                            class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
+            @endif
             </ul>
         </li>
     @endif

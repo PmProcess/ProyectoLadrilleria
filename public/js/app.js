@@ -86752,7 +86752,7 @@ var render = function () {
                         attrs: { "aria-hidden": "true" },
                       }),
                       _vm._v(
-                        "\n                                    Agregar Tipo de Empleado\n                                "
+                        "\n                                    Agregar Cargo\n                                "
                       ),
                     ]
                   ),
@@ -86918,12 +86918,12 @@ var staticRenderFns = [
       [
         _c("div", { staticClass: "col-lg-10 col-md-10" }, [
           _c("h2", { staticStyle: { "text-transform": "uppercase" } }, [
-            _c("b", [_vm._v("Tipos de Empleado")]),
+            _c("b", [_vm._v("Cargo")]),
           ]),
           _vm._v(" "),
           _c("ol", { staticClass: "breadcrumb" }, [
             _c("li", { staticClass: "breadcrumb-item active" }, [
-              _c("a", [_vm._v("Tipos de Empleado")]),
+              _c("a", [_vm._v("Cargo")]),
             ]),
             _vm._v(" "),
             _c("li", { staticClass: "breadcrumb-item active" }, [
@@ -86944,7 +86944,7 @@ var staticRenderFns = [
         { staticClass: "modal-title", attrs: { id: "exampleModalLabel" } },
         [
           _vm._v(
-            "\n                        Crear un nuevo Tipo de Empleado\n                    "
+            "\n                        Crear un nuevo Cargo\n                    "
           ),
         ]
       ),

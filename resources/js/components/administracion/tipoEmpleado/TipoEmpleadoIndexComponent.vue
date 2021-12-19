@@ -3,11 +3,11 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10 col-md-10">
                 <h2 style="text-transform: uppercase">
-                    <b>Tipos de Empleado</b>
+                    <b>Cargo</b>
                 </h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active">
-                        <a>Tipos de Empleado</a>
+                        <a>Cargo</a>
                     </li>
                     <li class="breadcrumb-item active">
                         <strong>Inicio</strong>
@@ -31,7 +31,7 @@
                                             class="fa fa-plus"
                                             aria-hidden="true"
                                         ></i>
-                                        Agregar Tipo de Empleado
+                                        Agregar Cargo
                                     </button>
                                 </div>
                             </div>
@@ -55,7 +55,7 @@
                 <div class="modal-content">
                     <div class="modal-header">
                         <h5 class="modal-title" id="exampleModalLabel">
-                            Crear un nuevo Tipo de Empleado
+                            Crear un nuevo Cargo
                         </h5>
                         <button
                             type="button"
