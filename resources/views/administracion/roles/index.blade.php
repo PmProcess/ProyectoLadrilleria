@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('contenido')
-@section('configuracion-active', 'active')
+@section('administracion-active', 'active')
 @section('rol-active', 'active')
 <div class="row wrapper border-bottom white-bg page-heading">
     <div class="col-lg-10 col-md-10">

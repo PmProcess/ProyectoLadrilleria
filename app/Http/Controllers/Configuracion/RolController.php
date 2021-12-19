@@ -18,7 +18,7 @@ class RolController extends Controller
     public function index()
     {
 
-        return view('configuracion.roles.index');
+        return view('administracion.roles.index');
     }
     public function getTable()
     {
@@ -38,7 +38,7 @@ class RolController extends Controller
         $role = new Role();
         $permissions_role = [];
         $permissions = Permission::get();
-        return view('configuracion.roles.create', compact('permissions', 'action', 'role', 'permissions_role'));
+        return view('administracion.roles.create', compact('permissions', 'action', 'role', 'permissions_role'));
     }
 
     /**
@@ -93,7 +93,7 @@ class RolController extends Controller
         $permissions = Permission::get();
         $put = True;
         $action = route('roles.update', $id);
-        return view('configuracion.roles.edit', [
+        return view('administracion.roles.edit', [
             'role' => $role,
             'action' => $action,
             'put' => $put,

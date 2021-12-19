@@ -26,6 +26,7 @@
     auth()->user()->can('haveaccess', 'empleado.index') ||
     auth()->user()->can('haveaccess', 'proveedor.index') ||
     auth()->user()->can('haveaccess', 'cliente.index') ||
+    auth()->user()->can('haveaccess', 'roles.index') ||
     auth()->user()->can('haveaccess', 'api.index'))
         <li class="@yield('administracion-active')">
             <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Administracion</span><span
@@ -51,6 +52,10 @@
                     <li class="@yield('api-active')"><a href="{{ route('api.index') }}"><i class="fa fa-paper-plane"
                                 aria-hidden="true"></i>Apis</a></li>
                 @endif
+                @if (auth()->user()->can('haveaccess', 'roles.index'))
+                    <li class="@yield('rol-active')"><a href="{{ route('roles.index') }}"><i class="fa fa-building"
+                                aria-hidden="true"></i>Roles</a></li>
+                @endif
             </ul>
 
         </li>
@@ -67,7 +72,9 @@
     @endif
     @if (auth()->user()->can('haveaccess', 'tipoProducto.index') ||
     auth()->user()->can('haveaccess', 'producto.index') ||
-    auth()->user()->can('haveaccess', 'docVenta.index'))
+    auth()->user()->can('haveaccess', 'docVenta.index') ||
+    auth()->user()->can('haveaccess', 'tipoDocumento.index') ||
+    auth()->user()->can('haveaccess', 'numeracion.index'))
         <li class="@yield('ventas-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                     class="fa arrow"></span></a>
@@ -85,6 +92,14 @@
                     <li class="@yield('docVenta-active')"><a href="{{ route('documentoVenta.index') }}"><i
                                 class="fa fa-book" aria-hidden="true"></i>Doc
                             Ventas</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'tipoDocumento.index'))
+                    <li class="@yield('tipoDocumento-active')"><a href="{{ route('tipoDocumento.index') }}"><i
+                                class="fa fa-building" aria-hidden="true"></i>Tipo de Documentos</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'numeracion.index'))
+                    <li class="@yield('numeracion-active')"><a href="{{ route('numeracion.index') }}"><i
+                                class="fa fa-building" aria-hidden="true"></i>Numeracion</a></li>
                 @endif
             </ul>
         </li>
@@ -114,28 +129,6 @@
             <ul class="nav nav-second-level collapse">
                 <li class="@yield('almacen-active')"><a href="{{ route('almacen.index') }}"><i class="fa fa-archive"
                             aria-hidden="true"></i>Almacen</a></li>
-            </ul>
-        </li>
-    @endif
-    @if (auth()->user()->can('haveaccess', 'tipoDocumento.index') ||
-    auth()->user()->can('haveaccess', 'numeracion.index') ||
-    auth()->user()->can('haveaccess', 'roles.index'))
-        <li class="@yield('configuracion-active')">
-            <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Configuracion</span><span
-                    class="fa arrow"></span></a>
-            <ul class="nav nav-second-level collapse">
-                @if (auth()->user()->can('haveaccess', 'tipoDocumento.index'))
-                    <li class="@yield('tipoDocumento-active')"><a href="{{ route('tipoDocumento.index') }}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Tipo de Documentos</a></li>
-                @endif
-                @if (auth()->user()->can('haveaccess', 'numeracion.index'))
-                    <li class="@yield('numeracion-active')"><a href="{{ route('numeracion.index') }}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Numeracion</a></li>
-                @endif
-                @if (auth()->user()->can('haveaccess', 'roles.index'))
-                    <li class="@yield('rol-active')"><a href="{{ route('roles.index') }}"><i class="fa fa-building"
-                                aria-hidden="true"></i>Roles</a></li>
-                @endif
             </ul>
         </li>
     @endif
