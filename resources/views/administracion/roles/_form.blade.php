@@ -24,10 +24,10 @@
                                 @endif
                             </div>
                             <div class="form-group row">
-                                <label class="required">Slug</label>
+                                <label class="required">Alias</label>
                                 <input type="text"
                                     class="form-control  {{ $errors->has('slug') ? ' is-invalid' : '' }}" id="slug"
-                                    placeholder="Slug" name="slug" value="{{ old('slug') ? old('slug') : $role->slug }}">
+                                    placeholder="Alias" name="slug" value="{{ old('slug') ? old('slug') : $role->slug }}">
                                 @if ($errors->has('slug'))
                                     <span class="invalid-feedback" role="alert">
                                         <strong>{{ $errors->first('slug') }}</strong>
@@ -39,7 +39,7 @@
                                 <label class="required">Descripcion</label>
                                 <input class="form-control  {{ $errors->has('description') ? ' is-invalid' : '' }}"
                                     value="{{ old('descripction') ? old('descripction') : $role->description }}"
-                                    placeholder="Description" name="description" id="description">
+                                    placeholder="Descripcion" name="description" id="description">
 
 
                                 @if ($errors->has('description'))

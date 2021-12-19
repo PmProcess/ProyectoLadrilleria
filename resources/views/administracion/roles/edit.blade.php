@@ -18,5 +18,5 @@
         </ol>
     </div>
 </div>
-@include('configuracion.roles._form')
+@include('administracion.roles._form')
 @stop

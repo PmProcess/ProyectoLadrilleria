@@ -31,10 +31,10 @@
                             style="text-transform:uppercase">
                             <thead>
                                 <tr>
-                                    <th class="text-center">Name</th>
-                                    <th class="text-center">Slug</th>
-                                    <th class="text-center">Description</th>
-                                    <th class="text-center">full access</th>
+                                    <th class="text-center">Nombre</th>
+                                    <th class="text-center">Alias</th>
+                                    <th class="text-center">Descripcion</th>
+                                    <th class="text-center">Full acceso</th>
                                     <th class="text-center">ACCIONES</th>
                                 </tr>
                             </thead>
@@ -102,8 +102,12 @@
                     className: "text-center"
                 },
                 {
-                    data: 'full-access',
-                    className: "text-center"
+                    data: null,
+                    className: "text-center",
+                    render:function(data)
+                    {
+                        return data["full-access"]=="yes"?"si":"no";
+                    }
                 },
                 {
                     data: null,
