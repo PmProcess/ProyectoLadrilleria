@@ -1,6 +1,6 @@
 @extends('layout.index')
 @section('contenido')
-@section('ventas-active', 'active')
+@section('almacenM-active', 'active')
 @section('producto-active', 'active')
 <div id="app">
     <productoindex-component >

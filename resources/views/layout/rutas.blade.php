@@ -67,12 +67,10 @@
             </ul>
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'producto.index') ||
-    auth()->user()->can('haveaccess', 'docVenta.index') ||
+    @if (auth()->user()->can('haveaccess', 'docVenta.index') ||
     auth()->user()->can('haveaccess', 'tipoDocumento.index') ||
     auth()->user()->can('haveaccess', 'numeracion.index') ||
-    auth()->user()->can('haveaccess', 'cliente.index') ||
-    auth()->user()->can('haveaccess', 'unidadMedida.index'))
+    auth()->user()->can('haveaccess', 'cliente.index'))
         <li class="@yield('ventas-active')">
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Ventas</span><span
                     class="fa arrow"></span></a>
@@ -82,10 +80,7 @@
                                 class="fa fa-book" aria-hidden="true"></i>Tipos
                             de Productos</a></li>
                 @endif --}}
-                @if (auth()->user()->can('haveaccess', 'producto.index'))
-                    <li class="@yield('producto-active')"><a href="{{ route('producto.index') }}"><i
-                                class="fa fa-cart-plus" aria-hidden="true"></i>Productos</a></li>
-                @endif
+
                 @if (auth()->user()->can('haveaccess', 'docVenta.index'))
                     <li class="@yield('docVenta-active')"><a href="{{ route('documentoVenta.index') }}"><i
                                 class="fa fa-book" aria-hidden="true"></i>Comprobante de Ventas</a></li>
@@ -102,10 +97,7 @@
                     <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
                                 class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
                 @endif
-                @if (auth()->user()->can('haveaccess', 'unidadMedida.index'))
-                    <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
-                                class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
-                @endif
+
             </ul>
         </li>
     @endif
@@ -123,13 +115,25 @@
             </ul>
         </li>
     @endif
-    @if (auth()->user()->can('haveaccess', 'almacen.index'))
-        <li class="@yield('almacen-active')">
+    @if (auth()->user()->can('haveaccess', 'almacen.index') ||
+    auth()->user()->can('haveaccess', 'producto.index') ||
+    auth()->user()->can('haveaccess', 'unidadMedida.index'))
+        <li class="@yield('almacenM-active')">
             <a href="#"><i class="fa fa-list"></i> <span class="nav-label">Almacen</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                <li class="@yield('almacen-active')"><a href="{{ route('almacen.index') }}"><i class="fa fa-archive"
-                            aria-hidden="true"></i>Almacen</a></li>
+                @if (auth()->user()->can('haveaccess', 'almacen.index'))
+                    <li class="@yield('almacen-active')"><a href="{{ route('almacen.index') }}"><i
+                                class="fa fa-archive" aria-hidden="true"></i>Almacen</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'producto.index'))
+                    <li class="@yield('producto-active')"><a href="{{ route('producto.index') }}"><i
+                                class="fa fa-cart-plus" aria-hidden="true"></i>Productos</a></li>
+                @endif
+                @if (auth()->user()->can('haveaccess', 'unidadMedida.index'))
+                    <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
+                                class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
+                @endif
             </ul>
         </li>
     @endif
