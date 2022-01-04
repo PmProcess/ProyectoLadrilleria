@@ -67,7 +67,7 @@
 <html>
 
 <head>
-    <title>Animated Login Form</title>
+    <title>SISTEMA | LOGIN</title>
     <link rel="stylesheet" type="text/css" href="{{ asset('LoginPlantilla/css/style.css') }}">
     <link href="https://fonts.googleapis.com/css?family=Poppins:600&display=swap" rel="stylesheet" />
     <script src="https://kit.fontawesome.com/a81368914c.js"></script>

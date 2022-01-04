@@ -6,6 +6,8 @@ use App\Providers\RouteServiceProvider;
 use Closure;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Tymon\JWTAuth\Exceptions\JWTException;
+use Tymon\JWTAuth\Facades\JWTAuth;
 
 class RedirectIfAuthenticated
 {
@@ -19,6 +21,14 @@ class RedirectIfAuthenticated
      */
     public function handle(Request $request, Closure $next, ...$guards)
     {
+        // if ($request->has('token')) {
+        //     try {
+        //         $this->auth = JWTAuth::parseToken()->authenticate();
+        //         return $next($request);
+        //     } catch (JWTException $e) {
+        //         return redirect(RouteServiceProvider::HOME);
+        //     }
+        // }
         $guards = empty($guards) ? [null] : $guards;
 
         foreach ($guards as $guard) {
