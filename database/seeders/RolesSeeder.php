@@ -53,6 +53,12 @@ class RolesSeeder extends Seeder
             'description' => 'Un usuario puede ver el modulo Proveedores'
         ]);
         $permission_all[] = $permission->id;
+        $permission = Permission::create([
+            'name' => 'modulo de Insumos',
+            'slug' => 'insumo.index',
+            'description' => 'Un usuario puede ver el modulo Insumos'
+        ]);
+        $permission_all[] = $permission->id;
 
 
 

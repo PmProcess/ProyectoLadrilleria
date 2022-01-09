@@ -116,6 +116,10 @@ Vue.component(
     require("./components/ventas/Producto/ProductoIndexComponent.vue").default
 );
 Vue.component(
+    "insumoindex-component",
+    require("./components/compras/Insumo/InsumoIndexComponent.vue").default
+);
+Vue.component(
     "numeracionindex-component",
     require("./components/configuracion/Numeracion/NumeracionIndexComponent.vue")
         .default
@@ -166,11 +170,6 @@ Vue.component(
 Vue.component(
     "datatablealmacen-component",
     require("./components/datatables/Almacen/DatatableAlmacenComponent.vue")
-);
-//List
-Vue.component(
-    "producto-lista-component",
-    require("./components/ventas/Producto/ProductoListaComponent.vue")
 );
 
 /**

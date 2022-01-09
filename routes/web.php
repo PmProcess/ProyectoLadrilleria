@@ -5,6 +5,7 @@ use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
+use App\Http\Controllers\Compras\InsumoController;
 use App\Http\Controllers\Configuracion\NumeracionController;
 use App\Http\Controllers\Configuracion\RolController;
 use App\Http\Controllers\Configuracion\TipoDocumentoController;
@@ -117,6 +118,13 @@ Route::prefix('producto')->middleware('auth')->group(function (){
     Route::post('/update/{id}',[ProductoController::class, 'update'])->name('producto.update');
     Route::post('/destroy/{id}',[ProductoController::class, 'destroy'])->name('producto.destroy');
     Route::get('/getList',[ProductoController::class,'getList'])->name('producto.getList');
+});
+Route::prefix('insumo')->middleware('auth')->group(function (){
+    Route::get('/', [InsumoController::class, 'index'])->name('insumo.index');
+    Route::post('/store',[InsumoController::class, 'store'])->name('insumo.store');
+    Route::post('/update/{id}',[InsumoController::class, 'update'])->name('insumo.update');
+    Route::post('/destroy/{id}',[InsumoController::class, 'destroy'])->name('insumo.destroy');
+    Route::get('/getList',[InsumoController::class,'getList'])->name('insumo.getList');
 });
 Route::prefix('ubigeo')->middleware('auth')->group(function(){
     Route::get('getprovincias/{departamentoid}',[UbigeoController::class,'getProvincias'])->name('ubigeo.getProvincias');

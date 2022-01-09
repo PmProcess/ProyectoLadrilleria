@@ -64,6 +64,10 @@
                     <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i
                                 class="fa fa-users" aria-hidden="true"></i>Proveedores</a></li>
                 @endif
+                @if (auth()->user()->can('haveaccess', 'insumo.index'))
+                    <li class="@yield('insumo-active')"><a href="{{ route('insumo.index') }}"><i
+                                class="fa fa-list" aria-hidden="true"></i>Insumos</a></li>
+                @endif
             </ul>
         </li>
     @endif
