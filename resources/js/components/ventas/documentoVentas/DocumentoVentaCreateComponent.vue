@@ -124,7 +124,7 @@
                                     </div>
                                 </div>
                                 <div class="col-md-6">
-                                    <div class="form-group row">
+                                    <!-- <div class="form-group row">
                                         <div class="col-md-6">
                                             <label for="">Forma de Pago</label>
                                             <v-select
@@ -193,7 +193,7 @@
                                                 }}</strong>
                                             </span>
                                         </div>
-                                    </div>
+                                    </div> -->
                                     <div class="form-group row">
                                         <div class="col-md-6">
                                             <label for=""
@@ -205,8 +205,7 @@
                                                     select.tipo_documento_id
                                                 "
                                                 v-on:input="
-                                                    obligatorio.tipo_documento_id =
-                                                        select.tipo_documento_id.id
+                                                    obligatorio.tipo_documento_id =(select.tipo_documento_id==null ? null :select.tipo_documento_id.id)
                                                 "
                                                 label="tipo"
                                             ></v-select>
@@ -444,16 +443,16 @@ export default {
         return {
             select: {
                 cliente_id: null,
-                forma_pago_id: null,
-                tipo_moneda_id: null,
+                // forma_pago_id: null,
+                // tipo_moneda_id: null,
                 tipo_documento_id: null,
             },
             obligatorio: {
                 fecha_registro: "",
                 fecha_vencimiento: "",
                 cliente_id: "",
-                forma_pago_id: "",
-                tipo_moneda_id: "",
+                // forma_pago_id: "",
+                // tipo_moneda_id: "",
                 tipo_documento_id: "",
             },
             detalle: {
@@ -474,14 +473,14 @@ export default {
                     error: false,
                     mensaje: "",
                 },
-                forma_pago_id: {
-                    error: false,
-                    mensaje: "",
-                },
-                tipo_moneda_id: {
-                    error: false,
-                    mensaje: "",
-                },
+                // forma_pago_id: {
+                //     error: false,
+                //     mensaje: "",
+                // },
+                // tipo_moneda_id: {
+                //     error: false,
+                //     mensaje: "",
+                // },
                 tipo_documento_id: {
                     error: false,
                     mensaje: "",
@@ -512,19 +511,26 @@ export default {
         this.obligatorio.fecha_vencimiento =
             fecha.getFullYear() +
             "-" +
-            (fecha.getMonth() + 1 < 10
-                ? "0" + (fecha.getMonth() + 1)
-                : fecha.getMonth() + 1) +
+            ((fecha.getMonth() + 1) < 10
+                ? "0" + ((fecha.getMonth() + 1))
+                : (fecha.getMonth() + 1)) +
             "-" +
-            (fecha.getDay() < 10 ? "0" + fecha.getDay() : fecha.getDay);
+            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate());
         this.obligatorio.fecha_registro =
             fecha.getFullYear() +
             "-" +
-            (fecha.getMonth() + 1 < 10
-                ? "0" + (fecha.getMonth() + 1)
-                : fecha.getMonth() + 1) +
+            ((fecha.getMonth() + 1) < 10
+                ? "0" + ((fecha.getMonth() + 1))
+                : (fecha.getMonth() + 1)) +
             "-" +
-            (fecha.getDay() < 10 ? "0" + fecha.getDay() : fecha.getDay);
+            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate());
+            console.log(fecha.getFullYear() +
+            "-" +
+            ((fecha.getMonth() + 1) < 10
+                ? "0" + ((fecha.getMonth() + 1))
+                : (fecha.getMonth() + 1)) +
+            "-" +
+            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate()));
     },
     mounted() {
         var $this = this;

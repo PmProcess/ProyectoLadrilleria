@@ -42,7 +42,6 @@ class ProductoController extends Controller
     {
         DB::beginTransaction();
         try {
-            Log::info($request);
             $datos = $request->except(['imagen']);
             if ($request->hasFile('imagen')) {
                 $datos['url_imagen'] = $request->file('imagen')->store('public/Producto');

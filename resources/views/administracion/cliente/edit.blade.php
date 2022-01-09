@@ -24,7 +24,6 @@
         <div class="col-md-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    {{ $errors }}
                     <h2>Crear Empleado</h2>
                     <form id="form" action="{{ route('cliente.update', $cliente->id) }}" method="POST"
                         class="wizard-big" enctype="multipart/form-data">

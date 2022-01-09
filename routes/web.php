@@ -45,6 +45,7 @@ Route::get('/', function () {
 Auth::routes();
 
 Route::get('/home', [HomeController::class, 'index'])->name('home');
+
 Route::prefix('tipoempleado')->middleware('auth')->group(function(){
     Route::get('/', [TipoEmpleadoController::class, 'index'])->name('tipoempleado.index');
     Route::post('/store',[TipoEmpleadoController::class, 'store'])->name('tipoempleado.store');
@@ -163,4 +164,12 @@ Route::prefix('documentoVenta')->middleware('auth')->group(function(){
     Route::get('edit/{id}',[DocumentoVentaController::class,'edit'])->name('documentoVenta.edit');
     Route::post('update/{id}',[DocumentoVentaController::class,'update'])->name('documentoVenta.update');
     Route::get('destroy/{id}',[DocumentoVentaController::class,'destroy'])->name('documentoVenta.destroy');
+    Route::prefix('pago')->middleware('auth')->group(function(){
+        Route::post('/store',[DocumentoVentaController::class,'storePago'])->name('documentoVenta.pago.store');
+        Route::get('/downloadimg/{id}',[DocumentoVentaController::class,'download'])->name('documentoVenta.pago.download');
+    });
+    Route::get('ticket/{id}',[DocumentoVentaController::class,'ticket'])->name('documentoVenta.ticket');
+    Route::get('a4/{id}',[DocumentoVentaController::class,'a4'])->name('documentoVenta.a4');
+    Route::get('sunat/{id}',[DocumentoVentaController::class,'sunat'])->name('documentoVenta.sunat');
+
 });

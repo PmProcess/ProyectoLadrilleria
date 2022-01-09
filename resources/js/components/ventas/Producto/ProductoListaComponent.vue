@@ -157,7 +157,7 @@
                                     </div>
                                 </div>
                                 <div class="form-group row">
-                                    <div class="col-md-6">
+                                    <div class="col-md-12">
                                         <label for="">Nombre</label>
                                         <input
                                             type="text"
@@ -179,7 +179,7 @@
                                             }}</strong>
                                         </span>
                                     </div>
-                                    <div class="col-md-6">
+                                    <!-- <div class="col-md-6">
                                         <label for="">Tipo de Operacion</label>
                                         <v-select
                                             v-model="
@@ -203,7 +203,7 @@
                                                 errores.tipo_operacion.mensaje
                                             }}</strong>
                                         </span>
-                                    </div>
+                                    </div> -->
                                 </div>
                                 <div class="form-group row">
                                     <div class="col-md-4">
@@ -252,6 +252,14 @@
                                                 errores.stock.mensaje
                                             }}</strong>
                                         </span>
+                                    </div>
+                                    <div class="col-md-4">
+                                        <label for="">codigo</label>
+                                        <input
+                                            type="text"
+                                            class="form-control form-control-sm"
+                                            v-model="modelo.otros.codigo"
+                                        />
                                     </div>
                                 </div>
                                 <div class="row">
@@ -351,20 +359,21 @@ export default {
                     precio_venta: "0",
                     stock: "0",
                     nombre: "",
-                    tipo_operacion: null,
+                    // tipo_operacion: null,
                 },
                 otros: {
                     imagen: "",
+                    codigo:""
                 },
             },
             id: "",
             preview: "",
             nombreImagen: "",
             errores: {
-                tipo_operacion: {
-                    error: false,
-                    mensaje: "",
-                },
+                // tipo_operacion: {
+                //     error: false,
+                //     mensaje: "",
+                // },
                 tipo_producto_id: {
                     error: false,
                     mensaje: "",
@@ -427,6 +436,7 @@ export default {
             this.modelo.obligatorio.nombre = item.nombre;
             this.modelo.obligatorio.precio_venta = item.precio_venta;
             this.modelo.obligatorio.stock = item.stock;
+            this.modelo.otros.codigo=item.codigo
             this.modelo.obligatorio.tipo_producto_id = {
                 code: item.tipo_producto_id,
                 label: item.tipo_producto.tipo,
@@ -435,9 +445,9 @@ export default {
                 code: item.unidad_medida_id,
                 label: item.unidad_medida.simbolo,
             };
-            this.modelo.obligatorio.tipo_operacion = {
-                label: item.tipo_operacion,
-            };
+            // this.modelo.obligatorio.tipo_operacion = {
+            //     label: item.tipo_operacion,
+            // };
             this.nombreImagen = item.nombre_imagen;
             if (item.url_imagen != null) {
                 this.preview =
@@ -460,7 +470,6 @@ export default {
         },
         editarProducto: function () {
             var $this = this;
-            console.log(this.modelo.otros.imagen);
             if (this.validaciones()) {
                 const config = {
                     headers: {
@@ -469,13 +478,14 @@ export default {
                 };
                 var data = new FormData();
                 for (var keyModelo in this.modelo) {
-                    console.log(keyModelo)
                     for (var key in this.modelo[keyModelo]) {
                         if (key.includes("id")) {
                             data.append(key, this.modelo[keyModelo][key].code);
                         } else {
                             if (
-                                typeof this.modelo[keyModelo][key] === "object" && key!="imagen"
+                                typeof this.modelo[keyModelo][key] ===
+                                    "object" &&
+                                key != "imagen"
                             ) {
                                 data.append(
                                     key,
@@ -576,7 +586,6 @@ export default {
                             if (value.data.success) {
                                 $this.datos();
                             } else {
-                                console.log(value.data.mensaje);
                                 toastr.error("Ocurrio un Error", "Error");
                             }
                         })

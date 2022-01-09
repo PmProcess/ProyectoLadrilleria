@@ -1,21 +1,22 @@
 <template>
     <div class="row">
         <div class="col-md-12">
-            <table
-                id="tableApis"
-                class="table table-striped table-bordered table-hover"
-                style="width: 100%"
-            >
-                <thead>
-                    <tr>
-                        <th>#</th>
-                        <th>Http</th>
-                        <th>Token</th>
-                        <th>Descripcion</th>
-                        <th>Acciones</th>
-                    </tr>
-                </thead>
-            </table>
+            <div class="container">
+                <table
+                    id="tableApis"
+                    class="table table-striped table-bordered table-hover"
+                >
+                    <thead>
+                        <tr>
+                            <th>#</th>
+                            <th>Http</th>
+                            <th>Token</th>
+                            <th>Descripcion</th>
+                            <th>Acciones</th>
+                        </tr>
+                    </thead>
+                </table>
+            </div>
         </div>
         <div
             class="modal fade"
@@ -232,10 +233,12 @@ export default {
                     {
                         data: "http",
                         className: "text-left",
+                        width: "10%",
                     },
                     {
                         data: "token",
                         className: "text-left",
+                        width: "50%",
                     },
                     {
                         data: "descripcion",
@@ -297,11 +300,11 @@ export default {
                 this.errores.token.mensaje = "Falta ingresar token";
                 resultado = false;
             }
-            if (this.descripcion.length == 0) {
-                this.errores.descripcion.error = true;
-                this.errores.descripcion.mensaje = "Falta ingresar descripcion";
-                resultado = false;
-            }
+            // if (this.descripcion.length == 0) {
+            //     this.errores.descripcion.error = true;
+            //     this.errores.descripcion.mensaje = "Falta ingresar descripcion";
+            //     resultado = false;
+            // }
             return !resultado ? false : true;
         },
         limpiarErrores: function () {
@@ -323,3 +326,11 @@ export default {
     },
 };
 </script>
+<style>
+#tableApis {
+    table-layout: fixed;
+}
+td {
+    word-wrap: break-word;
+}
+</style>

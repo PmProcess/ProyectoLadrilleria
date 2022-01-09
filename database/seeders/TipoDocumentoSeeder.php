@@ -20,5 +20,9 @@ class TipoDocumentoSeeder extends Seeder
         TipoDocumento::create([
             'tipo'=>'Factura de Venta'
         ]);
+        TipoDocumento::create([
+            'tipo'=>'Recibo de Venta'
+        ]);
+
     }
 }

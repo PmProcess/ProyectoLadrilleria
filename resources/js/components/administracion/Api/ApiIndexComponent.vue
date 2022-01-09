@@ -215,11 +215,11 @@ export default {
                 this.errores.token.mensaje = "Falta ingresar token";
                 resultado = false;
             }
-            if (this.descripcion.length == 0) {
-                this.errores.descripcion.error = true;
-                this.errores.descripcion.mensaje = "Falta ingresar descripcion";
-                resultado = false;
-            }
+            // if (this.descripcion.length == 0) {
+            //     this.errores.descripcion.error = true;
+            //     this.errores.descripcion.mensaje = "Falta ingresar descripcion";
+            //     resultado = false;
+            // }
             return !resultado ? false : true;
         },
         limpiarModalCreate: function () {

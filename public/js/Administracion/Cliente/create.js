@@ -100,6 +100,7 @@ $("#consultarDocumento").on("click", function () {
             })
             .then(json => {
                 var datos = json.data;
+                console.log(datos);
                 if ($("#tipo_documento").val() == "DNI") {
                     $("#nombres").val(datos.nombres)
                     $("#apellidos").val(datos.apellido_paterno + " " + datos.apellido_materno)

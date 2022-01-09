@@ -5,7 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Factura de Venta</title>
+    <title>Recibo de Venta</title>
 </head>
 {{-- <style>
     :root {
@@ -14314,9 +14314,9 @@
                             </div>
                             <div style="background-color:{{ $documento->cuadroDocumento->serie->backgroundColor }};
                         color:{{ $documento->cuadroDocumento->serie->color }}">
-                                F000-1</div>
+                                R-00001</div>
                             <div class="font-weight-light">
-                                Factura DE VENTA
+                                RECIBO DE VENTA
                             </div>
                         </div>
                     @endif

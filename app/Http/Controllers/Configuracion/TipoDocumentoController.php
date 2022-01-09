@@ -27,7 +27,7 @@ class TipoDocumentoController extends Controller
         return $json;
     }
     public function getList(){
-        $tiposDocumentos= TipoDocumento::get();
+        $tiposDocumentos= TipoDocumento::where('id','!=','3')->get();
         return DataTables::of($tiposDocumentos)->toJson();
     }
     public function vistaPreviaPdf($arreglo,$tipo)
@@ -43,6 +43,11 @@ class TipoDocumentoController extends Controller
         {
             $documento=$data[0]->Factura;
             $pdf=PDF::loadView('pdf.tiposDocumento.factura',compact('documento','empresa'));
+        }
+        elseif($tipo=="Recibo de Venta")
+        {
+            $documento=$data[0]->Recibo;
+            $pdf=PDF::loadView('pdf.tiposDocumento.recibo',compact('documento','empresa'));
         }
 
         return $pdf->stream();
@@ -63,6 +68,9 @@ class TipoDocumentoController extends Controller
             }
             elseif($tipo=="Factura de Venta"){
                 $data[0]->Factura=$dataArreglo[0]->Factura;
+            }
+            elseif($tipo=="Recibo de Venta"){
+                $data[0]->Recibo=$dataArreglo[0]->Recibo;
             }
             file_put_contents(database_path("data/TipoDocumento/tipodocumento.json"), json_encode($data));
 
@@ -88,6 +96,11 @@ class TipoDocumentoController extends Controller
         {
             $documento=$data[0]->Factura;
             $pdf=PDF::loadView('pdf.tiposDocumento.factura',compact('documento','empresa'));
+        }
+        elseif($tipo=="Recibo de Venta")
+        {
+            $documento=$data[0]->Recibo;
+            $pdf=PDF::loadView('pdf.tiposDocumento.recibo',compact('documento','empresa'));
         }
 
         return $pdf->stream();

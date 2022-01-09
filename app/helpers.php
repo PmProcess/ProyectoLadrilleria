@@ -1,11 +1,13 @@
 <?php
 
 use App\Models\Administracion\Cliente;
+use App\Models\Apis;
 use App\Models\Configuracion\NumeracionConteo;
 use App\Models\Configuracion\TipoDocumento;
 use App\Models\Configuracion\TipoMoneda;
 use App\Models\Configuracion\TipoPago;
 use App\Models\FormaPago;
+use App\Models\Mantenimiento\EmpresaPersonal;
 use App\Models\Ubigeo\Departamento;
 use App\Models\Ubigeo\Distrito;
 use App\Models\Ubigeo\Provincia;
@@ -73,17 +75,20 @@ if (!function_exists('getTipoMoneda')) {
     }
 };
 if (!function_exists('getProductos')) {
-    /**
-     * @param $tipoOperacion Indica el tipo de operacion de un producto ,puede ser compra o venta o ambas
-     */
-    function getProductos($tipoOperacion)
+    function getProductos()
     {
-        if ($tipoOperacion == "VENTA") {
+        //     if ($tipoOperacion == "VENTA") {
 
-            return Producto::where('tipo_operacion', "!=", 'COMPRA')->get();
-        }
+        //         return Producto::where('tipo_operacion', "!=", 'COMPRA')->get();
+        //     }
 
-        return Producto::where('tipo_operacion', "!=", 'VENTA')->get();
+        return Producto::where('estado', 'ACTIVO')->get();
+    }
+}
+if (!function_exists('formasPagos')) {
+    function formasPagos()
+    {
+        return FormaPago::get();
     }
 }
 if (!function_exists('obtenerCorrelativo')) {
@@ -101,6 +106,83 @@ if (!function_exists('obtenerCorrelativo')) {
             ]);
         }
 
-        return NumeracionConteo::create(['numeracion_id' => $numeracion->id, 'correlativo' => $numeracion->conteo()->orderBy('created_at','desc')->first()->correlativo + 1]);
+        return NumeracionConteo::create(['numeracion_id' => $numeracion->id, 'correlativo' => $numeracion->conteo()->orderBy('created_at', 'desc')->first()->correlativo + 1]);
+    }
+}
+if (!function_exists('generarQrApi')) {
+    function generarQrApi($comprobante)
+    {
+        $url = "https://facturacion.apisperu.com/api/v1/sale/qr";
+        $client = new \GuzzleHttp\Client();
+        $token = Apis::findOrFail(3)->token;
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => "Bearer {$token}"
+            ],
+            'body'    => $comprobante
+        ]);
+        $estado = $response->getStatusCode();
+        return $response->getBody();
+        if ($estado == '200') {
+
+            $resultado = $response->getBody()->getContents();
+            json_decode($resultado);
+            return $resultado;
+        }
+    }
+}
+if (!function_exists('enviarComprobanteapi')) {
+    function enviarComprobanteapi($comprobante)
+    {
+        $url = "https://facturacion.apisperu.com/api/v1/invoice/send";
+        $client = new \GuzzleHttp\Client(['verify'=>false]);
+        $token = Apis::findOrFail(3)->token;
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => "Bearer {$token}"
+            ],
+            'body'    => $comprobante
+        ]);
+
+        $estado = $response->getStatusCode();
+
+        if ($estado == '200') {
+
+            $resultado = $response->getBody()->getContents();
+            json_decode($resultado);
+            return $resultado;
+        }
+    }
+}
+if (!function_exists('generarComprobanteapi')) {
+    function generarComprobanteapi($comprobante)
+    {
+        $url = "https://facturacion.apisperu.com/api/v1/invoice/pdf";
+        $client = new \GuzzleHttp\Client(['verify'=>false]);
+        $token = Apis::findOrFail(3)->token;
+        $response = $client->post($url, [
+            'headers' => [
+                'Content-Type' => 'application/json',
+                'Accept' => 'application/json',
+                'Authorization' => "Bearer {$token}"
+            ],
+            'body'    => $comprobante
+        ]);
+
+        $estado = $response->getStatusCode();
+
+        return $response->getBody()->getContents();
+
+        dd($response->getBody()->getContents());
+        if ($estado == '200') {
+
+            $resultado = $response->getBody()->getContents();
+            json_decode($resultado);
+            return $resultado;
+        }
     }
 }

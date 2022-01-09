@@ -15,6 +15,7 @@ class CreateProductoTable extends Migration
     {
         Schema::create('producto', function (Blueprint $table) {
             $table->id();
+            $table->string('codigo')->nullable();
             $table->unsignedBigInteger('tipo_producto_id');
             $table->foreign('tipo_producto_id')->references('id')->on('tipo_producto')->onDelete('cascade');
             $table->decimal('precio_venta')->default(0);
@@ -24,7 +25,7 @@ class CreateProductoTable extends Migration
             $table->string('nombre');
             $table->string('nombre_imagen')->nullable();
             $table->string('url_imagen')->nullable();
-            $table->enum('tipo_operacion',['VENTA','COMPRA','VENTA Y COMPRA'])->default('VENTA');
+            // $table->enum('tipo_operacion',['VENTA','COMPRA','VENTA Y COMPRA'])->default('VENTA');
             $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });

@@ -16,13 +16,14 @@ class ApiSeeder extends Seeder
     {
         Apis::create([
             "http"=>"https://apiperu.dev/api/dni/",
-            "token" =>"2c5644b9cec147b1d85fcfd087e90a1ded15a5d86c6723214c8613db3e54c37e",
             "descripcion" =>"dni"
         ]);
         Apis::create([
             "http"=>"https://apiperu.dev/api/ruc/",
-            "token" =>"2c5644b9cec147b1d85fcfd087e90a1ded15a5d86c6723214c8613db3e54c37e",
             "descripcion" =>"ruc"
+        ]);
+        Apis::create([
+            "http"=>"https://facturacion.apisperu.com/api/v1"
         ]);
     }
 }

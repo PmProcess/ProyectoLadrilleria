@@ -123,6 +123,10 @@
             :json="json"
             ref="boletaIndexComponent"
         ></boleta-index-component>
+        <recibo-index-component
+            :json="json"
+            ref="reciboIndexComponent"
+        ></recibo-index-component>
     </div>
 </template>
 <script>
@@ -130,8 +134,9 @@ import "datatables.net-bs4";
 import "datatables.net-buttons-bs4";
 import FacturaIndexComponent from "./Tipos/FacturaIndexComponent.vue";
 import BoletaIndexComponent from "./Tipos/BoletaIndexComponent.vue";
+import ReciboIndexComponent from "./Tipos/ReciboIndexComponent.vue";
 export default {
-    components: { FacturaIndexComponent, BoletaIndexComponent },
+    components: { FacturaIndexComponent, BoletaIndexComponent ,ReciboIndexComponent},
     props: ["json"],
     data() {
         return {
@@ -146,7 +151,6 @@ export default {
         };
     },
     created() {
-        var $this = this;
     },
     mounted() {
         this.inicializarDatatables();
@@ -160,7 +164,7 @@ export default {
         });
         $(document).on("click", ".btn-show", function (e) {
             var dato = $this.table.row($(this).closest("tr")).data();
-            console.log(dato.tipo)
+            console.log(dato.tipo);
             $this.src = route("tipoDocumento.vistaPrevia", dato.tipo);
             $this.preview = true;
         });
@@ -172,6 +176,10 @@ export default {
             } else if (dato.tipo == "Factura de Venta") {
                 $this.$refs.facturaIndexComponent.setTipo(dato.tipo);
                 $this.$refs.facturaIndexComponent.openModal();
+            } else if (dato.tipo == "Recibo de Venta") {
+                console.log("fad")
+                $this.$refs.reciboIndexComponent.setTipo(dato.tipo);
+                $this.$refs.reciboIndexComponent.openModal();
             }
         });
     },

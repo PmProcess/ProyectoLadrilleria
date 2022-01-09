@@ -1,7 +1,7 @@
 <template>
     <div
         class="modal fade"
-        id="modalFactura"
+        id="modalRecibo"
         tabindex="-1"
         role="dialog"
         aria-labelledby="exampleModalLabel"
@@ -11,7 +11,7 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">
-                        Editar Pdf - Factura de Venta
+                        Editar Pdf - Recibo de Venta
                     </h5>
                     <button
                         type="button"
@@ -46,7 +46,7 @@
                                                     name="imagenAlign"
                                                     value="left"
                                                     v-model="
-                                                        json[0].Factura.imagen
+                                                        json[0].Recibo.imagen
                                                             .align
                                                     "
                                                 />
@@ -57,7 +57,7 @@
                                                     name="imagenAlign"
                                                     value="right"
                                                     v-model="
-                                                        json[0].Factura.imagen
+                                                        json[0].Recibo.imagen
                                                             .align
                                                     "
                                                 />
@@ -75,19 +75,19 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .imagen.show
                                                             "
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="imagenFactura"
+                                                            id="example1"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="imagenFactura"
+                                                            for="example1"
                                                         >
                                                             <span
                                                                 class="
@@ -126,7 +126,7 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cliente
                                                                     .direccion
                                                                     .show
@@ -134,13 +134,13 @@
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="direccionFactura"
+                                                            id="direccion"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="direccionFactura"
+                                                            for="direccion"
                                                         >
                                                             <span
                                                                 class="
@@ -167,7 +167,7 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cliente
                                                                     .tipoMoneda
                                                                     .show
@@ -175,13 +175,13 @@
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="tipoMonedaFactura"
+                                                            id="tipoMoneda"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="tipoMonedaFactura"
+                                                            for="tipoMoneda"
                                                         >
                                                             <span
                                                                 class="
@@ -210,7 +210,7 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cliente
                                                                     .formaPago
                                                                     .show
@@ -218,13 +218,13 @@
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="formaPagoFactura"
+                                                            id="formaPago"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="formaPagoFactura"
+                                                            for="formaPago"
                                                         >
                                                             <span
                                                                 class="
@@ -263,9 +263,8 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
-                                                                    .table
-                                                                    .header
+                                                                json[0].Recibo
+                                                                    .table.header
                                                                     .borderColor
                                                             "
                                                             picker="wheel"
@@ -299,9 +298,8 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
-                                                                    .table
-                                                                    .header
+                                                                json[0].Recibo
+                                                                    .table.header
                                                                     .backgroundColor
                                                             "
                                                             picker="wheel"
@@ -336,9 +334,8 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
-                                                                    .table
-                                                                    .header
+                                                                json[0].Recibo
+                                                                    .table.header
                                                                     .color
                                                             "
                                                             picker="wheel"
@@ -363,6 +360,133 @@
                                                 </div>
                                             </div>
                                         </div>
+                                        <!-- <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="switch">
+                                                    <label
+                                                        for=""
+                                                        class="required"
+                                                        >Direccion</label
+                                                    >
+                                                    <div class="onoffswitch">
+                                                        <input
+                                                            type="checkbox"
+                                                            v-model="
+                                                                json[0].Recibo
+                                                                    .cliente
+                                                                    .direccion
+                                                                    .show
+                                                            "
+                                                            class="
+                                                                onoffswitch-checkbox
+                                                            "
+                                                            id="direccion"
+                                                        />
+                                                        <label
+                                                            class="
+                                                                onoffswitch-label
+                                                            "
+                                                            for="direccion"
+                                                        >
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-inner
+                                                                "
+                                                            ></span>
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-switch
+                                                                "
+                                                            ></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                            <div class="col-md-6">
+                                                <div class="switch">
+                                                    <label
+                                                        for=""
+                                                        class="required"
+                                                        >Tipo Moneda</label
+                                                    >
+                                                    <div class="onoffswitch">
+                                                        <input
+                                                            type="checkbox"
+                                                            v-model="
+                                                                json[0].Recibo
+                                                                    .cliente
+                                                                    .tipoMoneda
+                                                                    .show
+                                                            "
+                                                            class="
+                                                                onoffswitch-checkbox
+                                                            "
+                                                            id="tipoMoneda"
+                                                        />
+                                                        <label
+                                                            class="
+                                                                onoffswitch-label
+                                                            "
+                                                            for="tipoMoneda"
+                                                        >
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-inner
+                                                                "
+                                                            ></span>
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-switch
+                                                                "
+                                                            ></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-md-6">
+                                                <div class="switch">
+                                                    <label
+                                                        for=""
+                                                        class="required"
+                                                        >Forma de Pago</label
+                                                    >
+                                                    <div class="onoffswitch">
+                                                        <input
+                                                            type="checkbox"
+                                                            v-model="
+                                                                json[0].Recibo
+                                                                    .cliente
+                                                                    .formaPago
+                                                                    .show
+                                                            "
+                                                            class="
+                                                                onoffswitch-checkbox
+                                                            "
+                                                            id="formaPago"
+                                                        />
+                                                        <label
+                                                            class="
+                                                                onoffswitch-label
+                                                            "
+                                                            for="formaPago"
+                                                        >
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-inner
+                                                                "
+                                                            ></span>
+                                                            <span
+                                                                class="
+                                                                    onoffswitch-switch
+                                                                "
+                                                            ></span>
+                                                        </label>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div> -->
                                     </fieldset>
                                 </div>
                                 <div class="col-md-5">
@@ -387,7 +511,7 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cuadroDocumento
                                                                     .borderColor
                                                             "
@@ -422,7 +546,7 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cuadroDocumento
                                                                     .serie
                                                                     .backgroundColor
@@ -459,7 +583,7 @@
                                                     <div class="col-md-3">
                                                         <verte
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .cuadroDocumento
                                                                     .serie.color
                                                             "
@@ -507,20 +631,20 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .empresa
                                                                     .nombre.show
                                                             "
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="nombreFactura"
+                                                            id="nombre"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="nombreFactura"
+                                                            for="nombre"
                                                         >
                                                             <span
                                                                 class="
@@ -547,7 +671,7 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .empresa
                                                                     .direccion
                                                                     .show
@@ -555,13 +679,13 @@
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="direccionEmpresaFactura"
+                                                            id="direccionEmpresa"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="direccionEmpresaFactura"
+                                                            for="direccionEmpresa"
                                                         >
                                                             <span
                                                                 class="
@@ -590,20 +714,20 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .empresa
                                                                     .email.show
                                                             "
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="emailFactura"
+                                                            id="email"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="emailFactura"
+                                                            for="email"
                                                         >
                                                             <span
                                                                 class="
@@ -630,20 +754,20 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
+                                                                json[0].Recibo
                                                                     .empresa
                                                                     .phone.show
                                                             "
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="phoneFactura"
+                                                            id="phone"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="phoneFactura"
+                                                            for="phone"
                                                         >
                                                             <span
                                                                 class="
@@ -677,7 +801,7 @@
                                                     name="imagenAlign"
                                                     value="striped"
                                                     v-model="
-                                                        json[0].Factura.table
+                                                        json[0].Recibo.table
                                                             .tipo
                                                     "
                                                 />
@@ -688,7 +812,7 @@
                                                     name="imagenAlign"
                                                     value="normal"
                                                     v-model="
-                                                        json[0].Factura.table
+                                                        json[0].Recibo.table
                                                             .tipo
                                                     "
                                                 />
@@ -706,20 +830,19 @@
                                                         <input
                                                             type="checkbox"
                                                             v-model="
-                                                                json[0].Factura
-                                                                    .table
-                                                                    .border
+                                                                json[0].Recibo
+                                                                    .table.border
                                                             "
                                                             class="
                                                                 onoffswitch-checkbox
                                                             "
-                                                            id="borderFactura"
+                                                            id="border"
                                                         />
                                                         <label
                                                             class="
                                                                 onoffswitch-label
                                                             "
-                                                            for="borderFactura"
+                                                            for="border"
                                                         >
                                                             <span
                                                                 class="
@@ -770,23 +893,25 @@ export default {
             previewPdf: false,
             src: "",
             tipo: "",
+            // colors:{ r: 255, g: 0, b: 0 }
         };
     },
     methods: {
         setTipo(tipo) {
             this.tipo = tipo;
         },
-        openModal: function () {
+        openModal() {
             var $this = this;
             $this.previewPdf = true;
             $this.src = route("tipoDocumento.vistaPreviaPdf", {
                 arreglo: JSON.stringify($this.json),
                 tipo: $this.tipo,
             });
-            $("#modalFactura").modal("show");
+            $("#modalRecibo").modal("show");
         },
         vistaPdfEdit: function () {
             var $this = this;
+            console.clear();
             $this.src = route("tipoDocumento.vistaPreviaPdf", {
                 arreglo: JSON.stringify($this.json),
                 tipo: $this.tipo,
@@ -799,7 +924,7 @@ export default {
                 tipo: $this.tipo,
             })).then((value) => {
                 if(value.data.success) {
-                    $("#modalFactura").modal("hide")
+                    $("#modalRecibo").modal("hide")
                     toastr.success("Exito",value.data.mensaje);
                 }
                 else{
@@ -822,7 +947,7 @@ fieldset {
 }
 .required:after {
     color: rgb(219, 95, 37);
-    content: " * ";
+    content: "*";
     display: inline;
     font-weight: bold;
 }

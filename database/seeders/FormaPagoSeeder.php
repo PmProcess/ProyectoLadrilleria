@@ -15,10 +15,13 @@ class FormaPagoSeeder extends Seeder
     public function run()
     {
         FormaPago::create([
-            "tipo"=>"Tarjeta"
+            "tipo"=>"PLINK"
         ]);
         FormaPago::create([
-            "tipo"=>"Efectivo"
+            "tipo"=>"YAPE"
+        ]);
+        FormaPago::create([
+            "tipo"=>"EFECTIVO"
         ]);
     }
 }

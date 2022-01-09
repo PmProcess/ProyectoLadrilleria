@@ -3,7 +3,8 @@
 @section('ventas-active', 'active')
 @section('docVenta-active', 'active')
 <div id="app">
-    <documentoventaindex-component >
+    <documentoventaindex-component :formaspagos="{{ formasPagos() }}" :error="{{ json_encode(session('error')) }}"
+        :mensaje="{{ json_encode(session('mensaje')) }}">
     </documentoventaindex-component>
 </div>
 @endsection

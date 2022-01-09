@@ -53,8 +53,11 @@
                                                     <th>#</th>
                                                     <th>Cliente</th>
                                                     <th>Tipo Doc</th>
-                                                    <th>Tipo Pago</th>
+                                                    <!-- <th>Tipo Pago</th> -->
                                                     <th>Serie</th>
+                                                    <th>Total</th>
+                                                    <th>Deuda</th>
+                                                    <th>Estado</th>
                                                     <th>Acciones</th>
                                                 </tr>
                                             </thead>
@@ -67,19 +70,275 @@
                 </div>
             </div>
         </div>
+        <div
+            class="modal fade"
+            id="modalListPago"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <h5 class="modal-title" id="exampleModalLabel">
+                            Pagos
+                        </h5>
+                        <button
+                            type="button"
+                            class="close"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div class="modal-body">
+                        <div style="float: right" v-if="montoDeuda != 0">
+                            <button
+                                class="btn btn-primary"
+                                @click="modalPago()"
+                            >
+                                <i class="fa fa-plus"></i> Nuevo
+                            </button>
+                        </div>
+                        <table
+                            id="tablePagos"
+                            class="
+                                table table-striped table-bordered table-hover
+                            "
+                            style="width: 100%"
+                        >
+                            <thead>
+                                <tr>
+                                    <th>T.Pago</th>
+                                    <th>Efectivo</th>
+                                    <th>Transf</th>
+                                    <th>Fecha</th>
+                                    <th>Img</th>
+                                </tr>
+                            </thead>
+                        </table>
+                    </div>
+                    <!-- <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Close
+                        </button>
+                        <button type="button" class="btn btn-primary">
+                            Save changes
+                        </button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div
+            class="modal fade"
+            id="modalPago"
+            tabindex="-1"
+            role="dialog"
+            aria-labelledby="exampleModalLabel"
+            aria-hidden="true"
+        >
+            <div class="modal-dialog modal-lg" role="document">
+                <div class="modal-content" style="display: inherit !important">
+                    <div style="float: right">
+                        <button
+                            type="button"
+                            class="close m-3"
+                            data-dismiss="modal"
+                            aria-label="Close"
+                        >
+                            <span aria-hidden="true">&times;</span>
+                        </button>
+                    </div>
+                    <div
+                        class="modal-header text-center"
+                        style="display: inherit !important"
+                    >
+                        <h4
+                            class="modal-title text-center text-uppercase"
+                            id="exampleModalLabel"
+                        >
+                            Registrar Pago
+                        </h4>
+                    </div>
+                    <div class="modal-body">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="form-group col-md-12">
+                                        <label for="" class="required"
+                                            >Forma de pago</label
+                                        >
+                                        <v-select
+                                            label="tipo"
+                                            :options="formaspagos"
+                                            v-model="formaPago"
+                                            v-on:input="changeFormaPago"
+                                        ></v-select>
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="" class="required"
+                                            >Efectivo</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            v-model="efectivo"
+                                        />
+                                    </div>
+                                    <div class="form-group col-md-12">
+                                        <label for="" class="required"
+                                            >Transferencia</label
+                                        >
+                                        <input
+                                            type="number"
+                                            class="form-control"
+                                            :disabled="
+                                                formaPago.tipo == 'EFECTIVO'
+                                            "
+                                            v-model="transferencia"
+                                        />
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <div class="row">
+                                            <div class="col-lg-12">
+                                                <label id="logo_label"
+                                                    >Pago:</label
+                                                >
+                                                <div class="custom-file">
+                                                    <input
+                                                        id="logo"
+                                                        type="file"
+                                                        name="logo"
+                                                        v-on:change="
+                                                            seleccionarimage
+                                                        "
+                                                        class="
+                                                            custom-file-input
+                                                        "
+                                                        accept="image/*"
+                                                    />
+                                                    <label
+                                                        for="logo"
+                                                        id="logo_txt"
+                                                        name="logo_txt"
+                                                        class="
+                                                            custom-file-label
+                                                            selected
+                                                        "
+                                                        >Seleccionar</label
+                                                    >
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-7">
+                                                <div
+                                                    class="
+                                                        row
+                                                        justify-content-end
+                                                    "
+                                                >
+                                                    <a
+                                                        href="javascript:void(0);"
+                                                        id="limpiar_logo"
+                                                        v-on:click="limpiar"
+                                                    >
+                                                        <span
+                                                            class="
+                                                                badge
+                                                                badge-danger
+                                                            "
+                                                            >x</span
+                                                        >
+                                                    </a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <div class="col-lg-2"></div>
+                                            <div class="col-lg-7">
+                                                <p>
+                                                    <img
+                                                        class="
+                                                            logo
+                                                            rounded
+                                                            img-fluid
+                                                        "
+                                                        alt=""
+                                                    />
+                                                    <input
+                                                        id="url_logo"
+                                                        name="url_logo"
+                                                        type="hidden"
+                                                        value=""
+                                                    />
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="modal-footer">
+                        <button
+                            type="button"
+                            class="btn btn-secondary"
+                            data-dismiss="modal"
+                        >
+                            Cerrar
+                        </button>
+                        <button
+                            type="button"
+                            class="btn btn-primary"
+                            @click="storePago()"
+                        >
+                            Guardar
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 </template>
 <script>
+import "sweetalert2/dist/sweetalert2.min.css";
 import "datatables.net-bs4";
 import "datatables.net-buttons-bs4";
 export default {
+    props: ["formaspagos", "error", "mensaje"],
     data() {
         return {
             table: null,
+            tablePagos: null,
+            formaPago: {
+                id: 3,
+                tipo: "EFECTIVO",
+            },
+            efectivo: 0,
+            transferencia: 0,
+            file: "",
+            documento_venta_id: "",
+            montoDeuda: -1,
         };
     },
     mounted() {
         var $this = this;
+        $(".logo").attr(
+            "src",
+            window.location.origin + "/img/defaultmoney.jpg"
+        );
         this.datosInicializado();
         $(document).on("click", ".btn-delete", function (e) {
             $this.$swal
@@ -100,9 +359,134 @@ export default {
                     }
                 });
         });
+        $(document).on("click", ".btn-pagar", function (e) {
+            let datos = $this.table.row($(this).closest("tr")).data();
+            $this.tablePagos.clear().draw();
+            datos.pagos.forEach((value, index, array) => {
+                let pagoRow = {};
+                $this.tablePagos.row.add(Object.assign(value, pagoRow)).draw();
+            });
+            $this.documento_venta_id = datos.id;
+            $this.montoDeuda = parseFloat(datos.deuda);
+            $("#modalListPago").modal("show");
+        });
+        $(document).on("click", ".btn-download", function (e) {
+            toastr.warning("No existe Imagen con este registro");
+        });
+        $(document).on("click", ".btn-ticket", function (e) {
+            let datos = $this.table.row($(this).closest("tr")).data();
+            window.open(
+                route("documentoVenta.ticket", datos.id),
+                "myWindow",
+                "width=900,height=600"
+            );
+        });
+        $(document).on("click", ".btn-a4", function (e) {
+            let datos = $this.table.row($(this).closest("tr")).data();
+            window.open(
+                route("documentoVenta.a4", datos.id),
+                "myWindow",
+                "width=900,height=600"
+            );
+        });
+        $(document).on("click", ".btn-sunat", function (e) {
+            let datos = $this.table.row($(this).closest("tr")).data();
+            window.location.href = route("documentoVenta.sunat", datos.id);
+        });
+
+        //-------Error
+        if (this.error != null) {
+            this.$swal.fire({
+                icon: "error",
+                title: "Oops...",
+                text: this.error,
+            });
+        }
+        if (this.mensaje != null) {
+            this.$swal.fire({
+                icon: "successs",
+                title: "Mensaje de Registro",
+                text: this.mensaje,
+            });
+        }
     },
     methods: {
         datosInicializado: function () {
+            this.tablePagos = $("#tablePagos").DataTable({
+                bPaginate: true,
+                bLengthChange: true,
+                // bFilter: true,
+                bInfo: true,
+                bAutoWidth: false,
+                processing: true,
+                language: {
+                    url: window.location.origin + "/Spanish.json",
+                },
+                columns: [
+                    {
+                        data: null,
+                        render: function (data) {
+                            return data.forma_pago.tipo;
+                        },
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            return data.efectivo;
+                        },
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            return data.transferencia;
+                        },
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            let fecha = new Date(data.created_at);
+                            return (
+                                fecha.toISOString().split("T")[0] +
+                                " " +
+                                fecha.getHours() +
+                                ":" +
+                                fecha.getMinutes()
+                            );
+                        },
+                    },
+                    {
+                        data: null,
+                        render: function (data) {
+                            return (
+                                "<a class='btn btn-primary " +
+                                (data.url_imagen == null
+                                    ? "btn-download'"
+                                    : "' href='" +
+                                      route(
+                                          "documentoVenta.pago.download",
+                                          data.id
+                                      ) +
+                                      "'") +
+                                " role='button'  title='descargar' style='color:white;'><i class='fa fa-download'></i> Descargar</a>"
+                            );
+                        },
+                    },
+                ],
+                columnDefs: [
+                    {
+                        targets: [0, 1, 2, 3, 4],
+                        className: "text-center",
+                    },
+                    {
+                        targets: [4],
+                        width: "10%",
+                    },
+                    {
+                        targets: [1, 2],
+                        width: "20%",
+                    },
+                ],
+            });
             this.table = $("#tableDocumentosVentas").DataTable({
                 bPaginate: true,
                 bLengthChange: true,
@@ -146,13 +530,6 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            return data.forma_pago.tipo;
-                        },
-                    },
-                    {
-                        data: null,
-                        className: "text-center",
-                        render: function (data) {
                             return (
                                 data.correlativo.numeracion.serie +
                                 "-" +
@@ -164,13 +541,58 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
+                            return data.total;
+                        },
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
+                            return data.deuda;
+                        },
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
+                            return data.estado_documento;
+                        },
+                    },
+                    {
+                        data: null,
+                        className: "text-center",
+                        render: function (data) {
+                            let opciones = "";
+                            opciones +=
+                                "<li><a class='dropdown-item btn-ticket'  title='Imprimir Ticket'><b><i class='fa fa-print'></i> Ticket</a></b></li>";
+                            opciones +=
+                                "<li><a class='dropdown-item btn-a4'  title='Imprimir A4'><b><i class='fa fa-print'></i> A4</a></b></li>";
+
+                            if (data.estado_documento == "PENDIENTE") {
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-pagar'  title='Pagar'><b><i class='fa fa-money'></i> Pagar</a></b></li>";
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>";
+                            } else if (data.estado_documento == "PAGADO") {
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-sunat'  title='Pagar'><b><i class='fa fa-send'></i> Sunat</a></b></li>";
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-pagar'  title='Pagar'><b><i class='fa fa-money'></i> Pagar</a></b></li>";
+                            } else if (data.estado_documento == "EXITO") {
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-pagar'  title='Pagar'><b><i class='fa fa-money'></i> Pagar</a></b></li>";
+                            } else if (data.estado_documento == "FALLO") {
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-sunat'  title='Pagar'><b><i class='fa fa-send'></i> Sunat</a></b></li>";
+                                opciones +=
+                                    "<li><a class='dropdown-item btn-pagar'  title='Pagar'><b><i class='fa fa-money'></i> Pagar</a></b></li>";
+                            }
+
                             return (
                                 "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
-                                // "<li><a class='dropdown-item btn-edit' href='#' title='Modificar' ><b><i class='fa fa-edit'></i>Editar</a></b></li>" +
-                                "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i> Eliminar</a></b></li>" +
+                                opciones +
                                 "</ul></div>"
                             );
-                            // return '<div class="dropdown"><button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Dropdown button</button><div class="dropdown-menu" aria-labelledby="dropdownMenuButton"><a class="dropdown-item" href="#">Action</a><a class="dropdown-item" href="#">Another action</a><a class="dropdown-item" href="#">Something else here</a></div></div>';
                         },
                     },
                 ],
@@ -179,6 +601,94 @@ export default {
         goCreate: function () {
             window.location.href = route("documentoVenta.create");
         },
+        changeFormaPago: function () {
+            if (this.formaPago.tipo == "EFECTIVO") {
+                this.transferencia = 0;
+            }
+        },
+        modalPago: function () {
+            this.formaPago = {
+                id: 3,
+                tipo: "EFECTIVO",
+            };
+            this.efectivo = 0;
+            this.transferencia = 0;
+            this.limpiar();
+            $("#modalPago").modal("show");
+        },
+        seleccionarimage: function (e) {
+            var $this = this;
+            $this.file = e.target.files[0];
+            var filePath = $(".custom-file #logo").val();
+            var allowedExtensions = /(.jpg|.jpeg|.png)$/i;
+            if (allowedExtensions.exec(filePath)) {
+                var userFile = $(".custom-file #logo");
+                userFile.attr("src", URL.createObjectURL(e.target.files[0]));
+                var data = userFile.attr("src");
+                $(".logo").attr("src", data);
+
+                let fileName = $(".custom-file #logo").val().split("\\").pop();
+                $(".custom-file #logo")
+                    .next(".custom-file-label")
+                    .addClass("selected")
+                    .html(fileName);
+            } else {
+                toastr.error(
+                    "Extensión inválida, formatos admitidos (.jpg . jpeg . png)",
+                    "Error"
+                );
+                $(".logo").attr(
+                    "src",
+                    window.location.origin + "/img/defaultmoney.jpg"
+                );
+            }
+        },
+        limpiar: function () {
+            this.file = "";
+            $(".logo").attr(
+                "src",
+                window.location.origin + "/img/defaultmoney.jpg"
+            );
+        },
+        storePago: function () {
+            if (
+                parseFloat(this.efectivo) + parseFloat(this.transferencia) >
+                this.montoDeuda
+            ) {
+                toastr.error("El Pago es mayor de lo que se debe");
+            } else {
+                let $this = this;
+                const config = {
+                    headers: {
+                        "content-type": "multipart/form-data",
+                    },
+                };
+                let data = new FormData();
+                data.append("documento_venta_id", this.documento_venta_id);
+                data.append("efectivo", this.efectivo);
+                data.append("transferencia", this.transferencia);
+                data.append("forma_pago_id", this.formaPago.id);
+                data.append("imagen", this.file);
+                axios
+                    .post(route("documentoVenta.pago.store"), data, config)
+                    .then((value) => {
+                        if (value.data.success) {
+                            let pagoRow = {};
+                            $this.tablePagos.row
+                                .add(Object.assign(value.data.data, pagoRow))
+                                .draw();
+                            $this.montoDeuda = parseFloat(
+                                value.data.montoDeuda
+                            );
+                            $this.table.ajax.reload();
+                            $("#modalPago").modal("hide");
+                        } else {
+                            toastr.error("Ocurrio un error", "error");
+                            // $("#modalPago").modal("show");
+                        }
+                    });
+            }
+        },
     },
 };
 </script>
@@ -186,4 +696,8 @@ export default {
 .swal2-container {
     z-index: 4000;
 }
+/* label.required::before{
+    content: " * ";
+    color: #f35731;
+} */
 </style>

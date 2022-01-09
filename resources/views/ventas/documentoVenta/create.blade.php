@@ -6,7 +6,7 @@
         <documentoventacreate-component :old="{{ json_encode(Session::getOldInput()) }}"
             :cliente_v="{{ json_encode(getClientes()) }}" :formapago_v="{{json_encode(getFormaPagos())}}"
             :tipodocumento_v="{{json_encode(getTipoDocumentos())}}"
-            :producto_v="{{json_encode(getProductos('VENTA'))}}"
+            :producto_v="{{json_encode(getProductos())}}"
             :csrf="{{ json_encode(csrf_token()) }}"
             :errores_laravel="{{json_encode(session('errores'))}}"
             :tipomoneda_v="{{json_encode(getTipoMoneda())}}"

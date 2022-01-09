@@ -116,7 +116,7 @@
                             </div>
                         </div>
                         <div class="form-group row">
-                            <div class="col-md-6">
+                            <div class="col-md-12">
                                 <label for="">Nombre</label>
                                 <input
                                     type="text"
@@ -136,7 +136,7 @@
                                     }}</strong>
                                 </span>
                             </div>
-                            <div class="col-md-6">
+                            <!-- <div class="col-md-6">
                                 <label for="">Tipo de Operacion</label>
                                 <v-select
                                     v-model="modelo.obligatorio.tipo_operacion"
@@ -154,7 +154,7 @@
                                         errores.tipo_operacion.mensaje
                                     }}</strong>
                                 </span>
-                            </div>
+                            </div> -->
                         </div>
                         <div class="form-group row">
                             <div class="col-md-4">
@@ -197,6 +197,14 @@
                                 >
                                     <strong>{{ errores.stock.mensaje }}</strong>
                                 </span>
+                            </div>
+                            <div class="col-md-4">
+                                <label for="">codigo</label>
+                                <input
+                                    type="text"
+                                    class="form-control form-control-sm"
+                                    v-model="modelo.otros.codigo"
+                                />
                             </div>
                         </div>
                         <div class="row">
@@ -297,12 +305,13 @@ export default {
                     precio_venta: "0",
                     stock: "0",
                     nombre: "",
-                    tipo_operacion: {
-                        label: "VENTA",
-                    },
+                    // tipo_operacion: {
+                    //     label: "VENTA",
+                    // },
                 },
                 otros: {
                     imagen: "",
+                    codigo: "",
                 },
             },
             tiposOperaciones: [
@@ -313,10 +322,10 @@ export default {
             tiposProductos: [],
             unidadesMedidas: [],
             errores: {
-                tipo_operacion: {
-                    error: false,
-                    mensaje: "",
-                },
+                // tipo_operacion: {
+                //     error: false,
+                //     mensaje: "",
+                // },
                 tipo_producto_id: {
                     error: false,
                     mensaje: "",
@@ -498,9 +507,9 @@ export default {
                 label: "ladrillo",
                 code: 1,
             };
-            this.modelo.obligatorio.tipo_operacion = {
-                label: "VENTA",
-            };
+            // this.modelo.obligatorio.tipo_operacion = {
+            //     label: "VENTA",
+            // };
         },
         limpiar: function () {},
     },

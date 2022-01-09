@@ -267,7 +267,7 @@ export default {
             var $this = this;
             const config = {
                 headers: {
-                    "content-type": "multipart/forma-data",
+                    "content-type": "multipart/form-data",
                 },
             };
             var data = new FormData();
