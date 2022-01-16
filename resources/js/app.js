@@ -149,6 +149,22 @@ Vue.component(
     require("./components/compras/documentoCompra/DocumentoCompraEditComponent.vue")
         .default
 );
+
+Vue.component(
+    "notaingresoindex-component",
+    require("./components/almacen/notaIngreso/NotaIngresoIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "notaingresocreate-component",
+    require("./components/almacen/notaIngreso/NotaIngresoCreateComponent.vue")
+        .default
+);
+Vue.component(
+    "notaingresoedit-component",
+    require("./components/almacen/notaIngreso/NotaIngresoEditComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(

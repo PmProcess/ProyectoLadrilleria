@@ -60,7 +60,12 @@ class RolesSeeder extends Seeder
         ]);
         $permission_all[] = $permission->id;
 
-
+        $permission = Permission::create([
+            'name' => 'modulo de Nota de Ingreso',
+            'slug' => 'notaIngreso.index',
+            'description' => 'Un usuario puede ver el modulo de Nota de Ingresos'
+        ]);
+        $permission_all[] = $permission->id;
 
         $permission = Permission::create([
             'name' => 'modulo de Clientes',
@@ -137,12 +142,12 @@ class RolesSeeder extends Seeder
         ]);
         $permission_all[] = $permission->id;
 
-        $permission=Permission::create([
-            'name'=>'modulo numeracion',
-            'slug'=>'numeracion.index',
-            'description'=>'Un usuario puede consultar el modulo de numeracion'
+        $permission = Permission::create([
+            'name' => 'modulo numeracion',
+            'slug' => 'numeracion.index',
+            'description' => 'Un usuario puede consultar el modulo de numeracion'
         ]);
-        $permission_all[]=$permission->id;
+        $permission_all[] = $permission->id;
 
 
 

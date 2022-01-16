@@ -33,23 +33,5 @@ class DetalleDocumentoCompra extends Model
             $insumo->stock += $detalle->cantidad;
             $insumo->save();
         });
-        // static::deleting(function($detalle){
-        //     Log::info("llego");
-        //     Log::info($detalle);
-        //     // $insumo=Insumo::findOrFail($detalle->insumo_id);
-        //     // $insumo->stock-=$detalle->cantidad;
-        //     // $insumo->save();
-        // });
     }
-    // protected static function boot()
-    // {
-    //     parent::boot();
-
-    //     static::deleting(function ($detalle) {
-    //         Log::info("llego");
-    //         $insumo = Insumo::findOrFail($detalle->insumo_id);
-    //         $insumo->stock -= $detalle->cantidad;
-    //         $insumo->save();
-    //     });
-    // }
 }

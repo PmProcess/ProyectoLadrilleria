@@ -4,6 +4,7 @@ use App\Http\Controllers\Administracion\ClienteController;
 use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
+use App\Http\Controllers\Almacen\NotaIngresoController;
 use App\Http\Controllers\ApisController;
 use App\Http\Controllers\Compras\DocumentoCompraController;
 use App\Http\Controllers\Compras\InsumoController;
@@ -189,5 +190,13 @@ Route::prefix('documentoCompra')->middleware('auth')->group(function(){
     Route::get('edit/{id}',[DocumentoCompraController::class,'edit'])->name('documentoCompra.edit');
     Route::post('update/{id}',[DocumentoCompraController::class,'update'])->name('documentoCompra.update');
     Route::get('destroy/{id}',[DocumentoCompraController::class,'destroy'])->name('documentoCompra.destroy');
-
+});
+Route::prefix('notaIngreso')->middleware('auth')->group(function(){
+    Route::get('index',[NotaIngresoController::class,'index'])->name('notaIngreso.index');
+    Route::get('getList',[NotaIngresoController::class,'getList'])->name('notaIngreso.getList');
+    Route::get('create',[NotaIngresoController::class,'create'])->name('notaIngreso.create');
+    Route::post('store',[NotaIngresoController::class,'store'])->name('notaIngreso.store');
+    Route::get('edit/{id}',[NotaIngresoController::class,'edit'])->name('notaIngreso.edit');
+    Route::post('update/{id}',[NotaIngresoController::class,'update'])->name('notaIngreso.update');
+    Route::get('destroy/{id}',[NotaIngresoController::class,'destroy'])->name('notaIngreso.destroy');
 });

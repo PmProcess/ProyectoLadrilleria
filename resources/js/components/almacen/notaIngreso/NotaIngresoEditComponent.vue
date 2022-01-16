@@ -3,14 +3,14 @@
         <div class="row wrapper border-bottom white-bg page-heading">
             <div class="col-lg-10 col-md-10">
                 <h2 style="text-transform: uppercase">
-                    <b>Documentos de Compras</b>
+                    <b>Notas de Ingresos</b>
                 </h2>
                 <ol class="breadcrumb">
                     <li class="breadcrumb-item active">
-                        <a>Documentos de Compras</a>
+                        <a>Notas de Ingresos</a>
                     </li>
                     <li class="breadcrumb-item active">
-                        <strong>Crear Documento de Compra</strong>
+                        <strong>Crear Nota de Ingreso</strong>
                     </li>
                 </ol>
             </div>
@@ -55,120 +55,6 @@
                                             </span>
                                         </div>
                                         <div class="col-md-6">
-                                            <label for="">Fecha Entrega</label>
-                                            <input
-                                                type="date"
-                                                name="fecha_entrega"
-                                                class="form-control"
-                                                :class="
-                                                    errores_externos
-                                                        .fecha_entrega.error
-                                                        ? 'is-invalid'
-                                                        : ''
-                                                "
-                                                v-model="
-                                                    obligatorio.fecha_entrega
-                                                "
-                                            />
-                                            <span
-                                                class="invalid-feedback"
-                                                role="alert"
-                                                v-if="
-                                                    errores_externos
-                                                        .fecha_entrega.error
-                                                "
-                                            >
-                                                <strong>{{
-                                                    errores_externos
-                                                        .fecha_entrega.mensaje
-                                                }}</strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div class="form-group row">
-                                        <div class="col-md-12">
-                                            <label for="">Proveedor</label>
-                                            <v-select
-                                                :options="proveedor_v"
-                                                label="nombre_completo"
-                                                v-model="select.proveedor_id"
-                                                v-on:input="
-                                                    obligatorio.proveedor_id =
-                                                        select.proveedor_id.id
-                                                "
-                                            ></v-select>
-                                            <input
-                                                type="hidden"
-                                                name="proveedor_id"
-                                                v-model="
-                                                    obligatorio.proveedor_id
-                                                "
-                                            />
-                                            <span
-                                                style="
-                                                    color: #dc3545;
-                                                    font-size: 80%;
-                                                "
-                                                v-if="
-                                                    errores_externos
-                                                        .proveedor_id.error
-                                                "
-                                            >
-                                                <strong>{{
-                                                    errores_externos
-                                                        .proveedor_id.mensaje
-                                                }}</strong>
-                                            </span>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-md-6">
-                                    <div class="form-group row">
-                                        <div class="col-md-6">
-                                            <label for=""
-                                                >Tipo de Documento</label
-                                            >
-                                            <v-select
-                                                :options="tipodocumento_v"
-                                                v-model="
-                                                    select.tipo_documento_id
-                                                "
-                                                v-on:input="
-                                                    obligatorio.tipo_documento_id =
-                                                        select.tipo_documento_id ==
-                                                        null
-                                                            ? null
-                                                            : select
-                                                                  .tipo_documento_id
-                                                                  .id
-                                                "
-                                                label="tipo"
-                                            ></v-select>
-                                            <input
-                                                type="hidden"
-                                                name="tipo_documento_id"
-                                                v-model="
-                                                    obligatorio.tipo_documento_id
-                                                "
-                                            />
-                                            <span
-                                                style="
-                                                    color: #dc3545;
-                                                    font-size: 80%;
-                                                "
-                                                v-if="
-                                                    errores_externos
-                                                        .tipo_documento_id.error
-                                                "
-                                            >
-                                                <strong>{{
-                                                    errores_externos
-                                                        .tipo_documento_id
-                                                        .mensaje
-                                                }}</strong>
-                                            </span>
-                                        </div>
-                                        <div class="col-md-6">
                                             <label for="">Almacen</label>
                                             <v-select
                                                 :options="almacen_v"
@@ -204,16 +90,14 @@
                                                 }}</strong>
                                             </span>
                                         </div>
-                                    </div>
-                                    <div class="form-group row">
                                         <div class="col-md-6">
-                                            <label for="">Numeracion</label>
+                                            <label for="">Codigo</label>
                                             <input
                                                 type="text"
-                                                name="numeracion"
-                                                id="numeracion"
+                                                name="codigo"
+                                                id="codigo"
                                                 class="form-control"
-                                                v-model="obligatorio.numeracion"
+                                                v-model="obligatorio.codigo"
                                             />
                                             <span
                                                 style="
@@ -221,12 +105,43 @@
                                                     font-size: 80%;
                                                 "
                                                 v-if="
-                                                    errores_externos.numeracion
+                                                    errores_externos.codigo
                                                         .error
                                                 "
                                             >
                                                 <strong>{{
-                                                    errores_externos.numeracion
+                                                    errores_externos.codigo
+                                                        .mensaje
+                                                }}</strong>
+                                            </span>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="form-group row">
+                                        <div class="col-md-12">
+                                            <label for="">Descripcion</label>
+                                            <textarea
+                                                name="descripcion"
+                                                id="descripcion"
+                                                rows="3"
+                                                class="form-control"
+                                                v-model="
+                                                    obligatorio.descripcion
+                                                "
+                                            ></textarea>
+                                            <span
+                                                style="
+                                                    color: #dc3545;
+                                                    font-size: 80%;
+                                                "
+                                                v-if="
+                                                    errores_externos.codigo
+                                                        .error
+                                                "
+                                            >
+                                                <strong>{{
+                                                    errores_externos.codigo
                                                         .mensaje
                                                 }}</strong>
                                             </span>
@@ -243,23 +158,20 @@
                                 <div class="col-md-12">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            <h4>
-                                                Detalle del Documento de Compra
-                                            </h4>
+                                            <h4>Detalle del Nota de Ingreso</h4>
                                         </div>
                                         <div class="panel-body">
                                             <div class="form-group row">
                                                 <div class="col-md-4">
                                                     <label for=""
-                                                        >Insumos</label
+                                                        >Productos</label
                                                     >
                                                     <v-select
-                                                        v-on:input="
-                                                            changeInsumo()
-                                                        "
-                                                        :options="insumo_v"
+                                                        :options="producto_v"
                                                         label="nombre"
-                                                        v-model="detalle.insumo"
+                                                        v-model="
+                                                            detalle.producto
+                                                        "
                                                     >
                                                     </v-select>
                                                     <span
@@ -269,12 +181,13 @@
                                                         "
                                                         v-if="
                                                             errores_internos
-                                                                .insumo.error
+                                                                .producto.error
                                                         "
                                                     >
                                                         <strong>{{
                                                             errores_internos
-                                                                .insumo.mensaje
+                                                                .producto
+                                                                .mensaje
                                                         }}</strong>
                                                     </span>
                                                 </div>
@@ -311,17 +224,22 @@
                                                         }}</strong>
                                                     </span>
                                                 </div>
-                                                <div class="col-md-2">
-                                                    <label for="">Precio</label>
+                                                <div class="col-md-3">
+                                                    <label for=""
+                                                        >Fecha
+                                                        Vencimiento</label
+                                                    >
                                                     <input
-                                                        type="number"
-                                                        step="any"
-                                                        name="precio"
-                                                        v-model="detalle.precio"
+                                                        type="date"
+                                                        name="fecha_vencimiento"
+                                                        v-model="
+                                                            detalle.fecha_vencimiento
+                                                        "
                                                         class="form-control"
                                                         :class="
                                                             errores_internos
-                                                                .precio.error
+                                                                .fecha_vencimiento
+                                                                .error
                                                                 ? 'is-invalid'
                                                                 : ''
                                                         "
@@ -331,12 +249,14 @@
                                                         role="alert"
                                                         v-if="
                                                             errores_internos
-                                                                .precio.error
+                                                                .fecha_vencimiento
+                                                                .error
                                                         "
                                                     >
                                                         <strong>{{
                                                             errores_internos
-                                                                .precio.mensaje
+                                                                .fecha_vencimiento
+                                                                .mensaje
                                                         }}</strong>
                                                     </span>
                                                 </div>
@@ -362,7 +282,7 @@
                                             <div class="row">
                                                 <div class="col-md-12">
                                                     <table
-                                                        id="tableDetalleDocumentoCompra"
+                                                        id="tableDetalleNotaIngreso"
                                                         class="
                                                             table
                                                             table-striped
@@ -379,9 +299,13 @@
                                                                 <th>
                                                                     Cantidad
                                                                 </th>
-                                                                <th>Insumo</th>
-                                                                <th>Precio</th>
-                                                                <th>Total</th>
+                                                                <th>
+                                                                    Producto
+                                                                </th>
+                                                                <th>
+                                                                    Fecha
+                                                                    Vencimiento
+                                                                </th>
                                                             </tr>
                                                         </thead>
                                                         <tbody></tbody>
@@ -426,45 +350,30 @@ export default {
         "proveedor_v",
         "almacen_v",
         "tipodocumento_v",
-        "insumo_v",
+        "producto_v",
         "csrf",
         "errores_laravel",
         "error",
+        "elemento",
     ],
     data() {
         return {
             select: {
-                proveedor_id: null,
-                tipo_documento_id: null,
                 almacen_id: null,
             },
             obligatorio: {
                 fecha_emision: "",
-                fecha_entrega: "",
-                proveedor_id: "",
-                tipo_documento_id: "",
                 almacen_id: "",
-                numeracion: "",
+                codigo: "",
+                descripcion: "",
             },
             detalle: {
-                insumo: null,
+                producto: null,
                 cantidad: null,
-                precio: null,
+                fecha_vencimiento: null,
             },
             errores_externos: {
                 fecha_emision: {
-                    error: false,
-                    mensaje: "",
-                },
-                fecha_entrega: {
-                    error: false,
-                    mensaje: "",
-                },
-                proveedor_id: {
-                    error: false,
-                    mensaje: "",
-                },
-                tipo_documento_id: {
                     error: false,
                     mensaje: "",
                 },
@@ -472,13 +381,17 @@ export default {
                     error: false,
                     mensaje: "",
                 },
-                numeracion: {
+                codigo: {
+                    error: false,
+                    mensaje: "",
+                },
+                descripcion: {
                     error: false,
                     mensaje: "",
                 },
             },
             errores_internos: {
-                insumo: {
+                producto: {
                     error: false,
                     mensaje: "",
                 },
@@ -486,7 +399,7 @@ export default {
                     error: false,
                     mensaje: "",
                 },
-                precio: {
+                fecha_vencimiento: {
                     error: false,
                     mensaje: "",
                 },
@@ -496,16 +409,8 @@ export default {
     },
     created() {
         //-------- load Fecha
-        this.ruta = route("documentoCompra.store");
+        this.ruta = route("notaIngreso.update", this.elemento.id);
         var fecha = new Date();
-        this.obligatorio.fecha_entrega =
-            fecha.getFullYear() +
-            "-" +
-            (fecha.getMonth() + 1 < 10
-                ? "0" + (fecha.getMonth() + 1)
-                : fecha.getMonth() + 1) +
-            "-" +
-            (fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate());
         this.obligatorio.fecha_emision =
             fecha.getFullYear() +
             "-" +
@@ -516,9 +421,9 @@ export default {
             (fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate());
     },
     mounted() {
-        console.log(this.old);
-        console.log(this.errores_laravel);
         var $this = this;
+        this.tablaInicializar();
+        this.setElemento();
         let i = Object.entries(this.old);
         i.forEach((value, index, array) => {
             if ($this.obligatorio[i[index][0]] != undefined) {
@@ -545,7 +450,6 @@ export default {
             });
         }
         //--------------------------------------------
-        this.tablaInicializar();
         $(document).on("click", ".btn-eliminar", function (e) {
             $this.table.row($(this).closest("tr")).remove().draw();
             $this.agregarTablaDetalle();
@@ -560,9 +464,41 @@ export default {
         }
     },
     methods: {
-        datosOld: function () {},
+        setElemento: function () {
+            console.log(this.elemento)
+            this.obligatorio.descripcion = this.elemento.descripcion;
+            this.obligatorio.codigo = this.elemento.codigo;
+            this.almacen_v.forEach((value, index, array) => {
+                if (value.id == this.elemento.almacen_id) {
+                    this.select.almacen_id = value;
+                    this.obligatorio.almacen_id = value.id;
+                }
+            });
+            let fecha_emision = new Date(this.elemento.fecha_emision);
+            this.obligatorio.fecha_emision =
+                fecha_emision.getFullYear() +
+                "-" +
+                (fecha_emision.getMonth() + 1 < 10
+                    ? "0" + (fecha_emision.getMonth() + 1)
+                    : fecha_emision.getMonth() + 1) +
+                "-" +
+                (fecha_emision.getDate() < 10
+                    ? "0" + fecha_emision.getDate()
+                    : fecha_emision.getDate());
+            this.elemento.detalle.forEach((value, index, array) => {
+                this.table.row
+                    .add({
+                        producto_id: value.producto_id,
+                        producto: value.producto.nombre,
+                        cantidad: value.cantidad,
+                        fecha_vencimiento:value.fecha_vencimiento,
+                    })
+                    .draw(false);
+                this.agregarTablaDetalle();
+            })
+        },
         tablaInicializar: function () {
-            this.table = $("#tableDetalleDocumentoCompra").DataTable({
+            this.table = $("#tableDetalleNotaIngreso").DataTable({
                 bPaginate: true,
                 bLengthChange: true,
                 bFilter: true,
@@ -598,7 +534,7 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            return data.insumo;
+                            return data.producto;
                         },
                     },
                     {
@@ -606,35 +542,20 @@ export default {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            return data.precio;
-                        },
-                    },
-                    {
-                        targets: [4],
-                        data: null,
-                        className: "text-center",
-                        render: function (data) {
-                            return data.total;
+                            return data.fecha_vencimiento;
                         },
                     },
                 ],
             });
         },
-        changeInsumo: function () {
-            this.detalle.precio =
-                this.detalle.insumo != null
-                    ? this.detalle.insumo.precio
-                    : 0;
-        },
         agregarDetalle: function () {
             if (this.validacionesDetalle()) {
                 this.table.row
                     .add({
-                        insumo_id: this.detalle.insumo.id,
-                        insumo: this.detalle.insumo.nombre,
+                        producto_id: this.detalle.producto.id,
+                        producto: this.detalle.producto.nombre,
                         cantidad: this.detalle.cantidad,
-                        precio: this.detalle.precio,
-                        total: this.detalle.cantidad * this.detalle.precio,
+                        fecha_vencimiento: this.detalle.fecha_vencimiento,
                     })
                     .draw(false);
                 this.agregarTablaDetalle();

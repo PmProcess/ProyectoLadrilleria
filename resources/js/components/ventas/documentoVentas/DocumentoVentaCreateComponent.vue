@@ -205,7 +205,13 @@
                                                     select.tipo_documento_id
                                                 "
                                                 v-on:input="
-                                                    obligatorio.tipo_documento_id =(select.tipo_documento_id==null ? null :select.tipo_documento_id.id)
+                                                    obligatorio.tipo_documento_id =
+                                                        select.tipo_documento_id ==
+                                                        null
+                                                            ? null
+                                                            : select
+                                                                  .tipo_documento_id
+                                                                  .id
                                                 "
                                                 label="tipo"
                                             ></v-select>
@@ -282,6 +288,17 @@
                                                                 .mensaje
                                                         }}</strong>
                                                     </span>
+                                                </div>
+                                                <div class="col-md-2">
+                                                    <label for="">Stock</label>
+                                                    <input
+                                                        type="number"
+                                                        name=""
+                                                        id=""
+                                                        v-model="stock"
+                                                        readonly
+                                                        class="form-control"
+                                                    />
                                                 </div>
                                                 <div class="col-md-2">
                                                     <label for=""
@@ -501,6 +518,7 @@ export default {
                 },
             },
             ruta: "",
+            stock: 0,
         };
     },
     created() {
@@ -511,26 +529,28 @@ export default {
         this.obligatorio.fecha_vencimiento =
             fecha.getFullYear() +
             "-" +
-            ((fecha.getMonth() + 1) < 10
-                ? "0" + ((fecha.getMonth() + 1))
-                : (fecha.getMonth() + 1)) +
+            (fecha.getMonth() + 1 < 10
+                ? "0" + (fecha.getMonth() + 1)
+                : fecha.getMonth() + 1) +
             "-" +
-            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate());
+            (fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate());
         this.obligatorio.fecha_registro =
             fecha.getFullYear() +
             "-" +
-            ((fecha.getMonth() + 1) < 10
-                ? "0" + ((fecha.getMonth() + 1))
-                : (fecha.getMonth() + 1)) +
+            (fecha.getMonth() + 1 < 10
+                ? "0" + (fecha.getMonth() + 1)
+                : fecha.getMonth() + 1) +
             "-" +
-            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate());
-            console.log(fecha.getFullYear() +
-            "-" +
-            ((fecha.getMonth() + 1) < 10
-                ? "0" + ((fecha.getMonth() + 1))
-                : (fecha.getMonth() + 1)) +
-            "-" +
-            (fecha.getDate() < 10 ? ("0" + fecha.getDate()) : fecha.getDate()));
+            (fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate());
+        console.log(
+            fecha.getFullYear() +
+                "-" +
+                (fecha.getMonth() + 1 < 10
+                    ? "0" + (fecha.getMonth() + 1)
+                    : fecha.getMonth() + 1) +
+                "-" +
+                (fecha.getDate() < 10 ? "0" + fecha.getDate() : fecha.getDate())
+        );
     },
     mounted() {
         var $this = this;
@@ -570,7 +590,7 @@ export default {
             this.$swal.fire({
                 icon: "error",
                 title: "Oops...",
-                text: this.error
+                text: this.error,
             });
         }
     },
@@ -640,19 +660,25 @@ export default {
                 this.detalle.producto != null
                     ? this.detalle.producto.precio_venta
                     : 0;
+            this.stock =
+                this.detalle.producto != null ? this.detalle.producto.stock : 0;
         },
         agregarDetalle: function () {
             if (this.validacionesDetalle()) {
-                this.table.row
-                    .add({
-                        producto_id: this.detalle.producto.id,
-                        producto: this.detalle.producto.nombre,
-                        cantidad: this.detalle.cantidad,
-                        precio: this.detalle.precio,
-                        total: this.detalle.cantidad * this.detalle.precio,
-                    })
-                    .draw(false);
-                this.agregarTablaDetalle();
+                if (this.stock > 0 && this.detalle.cantidad <= this.stock) {
+                    this.table.row
+                        .add({
+                            producto_id: this.detalle.producto.id,
+                            producto: this.detalle.producto.nombre,
+                            cantidad: this.detalle.cantidad,
+                            precio: this.detalle.precio,
+                            total: this.detalle.cantidad * this.detalle.precio,
+                        })
+                        .draw(false);
+                    this.agregarTablaDetalle();
+                } else {
+                    toastr.error("El stock no cumple");
+                }
             }
         },
         agregarTablaDetalle: function () {

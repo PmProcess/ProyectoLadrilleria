@@ -691,7 +691,7 @@ export default {
         changeInsumo: function () {
             this.detalle.precio =
                 this.detalle.insumo != null
-                    ? this.detalle.insumo.precio_venta
+                    ? this.detalle.insumo.precio
                     : 0;
         },
         agregarDetalle: function () {

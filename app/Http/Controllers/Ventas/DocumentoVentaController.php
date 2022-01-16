@@ -12,6 +12,7 @@ use App\Models\Ventas\DetalleDocumentoVenta;
 use App\Models\Ventas\DocumentoVenta;
 use App\Models\Ventas\EnvioSunat;
 use App\Models\Ventas\Pago;
+use App\Models\Ventas\Producto;
 use App\Rules\TipoDocumentoClienteRule;
 use Exception;
 use Illuminate\Http\Request;
@@ -79,6 +80,9 @@ class DocumentoVentaController extends Controller
             $documento = DocumentoVenta::create($datos);
             foreach (json_decode($detalle) as $value) {
                 $total += $value->total;
+                $producto=Producto::findOrFail($value->producto_id);
+                $producto->stock-=$value->cantidad;
+                $producto->save();
                 DetalleDocumentoVenta::create([
                     "documento_venta_id" => $documento->id,
                     "producto_id" => $value->producto_id,
@@ -164,9 +168,14 @@ class DocumentoVentaController extends Controller
     {
         DB::beginTransaction();
         try {
-            DocumentoVenta::findOrFail($id)->update([
+            $documento=DocumentoVenta::findOrFail($id)->update([
                 'estado' => "ANULADO"
             ]);
+            foreach ($documento->detalle as $key => $value) {
+                $producto=$value->producto;
+                $producto->stock+=$value->cantidad;
+                $producto->save();
+            }
             DB::commit();
             Session::flash('mensaje', "Se Elimino con Exito");
             return redirect()->route('documentoVentas.index');

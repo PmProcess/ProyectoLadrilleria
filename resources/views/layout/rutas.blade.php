@@ -138,6 +138,10 @@
                     <li class="@yield('unidadMedida-active')"><a href="{{ route('unidadMedida.index') }}"><i
                                 class="fa fa-building" aria-hidden="true"></i>Unidad de Medida</a></li>
                 @endif
+                @if (auth()->user()->can('haveaccess', 'notaIngreso.index'))
+                    <li class="@yield('notaIngreso-active')"><a href="{{ route('notaIngreso.index') }}"><i
+                                class="fa fa-building" aria-hidden="true"></i>Nota de Ingreso</a></li>
+                @endif
             </ul>
         </li>
     @endif
