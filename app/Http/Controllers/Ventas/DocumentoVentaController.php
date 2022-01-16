@@ -53,7 +53,6 @@ class DocumentoVentaController extends Controller
                 'tipo_documento_id' => 'required',
                 'fecha_registro' => 'required',
                 'fecha_vencimiento' => 'required',
-                // 'tabladetalle'=>'required|array'
             ];
             $mensaje = [
                 'cliente_id.required' => "El campo cliente es obligatorio",

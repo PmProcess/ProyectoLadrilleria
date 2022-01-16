@@ -1,12 +1,15 @@
 <?php
 
 use App\Models\Administracion\Cliente;
+use App\Models\Administracion\Proveedor;
 use App\Models\Apis;
+use App\Models\Compras\Insumo;
 use App\Models\Configuracion\NumeracionConteo;
 use App\Models\Configuracion\TipoDocumento;
 use App\Models\Configuracion\TipoMoneda;
 use App\Models\Configuracion\TipoPago;
 use App\Models\FormaPago;
+use App\Models\Mantenimiento\Almacen;
 use App\Models\Mantenimiento\EmpresaPersonal;
 use App\Models\Ubigeo\Departamento;
 use App\Models\Ubigeo\Distrito;
@@ -109,11 +112,39 @@ if (!function_exists('obtenerCorrelativo')) {
         return NumeracionConteo::create(['numeracion_id' => $numeracion->id, 'correlativo' => $numeracion->conteo()->orderBy('created_at', 'desc')->first()->correlativo + 1]);
     }
 }
+if(!function_exists('getProveedores'))
+{
+    function getProveedores(){
+        return Proveedor::with(['persona'])->get()->filter(function ($persona) {
+
+            return $persona->persona->estado == "ACTIVO";
+        })->map(function ($persona) {
+
+            $persona->nombre_completo = $persona->persona->tipoPersona->nombre_completo;
+            return $persona;
+        });
+
+    }
+}
+if(!function_exists('getAlmacenes'))
+{
+    function getAlmacenes()
+    {
+        return Almacen::where('estado','ACTIVO')->get();
+    }
+}
+if(!function_exists('getInsumos'))
+{
+    function getInsumos()
+    {
+        return Insumo::where('estado','ACTIVO')->get();
+    }
+}
 if (!function_exists('generarQrApi')) {
     function generarQrApi($comprobante)
     {
         $url = "https://facturacion.apisperu.com/api/v1/sale/qr";
-        $client = new \GuzzleHttp\Client();
+        $client =  new \GuzzleHttp\Client(['verify'=>false]);
         $token = Apis::findOrFail(3)->token;
         $response = $client->post($url, [
             'headers' => [

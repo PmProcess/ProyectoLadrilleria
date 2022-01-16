@@ -19,9 +19,9 @@ import VueSweetalert2 from "vue-sweetalert2";
 // fs.writeFile('calc1.js','console.log("done")',function(errr){
 //     console.log("Exito archivo")
 // })
-Vue.use(VueIframe);
 Vue.use(VueSweetalert2,options);
-Vue.config.devtools = false;
+Vue.use(VueIframe);
+// Vue.config.devtools = false;
 // import LottieAnimation from "lottie-vuejs/src/LottieAnimation.vue"
 Vue.component("v-select", vSelect);
 Vue.component("verte", Verte);
@@ -134,6 +134,21 @@ Vue.component(
     require("./components/ventas/documentoVentas/DocumentoVentaCreateComponent.vue")
         .default
 );
+Vue.component(
+    "documentocompraindex-component",
+    require("./components/compras/documentoCompra/DocumentoCompraIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "documentocompracreate-component",
+    require("./components/compras/documentoCompra/DocumentoCompraCreateComponent.vue")
+        .default
+);
+Vue.component(
+    "documentocompraedit-component",
+    require("./components/compras/documentoCompra/DocumentoCompraEditComponent.vue")
+        .default
+);
 //Datatable
 
 Vue.component(
@@ -178,6 +193,6 @@ Vue.component(
  * or customize the JavaScript scaffolding to fit your unique needs.
  */
 
-var pabloprueba = new Vue({
+var vue = new Vue({
     el: "#app",
 });

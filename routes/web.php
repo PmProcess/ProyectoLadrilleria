@@ -5,6 +5,7 @@ use App\Http\Controllers\Administracion\EmpleadoController;
 use App\Http\Controllers\Administracion\ProveedorController;
 use App\Http\Controllers\Administracion\TipoEmpleadoController;
 use App\Http\Controllers\ApisController;
+use App\Http\Controllers\Compras\DocumentoCompraController;
 use App\Http\Controllers\Compras\InsumoController;
 use App\Http\Controllers\Configuracion\NumeracionController;
 use App\Http\Controllers\Configuracion\RolController;
@@ -179,5 +180,14 @@ Route::prefix('documentoVenta')->middleware('auth')->group(function(){
     Route::get('ticket/{id}',[DocumentoVentaController::class,'ticket'])->name('documentoVenta.ticket');
     Route::get('a4/{id}',[DocumentoVentaController::class,'a4'])->name('documentoVenta.a4');
     Route::get('sunat/{id}',[DocumentoVentaController::class,'sunat'])->name('documentoVenta.sunat');
+});
+Route::prefix('documentoCompra')->middleware('auth')->group(function(){
+    Route::get('index',[DocumentoCompraController::class,'index'])->name('documentoCompra.index');
+    Route::get('getList',[DocumentoCompraController::class,'getList'])->name('documentoCompra.getList');
+    Route::get('create',[DocumentoCompraController::class,'create'])->name('documentoCompra.create');
+    Route::post('store',[DocumentoCompraController::class,'store'])->name('documentoCompra.store');
+    Route::get('edit/{id}',[DocumentoCompraController::class,'edit'])->name('documentoCompra.edit');
+    Route::post('update/{id}',[DocumentoCompraController::class,'update'])->name('documentoCompra.update');
+    Route::get('destroy/{id}',[DocumentoCompraController::class,'destroy'])->name('documentoCompra.destroy');
 
 });

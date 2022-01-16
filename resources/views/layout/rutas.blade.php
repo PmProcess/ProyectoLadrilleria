@@ -56,9 +56,9 @@
             <a href="#"><i class="fa fa-cart-plus"></i> <span class="nav-label">Compras</span><span
                     class="fa arrow"></span></a>
             <ul class="nav nav-second-level collapse">
-                @if (auth()->user()->can('haveaccess', 'docCompra.index'))
-                    <li class="@yield('docCompra-active')"><a href="#"><i class="fa fa-cart-plus"
-                                aria-hidden="true"></i>Orden de Compra</a></li>
+                @if (auth()->user()->can('haveaccess', 'documentoCompra.index'))
+                    <li class="@yield('documentoCompra-active')"><a href="{{ route('documentoCompra.index') }}"><i
+                                class="fa fa-cart-plus" aria-hidden="true"></i>Orden de Compra</a></li>
                 @endif
                 @if (auth()->user()->can('haveaccess', 'proveedor.index'))
                     <li class="@yield('proveedor-active')"><a href="{{ route('proveedor.index') }}"><i
