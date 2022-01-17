@@ -19,7 +19,7 @@
             <div class="col-md-12">
                 <div class="ibox">
                     <div class="ibox-content">
-                        <form :action="ruta" method="POST">
+                        <form :action="ruta" method="POST" id="frmFactura">
                             <input type="hidden" name="_token" v-model="csrf" />
                             <div class="form-group row">
                                 <div class="col-md-6">
@@ -426,7 +426,8 @@
                                         Regresar
                                     </button>
                                     <button
-                                        type="submit"
+                                        type="button"
+                                        @click="enviar"
                                         class="btn btn-primary"
                                     >
                                         Guardar
@@ -665,7 +666,10 @@ export default {
         },
         agregarDetalle: function () {
             if (this.validacionesDetalle()) {
-                if (this.stock > 0 && this.detalle.cantidad <= this.stock) {
+                if (
+                    parseFloat(this.stock) > 0 &&
+                    parseFloat(this.detalle.cantidad) <= parseFloat(this.stock)
+                ) {
                     this.table.row
                         .add({
                             producto_id: this.detalle.producto.id,
@@ -704,6 +708,13 @@ export default {
                 }
             }
             return resultado;
+        },
+        enviar: function () {
+            if (!this.table.data().count()) {
+                toastr.error("Detalle Vacio");
+            } else {
+                $("#frmFactura").submit();
+            }
         },
     },
 };

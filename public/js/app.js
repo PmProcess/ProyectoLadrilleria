@@ -14855,6 +14855,7 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
 
 
 
@@ -15032,7 +15033,7 @@ __webpack_require__.r(__webpack_exports__);
     },
     agregarDetalle: function agregarDetalle() {
       if (this.validacionesDetalle()) {
-        if (this.stock > 0 && this.detalle.cantidad <= this.stock) {
+        if (parseFloat(this.stock) > 0 && parseFloat(this.detalle.cantidad) <= parseFloat(this.stock)) {
           this.table.row.add({
             producto_id: this.detalle.producto.id,
             producto: this.detalle.producto.nombre,
@@ -15067,6 +15068,13 @@ __webpack_require__.r(__webpack_exports__);
       }
 
       return resultado;
+    },
+    enviar: function enviar() {
+      if (!this.table.data().count()) {
+        toastr.error("Detalle Vacio");
+      } else {
+        $("#frmFactura").submit();
+      }
     }
   }
 });
@@ -104426,270 +104434,55 @@ var render = function () {
       _c("div", { staticClass: "col-md-12" }, [
         _c("div", { staticClass: "ibox" }, [
           _c("div", { staticClass: "ibox-content" }, [
-            _c("form", { attrs: { action: _vm.ruta, method: "POST" } }, [
-              _c("input", {
-                directives: [
-                  {
-                    name: "model",
-                    rawName: "v-model",
-                    value: _vm.csrf,
-                    expression: "csrf",
+            _c(
+              "form",
+              { attrs: { action: _vm.ruta, method: "POST", id: "frmFactura" } },
+              [
+                _c("input", {
+                  directives: [
+                    {
+                      name: "model",
+                      rawName: "v-model",
+                      value: _vm.csrf,
+                      expression: "csrf",
+                    },
+                  ],
+                  attrs: { type: "hidden", name: "_token" },
+                  domProps: { value: _vm.csrf },
+                  on: {
+                    input: function ($event) {
+                      if ($event.target.composing) {
+                        return
+                      }
+                      _vm.csrf = $event.target.value
+                    },
                   },
-                ],
-                attrs: { type: "hidden", name: "_token" },
-                domProps: { value: _vm.csrf },
-                on: {
-                  input: function ($event) {
-                    if ($event.target.composing) {
-                      return
-                    }
-                    _vm.csrf = $event.target.value
-                  },
-                },
-              }),
-              _vm._v(" "),
-              _c("div", { staticClass: "form-group row" }, [
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("label", { attrs: { for: "" } }, [
-                        _vm._v("Fecha Registro"),
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.obligatorio.fecha_registro,
-                            expression:
-                              "\n                                                obligatorio.fecha_registro\n                                            ",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.errores_externos.fecha_registro.error
-                          ? "is-invalid"
-                          : "",
-                        attrs: { type: "date", name: "fecha_registro" },
-                        domProps: { value: _vm.obligatorio.fecha_registro },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.obligatorio,
-                              "fecha_registro",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.errores_externos.fecha_registro.error
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "invalid-feedback",
-                              attrs: { role: "alert" },
-                            },
-                            [
-                              _c("strong", [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.errores_externos.fecha_registro.mensaje
-                                  )
-                                ),
-                              ]),
-                            ]
-                          )
-                        : _vm._e(),
-                    ]),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "col-md-6" }, [
-                      _c("label", { attrs: { for: "" } }, [
-                        _vm._v("Fecha Vencimiento"),
-                      ]),
-                      _vm._v(" "),
-                      _c("input", {
-                        directives: [
-                          {
-                            name: "model",
-                            rawName: "v-model",
-                            value: _vm.obligatorio.fecha_vencimiento,
-                            expression:
-                              "\n                                                obligatorio.fecha_vencimiento\n                                            ",
-                          },
-                        ],
-                        staticClass: "form-control",
-                        class: _vm.errores_externos.fecha_vencimiento.error
-                          ? "is-invalid"
-                          : "",
-                        attrs: { type: "date", name: "fecha_vencimiento" },
-                        domProps: { value: _vm.obligatorio.fecha_vencimiento },
-                        on: {
-                          input: function ($event) {
-                            if ($event.target.composing) {
-                              return
-                            }
-                            _vm.$set(
-                              _vm.obligatorio,
-                              "fecha_vencimiento",
-                              $event.target.value
-                            )
-                          },
-                        },
-                      }),
-                      _vm._v(" "),
-                      _vm.errores_externos.fecha_vencimiento.error
-                        ? _c(
-                            "span",
-                            {
-                              staticClass: "invalid-feedback",
-                              attrs: { role: "alert" },
-                            },
-                            [
-                              _c("strong", [
-                                _vm._v(
-                                  _vm._s(
-                                    _vm.errores_externos.fecha_vencimiento
-                                      .mensaje
-                                  )
-                                ),
-                              ]),
-                            ]
-                          )
-                        : _vm._e(),
-                    ]),
-                  ]),
-                  _vm._v(" "),
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-md-12" },
-                      [
-                        _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Clientes"),
-                        ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.cliente_v,
-                            label: "nombre_completo",
-                          },
-                          on: {
-                            input: function ($event) {
-                              _vm.obligatorio.cliente_id =
-                                _vm.select.cliente_id.id
-                            },
-                          },
-                          model: {
-                            value: _vm.select.cliente_id,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.select, "cliente_id", $$v)
-                            },
-                            expression: "select.cliente_id",
-                          },
-                        }),
-                        _vm._v(" "),
-                        _c("input", {
-                          directives: [
-                            {
-                              name: "model",
-                              rawName: "v-model",
-                              value: _vm.obligatorio.cliente_id,
-                              expression: "obligatorio.cliente_id",
-                            },
-                          ],
-                          attrs: { type: "hidden", name: "cliente_id" },
-                          domProps: { value: _vm.obligatorio.cliente_id },
-                          on: {
-                            input: function ($event) {
-                              if ($event.target.composing) {
-                                return
-                              }
-                              _vm.$set(
-                                _vm.obligatorio,
-                                "cliente_id",
-                                $event.target.value
-                              )
-                            },
-                          },
-                        }),
-                        _vm._v(" "),
-                        _vm.errores_externos.cliente_id.error
-                          ? _c(
-                              "span",
-                              {
-                                staticStyle: {
-                                  color: "#dc3545",
-                                  "font-size": "80%",
-                                },
-                              },
-                              [
-                                _c("strong", [
-                                  _vm._v(
-                                    _vm._s(
-                                      _vm.errores_externos.cliente_id.mensaje
-                                    )
-                                  ),
-                                ]),
-                              ]
-                            )
-                          : _vm._e(),
-                      ],
-                      1
-                    ),
-                  ]),
-                ]),
+                }),
                 _vm._v(" "),
-                _c("div", { staticClass: "col-md-6" }, [
-                  _c("div", { staticClass: "form-group row" }, [
-                    _c(
-                      "div",
-                      { staticClass: "col-md-6" },
-                      [
+                _c("div", { staticClass: "form-group row" }, [
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c("div", { staticClass: "col-md-6" }, [
                         _c("label", { attrs: { for: "" } }, [
-                          _vm._v("Tipo de Documento"),
+                          _vm._v("Fecha Registro"),
                         ]),
-                        _vm._v(" "),
-                        _c("v-select", {
-                          attrs: {
-                            options: _vm.tipodocumento_v,
-                            label: "tipo",
-                          },
-                          on: {
-                            input: function ($event) {
-                              _vm.obligatorio.tipo_documento_id =
-                                _vm.select.tipo_documento_id == null
-                                  ? null
-                                  : _vm.select.tipo_documento_id.id
-                            },
-                          },
-                          model: {
-                            value: _vm.select.tipo_documento_id,
-                            callback: function ($$v) {
-                              _vm.$set(_vm.select, "tipo_documento_id", $$v)
-                            },
-                            expression:
-                              "\n                                                select.tipo_documento_id\n                                            ",
-                          },
-                        }),
                         _vm._v(" "),
                         _c("input", {
                           directives: [
                             {
                               name: "model",
                               rawName: "v-model",
-                              value: _vm.obligatorio.tipo_documento_id,
+                              value: _vm.obligatorio.fecha_registro,
                               expression:
-                                "\n                                                obligatorio.tipo_documento_id\n                                            ",
+                                "\n                                                obligatorio.fecha_registro\n                                            ",
                             },
                           ],
-                          attrs: { type: "hidden", name: "tipo_documento_id" },
-                          domProps: {
-                            value: _vm.obligatorio.tipo_documento_id,
-                          },
+                          staticClass: "form-control",
+                          class: _vm.errores_externos.fecha_registro.error
+                            ? "is-invalid"
+                            : "",
+                          attrs: { type: "date", name: "fecha_registro" },
+                          domProps: { value: _vm.obligatorio.fecha_registro },
                           on: {
                             input: function ($event) {
                               if ($event.target.composing) {
@@ -104697,27 +104490,25 @@ var render = function () {
                               }
                               _vm.$set(
                                 _vm.obligatorio,
-                                "tipo_documento_id",
+                                "fecha_registro",
                                 $event.target.value
                               )
                             },
                           },
                         }),
                         _vm._v(" "),
-                        _vm.errores_externos.tipo_documento_id.error
+                        _vm.errores_externos.fecha_registro.error
                           ? _c(
                               "span",
                               {
-                                staticStyle: {
-                                  color: "#dc3545",
-                                  "font-size": "80%",
-                                },
+                                staticClass: "invalid-feedback",
+                                attrs: { role: "alert" },
                               },
                               [
                                 _c("strong", [
                                   _vm._v(
                                     _vm._s(
-                                      _vm.errores_externos.tipo_documento_id
+                                      _vm.errores_externos.fecha_registro
                                         .mensaje
                                     )
                                   ),
@@ -104725,257 +104516,516 @@ var render = function () {
                               ]
                             )
                           : _vm._e(),
-                      ],
-                      1
-                    ),
+                      ]),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "col-md-6" }, [
+                        _c("label", { attrs: { for: "" } }, [
+                          _vm._v("Fecha Vencimiento"),
+                        ]),
+                        _vm._v(" "),
+                        _c("input", {
+                          directives: [
+                            {
+                              name: "model",
+                              rawName: "v-model",
+                              value: _vm.obligatorio.fecha_vencimiento,
+                              expression:
+                                "\n                                                obligatorio.fecha_vencimiento\n                                            ",
+                            },
+                          ],
+                          staticClass: "form-control",
+                          class: _vm.errores_externos.fecha_vencimiento.error
+                            ? "is-invalid"
+                            : "",
+                          attrs: { type: "date", name: "fecha_vencimiento" },
+                          domProps: {
+                            value: _vm.obligatorio.fecha_vencimiento,
+                          },
+                          on: {
+                            input: function ($event) {
+                              if ($event.target.composing) {
+                                return
+                              }
+                              _vm.$set(
+                                _vm.obligatorio,
+                                "fecha_vencimiento",
+                                $event.target.value
+                              )
+                            },
+                          },
+                        }),
+                        _vm._v(" "),
+                        _vm.errores_externos.fecha_vencimiento.error
+                          ? _c(
+                              "span",
+                              {
+                                staticClass: "invalid-feedback",
+                                attrs: { role: "alert" },
+                              },
+                              [
+                                _c("strong", [
+                                  _vm._v(
+                                    _vm._s(
+                                      _vm.errores_externos.fecha_vencimiento
+                                        .mensaje
+                                    )
+                                  ),
+                                ]),
+                              ]
+                            )
+                          : _vm._e(),
+                      ]),
+                    ]),
+                    _vm._v(" "),
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-12" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Clientes"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.cliente_v,
+                              label: "nombre_completo",
+                            },
+                            on: {
+                              input: function ($event) {
+                                _vm.obligatorio.cliente_id =
+                                  _vm.select.cliente_id.id
+                              },
+                            },
+                            model: {
+                              value: _vm.select.cliente_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.select, "cliente_id", $$v)
+                              },
+                              expression: "select.cliente_id",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.obligatorio.cliente_id,
+                                expression: "obligatorio.cliente_id",
+                              },
+                            ],
+                            attrs: { type: "hidden", name: "cliente_id" },
+                            domProps: { value: _vm.obligatorio.cliente_id },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.obligatorio,
+                                  "cliente_id",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.errores_externos.cliente_id.error
+                            ? _c(
+                                "span",
+                                {
+                                  staticStyle: {
+                                    color: "#dc3545",
+                                    "font-size": "80%",
+                                  },
+                                },
+                                [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errores_externos.cliente_id.mensaje
+                                      )
+                                    ),
+                                  ]),
+                                ]
+                              )
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
                   ]),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-6" }, [
+                    _c("div", { staticClass: "form-group row" }, [
+                      _c(
+                        "div",
+                        { staticClass: "col-md-6" },
+                        [
+                          _c("label", { attrs: { for: "" } }, [
+                            _vm._v("Tipo de Documento"),
+                          ]),
+                          _vm._v(" "),
+                          _c("v-select", {
+                            attrs: {
+                              options: _vm.tipodocumento_v,
+                              label: "tipo",
+                            },
+                            on: {
+                              input: function ($event) {
+                                _vm.obligatorio.tipo_documento_id =
+                                  _vm.select.tipo_documento_id == null
+                                    ? null
+                                    : _vm.select.tipo_documento_id.id
+                              },
+                            },
+                            model: {
+                              value: _vm.select.tipo_documento_id,
+                              callback: function ($$v) {
+                                _vm.$set(_vm.select, "tipo_documento_id", $$v)
+                              },
+                              expression:
+                                "\n                                                select.tipo_documento_id\n                                            ",
+                            },
+                          }),
+                          _vm._v(" "),
+                          _c("input", {
+                            directives: [
+                              {
+                                name: "model",
+                                rawName: "v-model",
+                                value: _vm.obligatorio.tipo_documento_id,
+                                expression:
+                                  "\n                                                obligatorio.tipo_documento_id\n                                            ",
+                              },
+                            ],
+                            attrs: {
+                              type: "hidden",
+                              name: "tipo_documento_id",
+                            },
+                            domProps: {
+                              value: _vm.obligatorio.tipo_documento_id,
+                            },
+                            on: {
+                              input: function ($event) {
+                                if ($event.target.composing) {
+                                  return
+                                }
+                                _vm.$set(
+                                  _vm.obligatorio,
+                                  "tipo_documento_id",
+                                  $event.target.value
+                                )
+                              },
+                            },
+                          }),
+                          _vm._v(" "),
+                          _vm.errores_externos.tipo_documento_id.error
+                            ? _c(
+                                "span",
+                                {
+                                  staticStyle: {
+                                    color: "#dc3545",
+                                    "font-size": "80%",
+                                  },
+                                },
+                                [
+                                  _c("strong", [
+                                    _vm._v(
+                                      _vm._s(
+                                        _vm.errores_externos.tipo_documento_id
+                                          .mensaje
+                                      )
+                                    ),
+                                  ]),
+                                ]
+                              )
+                            : _vm._e(),
+                        ],
+                        1
+                      ),
+                    ]),
+                  ]),
+                  _vm._v(" "),
+                  _c("input", {
+                    attrs: {
+                      type: "hidden",
+                      name: "tabladetalle",
+                      id: "tabladetalle",
+                    },
+                  }),
                 ]),
                 _vm._v(" "),
-                _c("input", {
-                  attrs: {
-                    type: "hidden",
-                    name: "tabladetalle",
-                    id: "tabladetalle",
-                  },
-                }),
-              ]),
-              _vm._v(" "),
-              _c("div", { staticClass: "row" }, [
-                _c("div", { staticClass: "col-md-12" }, [
-                  _c("div", { staticClass: "panel panel-primary" }, [
-                    _vm._m(1),
-                    _vm._v(" "),
-                    _c("div", { staticClass: "panel-body" }, [
-                      _c("div", { staticClass: "form-group row" }, [
-                        _c(
-                          "div",
-                          { staticClass: "col-md-4" },
-                          [
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-12" }, [
+                    _c("div", { staticClass: "panel panel-primary" }, [
+                      _vm._m(1),
+                      _vm._v(" "),
+                      _c("div", { staticClass: "panel-body" }, [
+                        _c("div", { staticClass: "form-group row" }, [
+                          _c(
+                            "div",
+                            { staticClass: "col-md-4" },
+                            [
+                              _c("label", { attrs: { for: "" } }, [
+                                _vm._v("Productos"),
+                              ]),
+                              _vm._v(" "),
+                              _c("v-select", {
+                                attrs: {
+                                  options: _vm.producto_v,
+                                  label: "nombre",
+                                },
+                                on: {
+                                  input: function ($event) {
+                                    return _vm.changeProducto()
+                                  },
+                                },
+                                model: {
+                                  value: _vm.detalle.producto,
+                                  callback: function ($$v) {
+                                    _vm.$set(_vm.detalle, "producto", $$v)
+                                  },
+                                  expression:
+                                    "\n                                                        detalle.producto\n                                                    ",
+                                },
+                              }),
+                              _vm._v(" "),
+                              _vm.errores_internos.producto.error
+                                ? _c(
+                                    "span",
+                                    {
+                                      staticStyle: {
+                                        color: "#dc3545",
+                                        "font-size": "80%",
+                                      },
+                                    },
+                                    [
+                                      _c("strong", [
+                                        _vm._v(
+                                          _vm._s(
+                                            _vm.errores_internos.producto
+                                              .mensaje
+                                          )
+                                        ),
+                                      ]),
+                                    ]
+                                  )
+                                : _vm._e(),
+                            ],
+                            1
+                          ),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
                             _c("label", { attrs: { for: "" } }, [
-                              _vm._v("Productos"),
+                              _vm._v("Stock"),
                             ]),
                             _vm._v(" "),
-                            _c("v-select", {
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.stock,
+                                  expression: "stock",
+                                },
+                              ],
+                              staticClass: "form-control",
                               attrs: {
-                                options: _vm.producto_v,
-                                label: "nombre",
+                                type: "number",
+                                name: "",
+                                id: "",
+                                readonly: "",
                               },
+                              domProps: { value: _vm.stock },
                               on: {
                                 input: function ($event) {
-                                  return _vm.changeProducto()
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.stock = $event.target.value
                                 },
                               },
-                              model: {
-                                value: _vm.detalle.producto,
-                                callback: function ($$v) {
-                                  _vm.$set(_vm.detalle, "producto", $$v)
+                            }),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("label", { attrs: { for: "" } }, [
+                              _vm._v("Cantidad"),
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
+                                {
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.detalle.cantidad,
+                                  expression:
+                                    "\n                                                        detalle.cantidad\n                                                    ",
                                 },
-                                expression:
-                                  "\n                                                        detalle.producto\n                                                    ",
+                              ],
+                              staticClass: "form-control",
+                              class: _vm.errores_internos.cantidad.error
+                                ? "is-invalid"
+                                : "",
+                              attrs: { type: "text", name: "cantidad" },
+                              domProps: { value: _vm.detalle.cantidad },
+                              on: {
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.detalle,
+                                    "cantidad",
+                                    $event.target.value
+                                  )
+                                },
                               },
                             }),
                             _vm._v(" "),
-                            _vm.errores_internos.producto.error
+                            _vm.errores_internos.cantidad.error
                               ? _c(
                                   "span",
                                   {
-                                    staticStyle: {
-                                      color: "#dc3545",
-                                      "font-size": "80%",
-                                    },
+                                    staticClass: "invalid-feedback",
+                                    attrs: { role: "alert" },
                                   },
                                   [
                                     _c("strong", [
                                       _vm._v(
                                         _vm._s(
-                                          _vm.errores_internos.producto.mensaje
+                                          _vm.errores_internos.cantidad.mensaje
                                         )
                                       ),
                                     ]),
                                   ]
                                 )
                               : _vm._e(),
-                          ],
-                          1
-                        ),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Stock"),
                           ]),
                           _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.stock,
-                                expression: "stock",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            attrs: {
-                              type: "number",
-                              name: "",
-                              id: "",
-                              readonly: "",
-                            },
-                            domProps: { value: _vm.stock },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.stock = $event.target.value
-                              },
-                            },
-                          }),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Cantidad"),
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.detalle.cantidad,
-                                expression:
-                                  "\n                                                        detalle.cantidad\n                                                    ",
-                              },
-                            ],
-                            staticClass: "form-control",
-                            class: _vm.errores_internos.cantidad.error
-                              ? "is-invalid"
-                              : "",
-                            attrs: { type: "text", name: "cantidad" },
-                            domProps: { value: _vm.detalle.cantidad },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.detalle,
-                                  "cantidad",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _vm.errores_internos.cantidad.error
-                            ? _c(
-                                "span",
+                          _c("div", { staticClass: "col-md-2" }, [
+                            _c("label", { attrs: { for: "" } }, [
+                              _vm._v("Precio"),
+                            ]),
+                            _vm._v(" "),
+                            _c("input", {
+                              directives: [
                                 {
-                                  staticClass: "invalid-feedback",
-                                  attrs: { role: "alert" },
+                                  name: "model",
+                                  rawName: "v-model",
+                                  value: _vm.detalle.precio,
+                                  expression: "detalle.precio",
                                 },
-                                [
-                                  _c("strong", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.errores_internos.cantidad.mensaje
-                                      )
-                                    ),
-                                  ]),
-                                ]
-                              )
-                            : _vm._e(),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2" }, [
-                          _c("label", { attrs: { for: "" } }, [
-                            _vm._v("Precio"),
-                          ]),
-                          _vm._v(" "),
-                          _c("input", {
-                            directives: [
-                              {
-                                name: "model",
-                                rawName: "v-model",
-                                value: _vm.detalle.precio,
-                                expression: "detalle.precio",
+                              ],
+                              staticClass: "form-control",
+                              class: _vm.errores_internos.precio.error
+                                ? "is-invalid"
+                                : "",
+                              attrs: {
+                                type: "number",
+                                step: "any",
+                                name: "precio",
                               },
-                            ],
-                            staticClass: "form-control",
-                            class: _vm.errores_internos.precio.error
-                              ? "is-invalid"
-                              : "",
-                            attrs: {
-                              type: "number",
-                              step: "any",
-                              name: "precio",
-                            },
-                            domProps: { value: _vm.detalle.precio },
-                            on: {
-                              input: function ($event) {
-                                if ($event.target.composing) {
-                                  return
-                                }
-                                _vm.$set(
-                                  _vm.detalle,
-                                  "precio",
-                                  $event.target.value
-                                )
-                              },
-                            },
-                          }),
-                          _vm._v(" "),
-                          _vm.errores_internos.precio.error
-                            ? _c(
-                                "span",
-                                {
-                                  staticClass: "invalid-feedback",
-                                  attrs: { role: "alert" },
-                                },
-                                [
-                                  _c("strong", [
-                                    _vm._v(
-                                      _vm._s(
-                                        _vm.errores_internos.precio.mensaje
-                                      )
-                                    ),
-                                  ]),
-                                ]
-                              )
-                            : _vm._e(),
-                        ]),
-                        _vm._v(" "),
-                        _c("div", { staticClass: "col-md-2 mt-4" }, [
-                          _c(
-                            "button",
-                            {
-                              staticClass:
-                                "\n                                                        btn\n                                                        btn-primary\n                                                        btn-sm\n                                                    ",
-                              attrs: { type: "button" },
+                              domProps: { value: _vm.detalle.precio },
                               on: {
-                                click: function ($event) {
-                                  return _vm.agregarDetalle()
+                                input: function ($event) {
+                                  if ($event.target.composing) {
+                                    return
+                                  }
+                                  _vm.$set(
+                                    _vm.detalle,
+                                    "precio",
+                                    $event.target.value
+                                  )
                                 },
                               },
-                            },
-                            [
-                              _c("i", { staticClass: "fa fa-plus" }),
-                              _vm._v(
-                                "\n                                                    Agregar\n                                                "
-                              ),
-                            ]
-                          ),
+                            }),
+                            _vm._v(" "),
+                            _vm.errores_internos.precio.error
+                              ? _c(
+                                  "span",
+                                  {
+                                    staticClass: "invalid-feedback",
+                                    attrs: { role: "alert" },
+                                  },
+                                  [
+                                    _c("strong", [
+                                      _vm._v(
+                                        _vm._s(
+                                          _vm.errores_internos.precio.mensaje
+                                        )
+                                      ),
+                                    ]),
+                                  ]
+                                )
+                              : _vm._e(),
+                          ]),
+                          _vm._v(" "),
+                          _c("div", { staticClass: "col-md-2 mt-4" }, [
+                            _c(
+                              "button",
+                              {
+                                staticClass:
+                                  "\n                                                        btn\n                                                        btn-primary\n                                                        btn-sm\n                                                    ",
+                                attrs: { type: "button" },
+                                on: {
+                                  click: function ($event) {
+                                    return _vm.agregarDetalle()
+                                  },
+                                },
+                              },
+                              [
+                                _c("i", { staticClass: "fa fa-plus" }),
+                                _vm._v(
+                                  "\n                                                    Agregar\n                                                "
+                                ),
+                              ]
+                            ),
+                          ]),
                         ]),
+                        _vm._v(" "),
+                        _vm._m(2),
                       ]),
-                      _vm._v(" "),
-                      _vm._m(2),
                     ]),
                   ]),
                 ]),
-              ]),
-              _vm._v(" "),
-              _vm._m(3),
-            ]),
+                _vm._v(" "),
+                _c("div", { staticClass: "row" }, [
+                  _c("div", { staticClass: "col-md-9" }),
+                  _vm._v(" "),
+                  _c("div", { staticClass: "col-md-3" }, [
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary btn-outline",
+                        attrs: { type: "button" },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Regresar\n                                "
+                        ),
+                      ]
+                    ),
+                    _vm._v(" "),
+                    _c(
+                      "button",
+                      {
+                        staticClass: "btn btn-primary",
+                        attrs: { type: "button" },
+                        on: { click: _vm.enviar },
+                      },
+                      [
+                        _vm._v(
+                          "\n                                    Guardar\n                                "
+                        ),
+                      ]
+                    ),
+                  ]),
+                ]),
+              ]
+            ),
           ]),
         ]),
       ]),
@@ -105063,39 +105113,6 @@ var staticRenderFns = [
             ]),
             _vm._v(" "),
             _c("tbody"),
-          ]
-        ),
-      ]),
-    ])
-  },
-  function () {
-    var _vm = this
-    var _h = _vm.$createElement
-    var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "row" }, [
-      _c("div", { staticClass: "col-md-9" }),
-      _vm._v(" "),
-      _c("div", { staticClass: "col-md-3" }, [
-        _c(
-          "button",
-          {
-            staticClass: "btn btn-primary btn-outline",
-            attrs: { type: "button" },
-          },
-          [
-            _vm._v(
-              "\n                                    Regresar\n                                "
-            ),
-          ]
-        ),
-        _vm._v(" "),
-        _c(
-          "button",
-          { staticClass: "btn btn-primary", attrs: { type: "submit" } },
-          [
-            _vm._v(
-              "\n                                    Guardar\n                                "
-            ),
           ]
         ),
       ]),
