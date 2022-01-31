@@ -50,7 +50,7 @@
                                         >
                                             <thead>
                                                 <tr>
-                                                    <th>#</th>
+                                                    <th>Fecha</th>
                                                     <th>Cliente</th>
                                                     <th>Tipo Doc</th>
                                                     <!-- <th>Tipo Pago</th> -->
@@ -500,7 +500,7 @@ export default {
                 },
                 columns: [
                     {
-                        data: "id",
+                        data: "fecha_registro",
                         className: "text-center",
                     },
                     {

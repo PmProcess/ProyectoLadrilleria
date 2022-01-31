@@ -27,7 +27,7 @@ class ClienteController extends Controller
         $clientes = DB::table('cliente as e')
             ->join('persona as p', 'p.id', '=', 'e.persona_id')
             ->select('e.id')
-            ->where('p.estado', 'ACTIVO')->get()->map(function ($value) {
+            ->where('p.estado', 'ACTIVO')->where('e.tipo', 'web')->get()->map(function ($value) {
                 $cliente=Cliente::findOrFail($value->id);
                 return array(
                     "id" => $cliente->id,
@@ -56,10 +56,10 @@ class ClienteController extends Controller
             // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            // 'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
-            // })],
-            // 'password' => ['required', 'same:confirm_password'],
-            // 'confirm_password' => 'required',
+            'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
+            })],
+            'password' => ['required', 'same:confirm_password'],
+            'confirm_password' => 'required',
         ];
         $message = [
             'departamento.required' => 'El Campo departamento es Obligatorio',
@@ -71,13 +71,13 @@ class ClienteController extends Controller
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
             'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            // 'email.required' => 'El Campo email es Obligatorio',
-            // 'email.unique' => 'El Campo email ya esta registrado',
-            // 'email.email' => 'formato no valido',
+            'email.required' => 'El Campo email es Obligatorio',
+            'email.unique' => 'El Campo email ya esta registrado',
+            'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
-            // 'password.required' => 'El Campo password es Obligatorio',
-            // 'password.same' => 'No coinciden los campos de contraseña',
-            // 'confirm_password.required' => 'El Campo password es Obligatorio',
+            'password.required' => 'El Campo password es Obligatorio',
+            'password.same' => 'No coinciden los campos de contraseña',
+            'confirm_password.required' => 'El Campo password es Obligatorio',
         ];
         if ($request->tipo_documento == "DNI") {
             $rules += array("nombres" => "required");
@@ -128,12 +128,12 @@ class ClienteController extends Controller
             }
             $cliente = new Cliente();
             $cliente->persona_id = $persona->id;
-            // if ($request->hasFile('logo')) {
-            //     $file = $request->file('logo');
-            //     $name = $file->getClientOriginalName();
-            //     $cliente->nombre_imagen = $name;
-            //     $cliente->url_imagen = $request->file('logo')->store('public/clientes');
-            // }
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $name = $file->getClientOriginalName();
+                $cliente->nombre_imagen = $name;
+                $cliente->url_imagen = $request->file('logo')->store('public/clientes');
+            }
             $cliente->save();
             DB::commit();
         } catch (Exception $e) {
@@ -161,9 +161,9 @@ class ClienteController extends Controller
             // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            // 'email' => ['required', 'email:rfc,dns'],
-            // 'password' => ['same:confirm_password'],
-            // 'confirm_password' => 'required',
+            'email' => ['required', 'email:rfc,dns'],
+            'password' => ['same:confirm_password'],
+            'confirm_password' => 'required',
         ];
         $message = [
             'departamento.required' => 'El Campo departamento es Obligatorio',
@@ -175,9 +175,9 @@ class ClienteController extends Controller
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
             'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            // 'email.required' => 'El Campo email es Obligatorio',
-            // 'email.unique' => 'El Campo email ya esta registrado',
-            // 'email.email' => 'formato no valido',
+            'email.required' => 'El Campo email es Obligatorio',
+            'email.unique' => 'El Campo email ya esta registrado',
+            'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
             // 'password.required' => 'El Campo password es Obligatorio',
             // 'password.same' => 'No coinciden los campos de contraseña',
@@ -232,13 +232,13 @@ class ClienteController extends Controller
                 $usuario->password = bcrypt($request->password);
                 $usuario->save();
             }
-            // if ($request->hasFile('logo')) {
-            //     $file = $request->file('logo');
-            //     $name = $file->getClientOriginalName();
-            //     $cliente->nombre_imagen = $name;
-            //     $cliente->url_imagen = $request->file('logo')->store('public/clientes');
-            //     $cliente->save();
-            // }
+            if ($request->hasFile('logo')) {
+                $file = $request->file('logo');
+                $name = $file->getClientOriginalName();
+                $cliente->nombre_imagen = $name;
+                $cliente->url_imagen = $request->file('logo')->store('public/clientes');
+                $cliente->save();
+            }
 
             DB::commit();
         } catch (Exception $e) {

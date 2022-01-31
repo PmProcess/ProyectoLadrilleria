@@ -489,7 +489,7 @@ export default {
                             ) {
                                 data.append(
                                     key,
-                                    this.modelo[keyModelo][key].label
+                                    this.modelo[keyModelo][key]
                                 );
                             } else {
                                 data.append(key, this.modelo[keyModelo][key]);

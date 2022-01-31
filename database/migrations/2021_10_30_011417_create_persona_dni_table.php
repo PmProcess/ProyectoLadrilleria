@@ -17,9 +17,9 @@ class CreatePersonaDniTable extends Migration
             $table->id();
             $table->unsignedBigInteger('persona_id');
             $table->foreign('persona_id')->references('id')->on('persona')->onDelete('cascade');
-            $table->string("nombres");
-            $table->string("apellidos");
-            $table->string("dni");
+            $table->string("nombres")->nullable();
+            $table->string("apellidos")->nullable();
+            $table->string("dni")->nullable();
             $table->timestamps();
         });
     }

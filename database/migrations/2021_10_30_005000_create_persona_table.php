@@ -19,10 +19,10 @@ class CreatePersonaTable extends Migration
             $table->mediumText("direccion")->nullable();
             $table->string('telefono')->nullable();
             $table->date('fecha_nacimiento')->nullable();
-            $table->enum('genero',['M','F']);
-            $table->unsignedBigInteger('distrito_id');
+            $table->enum('genero',['M','F'])->nullable();
+            $table->unsignedBigInteger('distrito_id')->nullable();
             $table->foreign('distrito_id')->references('id')->on('distrito')->onDelete('cascade');
-            $table->enum('estado_civil',['Casado','Viudo','Soltero']);
+            $table->enum('estado_civil',['Casado','Viudo','Soltero'])->nullable();
             $table->enum('estado',['ACTIVO','ANULADO'])->default('ACTIVO');
             $table->timestamps();
         });

@@ -20,6 +20,7 @@ class DocumentoVenta extends Model
         'user_id',
         // 'forma_pago_id',
         'correlativo_id',
+        'cotizacion_id',
         'tipo_documento_id',
         'fecha_registro',
         'fecha_vencimiento',
@@ -38,6 +39,10 @@ class DocumentoVenta extends Model
     // {
     //     return $this->belongsTo(tipoMoneda::class,'tipo_moneda_id');
     // }
+    public function cotizacion()
+    {
+        return $this->belongsTo(Cotizacion::class,'cotizacion_id');
+    }
     public function cliente()
     {
         return $this->belongsTo(Cliente::class,'cliente_id');

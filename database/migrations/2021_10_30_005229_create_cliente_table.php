@@ -17,6 +17,11 @@ class CreateClienteTable extends Migration
             $table->id();
             $table->unsignedBigInteger('persona_id');
             $table->foreign('persona_id')->references('id')->on('persona')->onDelete('cascade');
+            $table->unsignedBigInteger('user_id')->nullable();
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->string('url_imagen')->nullable();
+            $table->string('nombre_imagen')->nullable();
+            $table->enum('tipo',['app','web'])->default('web');
             $table->timestamps();
         });
     }

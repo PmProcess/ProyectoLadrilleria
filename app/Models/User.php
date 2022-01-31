@@ -9,6 +9,7 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Passport\HasApiTokens;
+use App\Models\Administracion\Cliente;
 use PhpParser\Node\Expr\FuncCall;
 
 class User extends Authenticatable
@@ -48,5 +49,9 @@ class User extends Authenticatable
     public function empleado()
     {
         return $this->hasOne(Empleado::class,'user_id');
+    }
+    public function cliente()
+    {
+        return $this->hasOne(Cliente::class,'user_id');
     }
 }

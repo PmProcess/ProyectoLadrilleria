@@ -8,7 +8,9 @@ import helperJs from "./helpers.js";
 import vSelect from "vue-select";
 import VueIframe from "vue-iframes";
 import Verte from "verte";
-
+import VueApexCharts from 'vue-apexcharts'
+Vue.use(VueApexCharts)
+Vue.component('apexchart', VueApexCharts)
 const options = {
     confirmButtonColor: "#41b882",
     cancelButtonColor: "#ff7674",
@@ -135,6 +137,16 @@ Vue.component(
         .default
 );
 Vue.component(
+    "cotizacionindex-component",
+    require("./components/ventas/cotizacion/CotizacionIndexComponent.vue")
+        .default
+);
+Vue.component(
+    "cotizacionedit-component",
+    require("./components/ventas/cotizacion/CotizacionEditComponent.vue")
+        .default
+);
+Vue.component(
     "documentocompraindex-component",
     require("./components/compras/documentoCompra/DocumentoCompraIndexComponent.vue")
         .default
@@ -201,6 +213,10 @@ Vue.component(
 Vue.component(
     "datatablealmacen-component",
     require("./components/datatables/Almacen/DatatableAlmacenComponent.vue")
+);
+Vue.component(
+    "reporte-component",
+    require("./components/reportes/Reporte/ReporteComponent.vue").default
 );
 
 /**

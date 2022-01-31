@@ -101,7 +101,8 @@
                     <li class="@yield('cliente-active')"><a href="{{ route('cliente.index') }}"><i
                                 class="fa fa-users" aria-hidden="true"></i>Clientes</a></li>
                 @endif
-
+                <li class="@yield('cotizacion-active')"><a href="{{ route('cotizacion.index') }}"><i
+                                class="fa fa-users" aria-hidden="true"></i>Cotizacion</a></li>
             </ul>
         </li>
     @endif
@@ -145,7 +146,8 @@
             </ul>
         </li>
     @endif
-    <li class="@yield('map-active')">
-        <a href="#"><i class="fa fa-globe"></i> <span class="nav-label">Reportes</a>
+    <li class="@yield('reportes-active')">
+        <a href="{{ route('reporte.index') }}" class="@yield('reporte-active')"><i class="fa fa-globe"></i> <span
+                class="nav-label">Reportes</a>
     </li>
 </ul>

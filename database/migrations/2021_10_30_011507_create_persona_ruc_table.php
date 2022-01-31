@@ -17,9 +17,9 @@ class CreatePersonaRucTable extends Migration
             $table->id();
             $table->unsignedBigInteger('persona_id');
             $table->foreign('persona_id')->references('id')->on('persona')->onDelete('cascade');
-            $table->string('nombre_comercial');
-            $table->string('razon_social');
-            $table->string('ruc');
+            $table->string('nombre_comercial')->nullable();
+            $table->string('razon_social')->nullable();
+            $table->string('ruc')->nullable();
             $table->timestamps();
         });
     }

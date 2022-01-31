@@ -19,6 +19,8 @@ class CreateDocumentoVentaTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('cliente')->onDelete('cascade');
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+            $table->unsignedBigInteger('cotizacion_id')->nullable();
+            $table->foreign('cotizacion_id')->references('id')->on('cotizacion')->onDelete('cascade');
             // $table->unsignedBigInteger('forma_pago_id');
             // $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
             $table->unsignedBigInteger('correlativo_id');

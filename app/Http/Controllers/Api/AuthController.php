@@ -8,44 +8,70 @@ use Carbon\Carbon;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
-
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Validator;
+use App\Models\Administracion\Persona;
+use App\Models\Administracion\PersonaDni;
+use App\Models\Administracion\Cliente;
 class AuthController extends Controller
 {
-    // public function login(Request $request)
-    // {
-    //     $creds = $request->only(['email','password']);
-
-    //     if(!$token = auth()->attempt($creds))
-    //     {
-    //         return response()->json([
-    //             'success' => false
-    //         ]);
-    //     }
-
-    //     return response()->json([
-    //         'success' => true,
-    //         'token' => $token,
-    //         'user' => Auth::user()
-    //     ]);
-    // }
-
     public function signUp(Request $request)
     {
-        $request->validate([
-            'name' => 'required|string',
-            'email' => 'required|string|email|unique:users',
-            'password' => 'required|string'
-        ]);
-
-        User::create([
-            'name' => $request->name,
-            'email' => $request->email,
-            'password' => bcrypt($request->password)
-        ]);
-
-        return response()->json([
-            'message' => 'Successfully created user!'
-        ], 201);
+        Log::info($request);
+        DB::beginTransaction();
+        try{
+            $rules=[
+                    'name' => 'required',
+                    'email' => 'required|email|unique:users',
+                    'password' => 'required'
+            ];
+            $message=[
+                'name.required'=>"El nombre es requerido",
+                'email.required'=>"El email es requerido",
+                'email.email'=>"El email no cumple con el formato",
+                'email.unique'=>"El email ya esta en uso",
+                'password.required'=>"El password es requerido"
+            ];
+            $validator = Validator::make($request->all(), $rules,$message);
+            if ($validator->fails()) {
+                return response()->json([
+                    'success'=>false,
+                    "message"=>$validator->errors()->first()
+                ]);
+            }
+            $user=User::create([
+                'name' => $request->name,
+                'email' => $request->email,
+                'password' => bcrypt($request->password)
+            ]);
+            $persona=Persona::create([
+                'tipo_documento'=>"DNI"
+            ]);
+            $personaDni=PersonaDni::create([
+                'nombres'=>$request->name,
+                'persona_id'=>$persona->id
+            ]);
+            $cliente=Cliente::create([
+                'user_id'=>$user->id,
+                'persona_id'=>$persona->id,
+                'tipo'=>'app'
+            ]);
+            DB::commit();
+            return response()->json([
+                'success'=>true,
+                'message' => 'Usuario creado con Exito',
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            Log::info($e);
+            DB::rollback();
+            return response()->json([
+                'success'=>false,
+                'message' => 'Ocurrio un Error',
+            ]);
+        }
     }
 
     /**
@@ -53,37 +79,52 @@ class AuthController extends Controller
      */
     public function login(Request $request)
     {
-        $request->validate([
-            'email' => 'required|string|email',
-            'password' => 'required|string',
-            'remember_me' => 'nullable|boolean'
-        ]);
+        Log::info($request);
+        try{
 
-        $credentials = request(['email', 'password']);
-
-        if (!Auth::attempt($credentials))
+            $rules=[
+                'email' => 'required',
+                'password' => 'required',
+            ];
+            $message=[
+                'email.required'=>"El email es requerido",
+                'password.required'=>"El password es requerido"
+            ];
+            
+            $validator = Validator::make($request->all(), $rules,$message);
+            if($validator->fails())
+            {
+                return response()->json([
+                    'success'=>true,
+                    "message"=>$validator->errors()->first()
+                ]);
+            }
+            $credentials = request(['email', 'password']);
+            if (!Auth::attempt($credentials))
+                return response()->json([
+                    'success' => false,
+                    'message' => 'Logueo incorrecto'
+                ]);
+            $user = $request->user();
+            $tokenResult = $user->createToken('Personal Access Token');
+            $token = $tokenResult->token;
+            $token->save();
             return response()->json([
-                'success' => false,
-                'message' => 'Unauthorized'
+                'success' => true,
+                "message"=>$user,
+                'token' => $tokenResult->accessToken,
+                'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
             ]);
-
-        $user = $request->user();
-        $tokenResult = $user->createToken('Personal Access Token');
-
-        $token = $tokenResult->token;
-        if ($request->remember_me)
-            $token->expires_at = Carbon::now()->addWeeks(1);
-        $token->save();
-
-        return response()->json([
-            'success' => true,
-            'token' => $tokenResult->accessToken,
-            'token_type' => 'Bearer',
-            'user' => $user,
-            'expires_at' => Carbon::parse($token->expires_at)->toDateTimeString()
-        ]);
+        }
+        catch(\Exception $e)
+        {
+            Log::info($e);
+            return response()->json([
+                'success' =>false,
+                "message"=>"Ocurrio un Error",
+            ]);
+        }
     }
-
     /**
      * Cierre de sesión (anular el token)
      */
@@ -92,17 +133,16 @@ class AuthController extends Controller
         try
         {
             $request->user()->token()->revoke();
-
             return response()->json([
                 'success' => true,
-                'message' => 'Successfully logged out'
+                'message' => 'Cierre de Session correctamente'
             ]);
         }
         catch(Exception $e)
         {
             return response()->json([
                 'success' => false,
-                'message' => ''.$e
+                'message' => $e->getMessage()
             ]);
         }
     }
@@ -112,6 +152,27 @@ class AuthController extends Controller
      */
     public function user(Request $request)
     {
-        return response()->json($request->user());
+
+        try{
+            $user=User::findOrFail($request->user_id);
+            $cliente=$user->cliente;
+            $datos=array(
+                "nombres"=>$cliente->persona->personaDni? $cliente->persona->personaDni->nombres:$cliente->persona->personaRuc->nombre_comercial,
+                "correo"=>$user->email,
+                "telefono"=>$cliente->persona->telefono,
+                "direccion"=>$cliente->persona->direccion
+            );
+            return response()->json([
+                "success"=>true,
+                "message"=>$datos
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                "success"=>false,
+                "message"=>"Ocurrio un Error"
+            ]);
+        }
     }
 }

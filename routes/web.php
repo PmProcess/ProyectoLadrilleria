@@ -15,8 +15,10 @@ use App\Http\Controllers\HomeController;
 use App\Http\Controllers\Mantenimiento\AlmacenController;
 use App\Http\Controllers\Mantenimiento\EmpresaPersonalController;
 use App\Http\Controllers\Mantenimiento\UnidadMedidaController;
+use App\Http\Controllers\Reporte\ReporteController;
 use App\Http\Controllers\Ubigeo\UbigeoController;
 use App\Http\Controllers\Ventas\DocumentoVentaController;
+use App\Http\Controllers\Ventas\CotizacionController;
 use App\Http\Controllers\Ventas\ProductoController;
 use App\Http\Controllers\Ventas\TipoProductoController;
 use App\Models\Configuracion\Numeracion;
@@ -182,6 +184,16 @@ Route::prefix('documentoVenta')->middleware('auth')->group(function(){
     Route::get('a4/{id}',[DocumentoVentaController::class,'a4'])->name('documentoVenta.a4');
     Route::get('sunat/{id}',[DocumentoVentaController::class,'sunat'])->name('documentoVenta.sunat');
 });
+Route::prefix('cotizacion')->middleware('auth')->group(function(){
+    Route::get('index',[CotizacionController::class,'index'])->name('cotizacion.index');
+    Route::get('getList',[CotizacionController::class,'getList'])->name('cotizacion.getList');
+    Route::get('create',[CotizacionController::class,'create'])->name('cotizacion.create');
+    Route::post('store',[CotizacionController::class,'store'])->name('cotizacion.store');
+    Route::get('edit/{id}',[CotizacionController::class,'edit'])->name('cotizacion.edit');
+    Route::post('update/{id}',[CotizacionController::class,'update'])->name('cotizacion.update');
+    Route::get('destroy/{id}',[CotizacionController::class,'destroy'])->name('cotizacion.destroy');
+    Route::post('storeDocumento/{id}',[CotizacionController::class,'storeDocumento'])->name('cotizacion.storeDocumento');
+});
 Route::prefix('documentoCompra')->middleware('auth')->group(function(){
     Route::get('index',[DocumentoCompraController::class,'index'])->name('documentoCompra.index');
     Route::get('getList',[DocumentoCompraController::class,'getList'])->name('documentoCompra.getList');
@@ -199,4 +211,16 @@ Route::prefix('notaIngreso')->middleware('auth')->group(function(){
     Route::get('edit/{id}',[NotaIngresoController::class,'edit'])->name('notaIngreso.edit');
     Route::post('update/{id}',[NotaIngresoController::class,'update'])->name('notaIngreso.update');
     Route::get('destroy/{id}',[NotaIngresoController::class,'destroy'])->name('notaIngreso.destroy');
+});
+Route::prefix('reporte')->middleware('auth')->group(function(){
+    Route::get('/',[ReporteController::class,'index'])->name('reporte.index');
+    Route::get('/getVentas',[ReporteController::class,'getVentas'])->name('reporte.getVentas');
+    Route::get('/getCompras',[ReporteController::class,'getCompras'])->name('reporte.getCompras');
+    Route::get('/getProductos',[ReporteController::class,'getProductos'])->name('reporte.getProductos');
+    Route::get('/getAlmacen',[ReporteController::class,'getAlmacen'])->name('reporte.getAlmacen');
+
+    Route::get('/pdfVentas',[ReporteController::class,'pdfVentas'])->name('reporte.pdfVentas');
+    Route::get('/pdfCompras',[ReporteController::class,'pdfCompras'])->name('reporte.pdfCompras');
+    Route::get('/pdfProdutos',[ReporteController::class,'pdfProductos'])->name('reporte.pdfProductos');
+    Route::get('/pdfAlmacen',[ReporteController::class,'pdfAlmacen'])->name('reporte.pdfAlmacen');
 });
