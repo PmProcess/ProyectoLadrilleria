@@ -90,7 +90,7 @@ class AuthController extends Controller
                 'email.required'=>"El email es requerido",
                 'password.required'=>"El password es requerido"
             ];
-            
+
             $validator = Validator::make($request->all(), $rules,$message);
             if($validator->fails())
             {
@@ -165,6 +165,32 @@ class AuthController extends Controller
             return response()->json([
                 "success"=>true,
                 "message"=>$datos
+            ]);
+        }
+        catch(\Exception $e)
+        {
+            return response()->json([
+                "success"=>false,
+                "message"=>"Ocurrio un Error"
+            ]);
+        }
+    }
+    public function updateUser(Request $request)
+    {
+
+        try{
+            $user=User::findOrFail($request->user_id);
+            $cliente=$user->cliente;
+            $persona=$cliente->persona;
+            $persona->direccion=$request->direccion;
+            $persona->telefono=$request->telefono;
+            $persona->save();
+            $personaDni=$persona->personaDni;
+            $personaDni->nombres=$request->nombres;
+            $personaDni->save();
+            return response()->json([
+                "success"=>true,
+                "message"=>"Registro con Exito"
             ]);
         }
         catch(\Exception $e)

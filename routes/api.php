@@ -28,6 +28,7 @@ Route::group(['prefix' => 'auth'], function () {
     Route::post('/user', [AuthController::class, 'user']);
     Route::post('/storeCotizacion',[ApiController::class,'storeCotizacion']);
     Route::post('/deleteCotizacion',[ApiController::class,'deleteCotizacion']);
+    Route::post('/updateUser',[AuthController::class,'updateUser']);
 });
 
 // Route::get('user', [AuthController::class, 'user']);
