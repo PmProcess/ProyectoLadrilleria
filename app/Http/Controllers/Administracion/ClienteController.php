@@ -56,10 +56,10 @@ class ClienteController extends Controller
             // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
-            })],
-            'password' => ['required', 'same:confirm_password'],
-            'confirm_password' => 'required',
+            // 'email' => ['required', 'email:rfc,dns', Rule::unique('users', 'email')->where(function ($query) {
+            // })],
+            // 'password' => ['required', 'same:confirm_password'],
+            // 'confirm_password' => 'required',
         ];
         $message = [
             'departamento.required' => 'El Campo departamento es Obligatorio',
@@ -70,14 +70,14 @@ class ClienteController extends Controller
             'telefono.numeric' => 'El Campo telefono debe ser numerico',
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
-            'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            'email.required' => 'El Campo email es Obligatorio',
-            'email.unique' => 'El Campo email ya esta registrado',
-            'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
-            'password.required' => 'El Campo password es Obligatorio',
-            'password.same' => 'No coinciden los campos de contraseña',
-            'confirm_password.required' => 'El Campo password es Obligatorio',
+            'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
+            // 'email.required' => 'El Campo email es Obligatorio',
+            // 'email.unique' => 'El Campo email ya esta registrado',
+            // 'email.email' => 'formato no valido',
+            // 'password.required' => 'El Campo password es Obligatorio',
+            // 'password.same' => 'No coinciden los campos de contraseña',
+            // 'confirm_password.required' => 'El Campo password es Obligatorio',
         ];
         if ($request->tipo_documento == "DNI") {
             $rules += array("nombres" => "required");
@@ -161,8 +161,8 @@ class ClienteController extends Controller
             // 'numero_documento' => 'required',
             'genero' => 'required',
             'estado_civil' => 'required',
-            'email' => ['required', 'email:rfc,dns'],
-            'password' => ['same:confirm_password'],
+            // 'email' => ['required', 'email:rfc,dns'],
+            // 'password' => ['same:confirm_password'],
             'confirm_password' => 'required',
         ];
         $message = [
@@ -175,9 +175,9 @@ class ClienteController extends Controller
             'direccion.required' => 'El Campo direccion es Obligatorio',
             'fecha_nacimiento.required' => 'El Campo Fecha es Obligatorio',
             'estado_civil.required' => 'El Campo estado Civil es Obligatorio',
-            'email.required' => 'El Campo email es Obligatorio',
-            'email.unique' => 'El Campo email ya esta registrado',
-            'email.email' => 'formato no valido',
+            // 'email.required' => 'El Campo email es Obligatorio',
+            // 'email.unique' => 'El Campo email ya esta registrado',
+            // 'email.email' => 'formato no valido',
             'genero.required' => 'El Campo genero es Obligatorio',
             // 'password.required' => 'El Campo password es Obligatorio',
             // 'password.same' => 'No coinciden los campos de contraseña',
@@ -227,11 +227,11 @@ class ClienteController extends Controller
                 $persona_ruc->ruc = $request->numero_documento;
                 $persona_ruc->save();
             }
-            if ($request->get('password')) {
-                $usuario = $cliente->user;
-                $usuario->password = bcrypt($request->password);
-                $usuario->save();
-            }
+            // if ($request->get('password')) {
+            //     $usuario = $cliente->user;
+            //     $usuario->password = bcrypt($request->password);
+            //     $usuario->save();
+            // }
             if ($request->hasFile('logo')) {
                 $file = $request->file('logo');
                 $name = $file->getClientOriginalName();
