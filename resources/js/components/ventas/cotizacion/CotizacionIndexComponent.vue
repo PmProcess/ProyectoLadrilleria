@@ -20,8 +20,7 @@
                 <div class="ibox">
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-md-12">
-                            </div>
+                            <div class="col-md-12"></div>
                             <div class="col-md-12">
                                 <div class="row">
                                     <div class="col-md-12">
@@ -60,7 +59,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import "datatables.net-bs4";
 import "datatables.net-buttons-bs4";
 export default {
-    props: [ "error", "mensaje"],
+    props: ["error", "mensaje"],
     data() {
         return {
             table: null,
@@ -88,6 +87,12 @@ export default {
                         );
                     }
                 });
+        });
+        $(document).on("click", ".btn-documento", function (e) {
+            window.location.href = route(
+                "cotizacion.createDocumento",
+                $this.table.row($(this).closest("tr")).data().id
+            );
         });
 
         //-------Error
@@ -123,24 +128,32 @@ export default {
                     {
                         data: null,
                         className: "text-center",
-                        render: function(data)
-                        {
-                            return data.created_at;
-                        }
+                        render: function (data) {
+                            let fecha = new Date(data.created_at);
+                            return (
+                                fecha.getFullYear() +
+                                "-" +
+                                (fecha.getMonth() + 1) +
+                                "-" +
+                                fecha.getDate() +
+                                " " +
+                                fecha.getHours() +
+                                ":" +
+                                fecha.getMinutes()
+                            );
+                        },
                     },
                     {
                         data: null,
                         className: "text-center",
                         render: function (data) {
-                            console.log(data)
-                                return (
-                                    data.cliente.persona.tipo_persona.nombres
-                                );
+                            console.log(data);
+                            return data.cliente.persona.tipo_persona.nombres;
                         },
                     },
                     {
-                        data:'total',
-                        className:"text-center"
+                        data: "total",
+                        className: "text-center",
                     },
                     {
                         data: null,
@@ -156,21 +169,18 @@ export default {
                             let opciones = "";
 
                             if (data.estado_cotizacion == "PENDIENTE") {
-                               opciones +=
+                                opciones +=
                                     "<li><a class='dropdown-item btn-documento'  title='Enviar'><b><i class='fa fa-list'></i>Documento Venta</a></b></li>";
                                 opciones +=
                                     "<li><a class='dropdown-item btn-delete'  title='Eliminar'><b><i class='fa fa-trash'></i>Eliminar</a></b></li>";
                                 return (
-                                "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
-                                opciones +
-                                "</ul></div>");
-                               // return "<button class='btn btn-warning'>Documento Venta</button><button class='btn btn-danger'>Eliminar </button>"
+                                    "<div class='btn-group' style='text-transform:capitalize;'><button data-toggle='dropdown' class='btn btn-danger  btn-sm  dropdown-toggle'><i class='fa fa-bars'></i></button><ul class='dropdown-menu'>" +
+                                    opciones +
+                                    "</ul></div>"
+                                );
+                                // return "<button class='btn btn-warning'>Documento Venta</button><button class='btn btn-danger'>Eliminar </button>"
                             }
                             return "";
-                            
-                        
-
-                            
                         },
                     },
                 ],

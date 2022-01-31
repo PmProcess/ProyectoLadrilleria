@@ -5,6 +5,11 @@ namespace App\Http\Controllers\Ventas;
 use App\Models\Ventas\Cotizacion;
 use App\Models\Ventas\DetalleCotizacion;
 use App\Http\Controllers\Controller;
+use App\Models\Configuracion\TipoDocumento;
+use App\Models\Ventas\DetalleDocumentoVenta;
+use App\Models\Ventas\DocumentoVenta;
+use App\Models\Ventas\Producto;
+use App\Rules\TipoDocumentoClienteRule;
 use Exception;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -81,8 +86,9 @@ class CotizacionController extends Controller
     }
     public function createDocumento($id)
     {
-        $cotizacion =Cotizacion::where('id',$id)->with(['detalle'])->first();
-        
+        $cotizacion =Cotizacion::where('id',$id)->with(['detalle.producto'])->first();
+        return view('ventas.cotizacion.documento.create',compact('cotizacion'));
+
     }
     public function storeDocumento(Request $request)
     {
@@ -117,6 +123,7 @@ class CotizacionController extends Controller
             $datos['tipo_pago_id'] = 1;
             $detalle = $request->get('tabladetalle');
             $documento = DocumentoVenta::create($datos);
+            $documento->cotizacion_id=$request->cotizacion_id;
             foreach (json_decode($detalle) as $value) {
                 $total += $value->total;
                 $producto=Producto::findOrFail($value->producto_id);

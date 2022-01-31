@@ -219,6 +219,12 @@ Vue.component(
     require("./components/reportes/Reporte/ReporteComponent.vue").default
 );
 
+
+Vue.component(
+    "documentoventacotizacioncreate-component",
+    require("./components/ventas/cotizacion/CotizacionCreateDocumentoComponent.vue")
+        .default
+);
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application

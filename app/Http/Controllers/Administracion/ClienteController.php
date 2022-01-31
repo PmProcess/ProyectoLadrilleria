@@ -27,7 +27,7 @@ class ClienteController extends Controller
         $clientes = DB::table('cliente as e')
             ->join('persona as p', 'p.id', '=', 'e.persona_id')
             ->select('e.id')
-            ->where('p.estado', 'ACTIVO')->where('e.tipo', 'web')->get()->map(function ($value) {
+            ->where('p.estado', 'ACTIVO')->get()->map(function ($value) {
                 $cliente=Cliente::findOrFail($value->id);
                 return array(
                     "id" => $cliente->id,

@@ -49,7 +49,8 @@ class AuthController extends Controller
                 'password' => bcrypt($request->password)
             ]);
             $persona=Persona::create([
-                'tipo_documento'=>"DNI"
+                'tipo_documento'=>"DNI",
+                'distrito_id'=>1
             ]);
             $personaDni=PersonaDni::create([
                 'nombres'=>$request->name,

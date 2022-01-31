@@ -192,7 +192,8 @@ Route::prefix('cotizacion')->middleware('auth')->group(function(){
     Route::get('edit/{id}',[CotizacionController::class,'edit'])->name('cotizacion.edit');
     Route::post('update/{id}',[CotizacionController::class,'update'])->name('cotizacion.update');
     Route::get('destroy/{id}',[CotizacionController::class,'destroy'])->name('cotizacion.destroy');
-    Route::post('storeDocumento/{id}',[CotizacionController::class,'storeDocumento'])->name('cotizacion.storeDocumento');
+    Route::get('createDocumento/{id}',[CotizacionController::class,'createDocumento'])->name('cotizacion.createDocumento');
+    Route::post('storeDocumento',[CotizacionController::class,'storeDocumento'])->name('cotizacion.storeDocumento');
 });
 Route::prefix('documentoCompra')->middleware('auth')->group(function(){
     Route::get('index',[DocumentoCompraController::class,'index'])->name('documentoCompra.index');
