@@ -24,14 +24,17 @@ class AuthController extends Controller
             $rules=[
                     'name' => 'required',
                     'email' => 'required|email|unique:users',
-                    'password' => 'required'
+                    'password' => 'required',
+                    'dni'=> ['required','unique:persona_dni,dni']
             ];
             $message=[
                 'name.required'=>"El nombre es requerido",
                 'email.required'=>"El email es requerido",
                 'email.email'=>"El email no cumple con el formato",
                 'email.unique'=>"El email ya esta en uso",
-                'password.required'=>"El password es requerido"
+                'password.required'=>"El password es requerido",
+                'dni.required'=>"El dni es requerido",
+                'dni.unique'=>"El dni debe ser unico"
             ];
             $validator = Validator::make($request->all(), $rules,$message);
             if ($validator->fails()) {
@@ -50,6 +53,8 @@ class AuthController extends Controller
             ]);
             $personaDni=PersonaDni::create([
                 'nombres'=>$request->name,
+                'apellidos'=>$request->apellidos,
+                'dni'=>$request->dni,
                 'persona_id'=>$persona->id
             ]);
             $cliente=Cliente::create([
