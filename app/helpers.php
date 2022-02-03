@@ -38,11 +38,15 @@ if (!function_exists('getDistritos')) {
 if (!function_exists('getClientes')) {
     function getClientes()
     {
-        return Cliente::with(['persona'])->get()->filter(function ($cliente) {
+        // return Cliente::with(['persona'])->get()->filter(function ($cliente) {
 
-            return $cliente->persona->estado == "ACTIVO";
-        })->map(function ($cliente) {
+        //     return $cliente->persona->estado == "ACTIVO";
+        // })->map(function ($cliente) {
 
+        //     $cliente->nombre_completo = $cliente->persona->tipoPersona->nombre_completo;
+        //     return $cliente;
+        // });
+        return Cliente::with(['persona'])->get()->map(function($cliente){
             $cliente->nombre_completo = $cliente->persona->tipoPersona->nombre_completo;
             return $cliente;
         });

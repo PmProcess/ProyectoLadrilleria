@@ -20,20 +20,22 @@
                 <div class="ibox">
                     <div class="ibox-content">
                         <div class="row">
-                            <div class="col-md-12">
-                                <div class="float-right mb-2">
-                                    <button
-                                        type="button"
-                                        class="btn btn-primary btn-agregar"
-                                        @click="goCreate"
-                                    >
-                                        <i
-                                            class="fa fa-plus"
-                                            aria-hidden="true"
-                                        ></i>
-                                        Agregar Documento de venta
-                                    </button>
-                                </div>
+                            <div class="form-group col-md-10">
+                                <!-- <button class="btn btn-primary" @click="reiniciar">Reiniciar</button> -->
+                                <h4>Tiempo:{{ tiempo }} milliseconds</h4>
+                            </div>
+                            <div class="form-group col-md-2 mt-4">
+                                <button
+                                    type="button"
+                                    class="btn btn-primary btn-agregar"
+                                    @click="goCreate"
+                                >
+                                    <i
+                                        class="fa fa-plus"
+                                        aria-hidden="true"
+                                    ></i>
+                                    Agregar
+                                </button>
                             </div>
                             <div class="col-md-12">
                                 <div class="row">
@@ -317,7 +319,7 @@ import "sweetalert2/dist/sweetalert2.min.css";
 import "datatables.net-bs4";
 import "datatables.net-buttons-bs4";
 export default {
-    props: ["formaspagos", "error", "mensaje"],
+    props: ["formaspagos", "error", "mensaje", "tiempophp"],
     data() {
         return {
             table: null,
@@ -331,15 +333,69 @@ export default {
             file: "",
             documento_venta_id: "",
             montoDeuda: -1,
+            tiempoBackend: 0,
+            tiempoPagina: 0,
+            tiempo: 0,
+            intervalo: null,
+            hours: 0,
+            minutes: 0,
+            seconds: 0,
+            milliseconds: 0,
         };
     },
     mounted() {
         var $this = this;
+        this.tiempoBackend = this.tiempophp;
         $(".logo").attr(
             "src",
             window.location.origin + "/img/defaultmoney.jpg"
         );
         this.datosInicializado();
+
+        // $this.updateTime(0, 0, 0, 0);
+
+        // let start = performance.now();
+        // window.addEventListener("unload", function () {
+        //     $this.tiempoPagina=performance.now() - start
+        //     console.log($this.tiempoPagina)
+        //     console.log("dfasd")
+        // });
+        let tiempoInicio = new Date();
+        let inicio = 1;
+        $this.table.on("draw", function () {
+            var timeElapsed = new Date().getTime() - tiempoInicio.getTime();
+            if (inicio <= 2) {
+                $this.tiempo = (
+                    parseFloat($this.tiempoBackend) + parseFloat(timeElapsed)
+                ).toFixed(2);
+                inicio++;
+            }
+
+            //  clearInterval($this.intervalo);
+        });
+        window.addEventListener("load", function () {
+            $this.table.on("search.dt", function () {
+                // inicio="final"
+                // var startTime = new Date(); // fetch current time
+                // var timeElapsed = new Date().getTime() - startTime.getTime(); // calculate the time elapsed in milliseconds
+                // // calculate hours
+                // $this.hours = parseInt(timeElapsed / 1000 / 60 / 60);
+                // // calculate minutes
+                // $this.minutes = parseInt(timeElapsed / 1000 / 60);
+                // if ($this.minutes > 60) $this.minutes %= 60;
+                // // calculate seconds
+                // $this.seconds = parseInt(timeElapsed / 1000);
+                // if ($this.seconds > 60) $this.seconds %= 60;
+                // // calculate milliseconds
+                // $this.milliseconds = timeElapsed;
+                // if ($this.milliseconds > 1000) $this.milliseconds %= 1000;
+                // $this.tiempo += $this.milliseconds;
+                // // set the stopwatch
+                // // setStopwatch(hours, minutes, seconds, milliseconds);
+                // $this.updateTime(0, 0, 0, 0);
+            });
+        });
+
         $(document).on("click", ".btn-delete", function (e) {
             $this.$swal
                 .fire({
@@ -411,6 +467,34 @@ export default {
         }
     },
     methods: {
+        updateTime(prev_hours, prev_minutes, prev_seconds, prev_milliseconds) {
+            var startTime = new Date(); // fetch current time
+            let $this = this;
+            $this.intervalo = setInterval(function () {
+                var timeElapsed = new Date().getTime() - startTime.getTime(); // calculate the time elapsed in milliseconds
+
+                // calculate hours
+                $this.hours =
+                    parseInt(timeElapsed / 1000 / 60 / 60) + prev_hours;
+
+                // calculate minutes
+                $this.minutes =
+                    parseInt(timeElapsed / 1000 / 60) + prev_minutes;
+                if ($this.minutes > 60) $this.minutes %= 60;
+
+                // calculate seconds
+                $this.seconds = parseInt(timeElapsed / 1000) + prev_seconds;
+                if ($this.seconds > 60) $this.seconds %= 60;
+
+                // calculate milliseconds
+                $this.milliseconds = timeElapsed + prev_milliseconds;
+                if ($this.milliseconds > 1000) $this.milliseconds %= 1000;
+                $this.tiempo += $this.milliseconds;
+
+                // set the stopwatch
+                // setStopwatch(hours, minutes, seconds, milliseconds);
+            }, 25); // update time in stopwatch after every 25ms
+        },
         datosInicializado: function () {
             this.tablePagos = $("#tablePagos").DataTable({
                 bPaginate: true,
@@ -419,6 +503,7 @@ export default {
                 bInfo: true,
                 bAutoWidth: false,
                 processing: true,
+                searching: true,
                 language: {
                     url: window.location.origin + "/Spanish.json",
                 },
@@ -490,8 +575,8 @@ export default {
             this.table = $("#tableDocumentosVentas").DataTable({
                 bPaginate: true,
                 bLengthChange: true,
-                bFilter: true,
                 bInfo: true,
+                searching: true,
                 bAutoWidth: false,
                 processing: true,
                 ajax: route("documentoVenta.getList"),
@@ -649,6 +734,9 @@ export default {
                 "src",
                 window.location.origin + "/img/defaultmoney.jpg"
             );
+        },
+        reiniciar: function () {
+            clearInterval(this.intervalo);
         },
         storePago: function () {
             if (
