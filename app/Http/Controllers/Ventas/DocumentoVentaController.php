@@ -30,7 +30,7 @@ class DocumentoVentaController extends Controller
 {
     public function index()
     {
-        $tiempophp = microtime(true);
+        $tiempophp = date('Y-m-d H:i:s',time());
         return view("ventas.documentoVenta.index", compact('tiempophp'));
     }
     public function getList()

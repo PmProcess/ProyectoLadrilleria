@@ -15,7 +15,7 @@ class ReporteController extends Controller
 {
     public function index()
     {
-        $tiempophp = microtime(true);
+        $tiempophp = date('Y-m-d H:i:s',time());
         return view('reportes.reporte.index',compact('tiempophp'));
     }
     public function getVentas(Request $request)

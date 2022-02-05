@@ -3,8 +3,7 @@
 @section('reportes-active', 'active')
 @section('reporte-active', 'active')
 <div id="app">
-    <reporte-component>
-
+    <reporte-component :tiempophp="{{json_encode($tiempophp)}}">
     </reporte-component>
 </div>
 @endsection

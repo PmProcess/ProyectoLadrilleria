@@ -4,7 +4,7 @@
 @section('docVenta-active', 'active')
 <div id="app">
     <documentoventaindex-component :formaspagos="{{ formasPagos() }}" :error="{{ json_encode(session('error')) }}"
-        :mensaje="{{ json_encode(session('mensaje')) }}" :tiempophp="{{microtime(true)-$tiempophp}}">
+        :mensaje="{{ json_encode(session('mensaje')) }}" :tiempophp="{{json_encode($tiempophp)}}">
     </documentoventaindex-component>
 </div>
 @endsection

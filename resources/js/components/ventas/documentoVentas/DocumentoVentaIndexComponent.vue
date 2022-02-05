@@ -22,7 +22,35 @@
                         <div class="row">
                             <div class="form-group col-md-10">
                                 <!-- <button class="btn btn-primary" @click="reiniciar">Reiniciar</button> -->
-                                <h4>Tiempo:{{ tiempo }} milliseconds</h4>
+                                <h4>
+                                    Tiempo Usuario:{{ tiempoUsuario }} segundos
+                                </h4>
+                                <h4>
+                                    Tiempo cargar Datos:{{ tiempo }} segundos
+                                </h4>
+
+                                <div class="row">
+                                    <div class="col-md-5">
+                                        <label for="">Buscar</label>
+                                        <div class="input-group mb-3">
+                                            <input
+                                                type="search"
+                                                name="busqueda"
+                                                id="busqueda"
+                                                class="form-control"
+                                            />
+                                            <div class="input-group-append">
+                                                <button
+                                                    class="btn btn-primary"
+                                                    type="button"
+                                                    @click="buscarTabla"
+                                                >
+                                                    Buscar
+                                                </button>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
                             </div>
                             <div class="form-group col-md-2 mt-4">
                                 <button
@@ -333,7 +361,8 @@ export default {
             file: "",
             documento_venta_id: "",
             montoDeuda: -1,
-            tiempoBackend: 0,
+            tiempoBackendInicial: 0,
+            tiempoUsuario: 0,
             tiempoPagina: 0,
             tiempo: 0,
             intervalo: null,
@@ -341,17 +370,20 @@ export default {
             minutes: 0,
             seconds: 0,
             milliseconds: 0,
+            nopresionado: true,
         };
     },
     mounted() {
         var $this = this;
-        this.tiempoBackend = this.tiempophp;
+        this.tiempoBackendInicial = new Date(this.tiempophp);
         $(".logo").attr(
             "src",
             window.location.origin + "/img/defaultmoney.jpg"
         );
         this.datosInicializado();
-
+        window.addEventListener("load", function () {
+            $("#tableDocumentosVentas_filter").hide();
+        });
         // $this.updateTime(0, 0, 0, 0);
 
         // let start = performance.now();
@@ -361,17 +393,14 @@ export default {
         //     console.log("dfasd")
         // });
         let tiempoInicio = new Date();
-        let inicio = 1;
+        let inicio = 0;
         $this.table.on("draw", function () {
-            var timeElapsed = new Date().getTime() - tiempoInicio.getTime();
+            var timeElapsed =
+                (new Date().getTime() - tiempoInicio.getTime()) / 1000;
             if (inicio <= 2) {
-                $this.tiempo = (
-                    parseFloat($this.tiempoBackend) + parseFloat(timeElapsed)
-                ).toFixed(2);
+                $this.tiempo = parseFloat(timeElapsed).toFixed(2);
                 inicio++;
             }
-
-            //  clearInterval($this.intervalo);
         });
         window.addEventListener("load", function () {
             $this.table.on("search.dt", function () {
@@ -494,6 +523,16 @@ export default {
                 // set the stopwatch
                 // setStopwatch(hours, minutes, seconds, milliseconds);
             }, 25); // update time in stopwatch after every 25ms
+        },
+        buscarTabla: function () {
+            if (this.nopresionado) {
+                this.tiempoUsuario =
+                    (new Date().getTime() -
+                        this.tiempoBackendInicial.getTime()) /
+                    1000;
+                this.nopresionado = false;
+            }
+            this.table.search($("#busqueda").val()).draw();
         },
         datosInicializado: function () {
             this.tablePagos = $("#tablePagos").DataTable({

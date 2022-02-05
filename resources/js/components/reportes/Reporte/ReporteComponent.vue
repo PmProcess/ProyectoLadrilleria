@@ -57,7 +57,18 @@
                                         </select>
                                     </div>
                                     <div class="col-md-3 mt-4">
-                                        <h3>Tiempo:{{tiempo}} milliseconds</h3>
+                                        <h3>
+                                            Tiempo Carga Grafica:{{
+                                                tiempo
+                                            }}
+                                            segundos
+                                        </h3>
+                                        <h3>
+                                            Tiempo Usuario:{{
+                                                tiempoUsuario
+                                            }}
+                                            segundos
+                                        </h3>
                                         <div class="form-group">
                                             <button
                                                 class="btn btn-primary"
@@ -254,6 +265,7 @@
 <script>
 import { jsPDF } from "jspdf";
 export default {
+    props: ["tiempophp"],
     data() {
         return {
             fechaInicialVenta: "",
@@ -274,6 +286,8 @@ export default {
             dataAlmacen: {},
             seriesAlmacen: [],
             tiempo: 0,
+            tiempoInicial: null,
+            tiempoUsuario: 0,
             intervalo: null,
             hours: 0,
             minutes: 0,
@@ -281,35 +295,10 @@ export default {
             milliseconds: 0,
         };
     },
-    mounted() {},
+    mounted() {
+        this.tiempoInicial = new Date(this.tiempophp);
+    },
     methods: {
-        updateTime(prev_hours, prev_minutes, prev_seconds, prev_milliseconds) {
-            var startTime = new Date(); // fetch current time
-            let $this = this;
-            $this.intervalo = setInterval(function () {
-                var timeElapsed = new Date().getTime() - startTime.getTime(); // calculate the time elapsed in milliseconds
-
-                // calculate hours
-                $this.hours =
-                    parseInt(timeElapsed / 1000 / 60 / 60) + prev_hours;
-
-                // calculate minutes
-                $this.minutes =
-                    parseInt(timeElapsed / 1000 / 60) + prev_minutes;
-                if ($this.minutes > 60) $this.minutes %= 60;
-
-                // calculate seconds
-                $this.seconds = parseInt(timeElapsed / 1000) + prev_seconds;
-                if ($this.seconds > 60) $this.seconds %= 60;
-
-                // calculate milliseconds
-                $this.milliseconds = timeElapsed + prev_milliseconds;
-                if ($this.milliseconds > 1000) $this.milliseconds %= 1000;
-                $this.tiempo += $this.milliseconds;
-                // set the stopwatch
-                // setStopwatch(hours, minutes, seconds, milliseconds);
-            }, 25); // update time in stopwatch after every 25ms
-        },
         searchReporteVenta: async function () {
             let $this = this;
             if (
@@ -319,9 +308,11 @@ export default {
                 toastr.error("Error", "Seleccione el rango de fechas");
                 return;
             }
-            $this.tiempo=0;
-            var timerStart = Date.now();
-            //$this.updateTime(0, 0, 0, 0);
+            $this.tiempo = 0;
+            this.tiempoUsuario =
+                new Date().getTime() - this.tiempoInicial.getTime();
+            this.tiempoUsuario /= 1000;
+            var timerStart =new Date();
             let datos = await axios.get(route("reporte.getVentas"), {
                 params: {
                     fechaInicial: this.fechaInicialVenta,
@@ -329,8 +320,8 @@ export default {
                     estado: this.estado,
                 },
             });
-            $this.tiempo=Date.now()-timerStart;
-            //clearInterval($this.intervalo);
+            $this.tiempo = new Date().getTime()- timerStart.getTime();
+            $this.tiempo /= 1000;
             var datasets = [];
             this.dataVenta = {
                 title: {
